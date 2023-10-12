@@ -1,11 +1,10 @@
-package org.softuni.mobilele.model;
+package org.softuni.mobilele.model.entity;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import org.softuni.mobilele.model.enums.RoleType;
+import org.softuni.mobilele.model.entity.enums.RoleType;
 
 @Entity
 @Table(name="roles")

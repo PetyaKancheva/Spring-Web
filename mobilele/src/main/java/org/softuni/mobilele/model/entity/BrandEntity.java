@@ -1,8 +1,9 @@
-package org.softuni.mobilele.model;
+package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import org.softuni.mobilele.model.entity.BaseEntity;
 
 import java.time.LocalDateTime;
 @Entity

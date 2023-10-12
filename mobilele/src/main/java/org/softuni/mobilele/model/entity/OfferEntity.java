@@ -1,8 +1,8 @@
-package org.softuni.mobilele.model;
+package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
-import org.softuni.mobilele.model.enums.EngineType;
-import org.softuni.mobilele.model.enums.TransmissionType;
+import org.softuni.mobilele.model.entity.enums.EngineType;
+import org.softuni.mobilele.model.entity.enums.TransmissionType;
 
 import java.time.LocalDateTime;
 
