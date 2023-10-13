@@ -1,4 +1,4 @@
-package org.softuni.mobilele.web;
+package org.softuni.mobilele;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
-
+        System.out.println("TEst Run");
     }
+
 }
