@@ -25,5 +25,5 @@ public class UserRegistrationController {
 
         return "redirect:/";
     }
-
+    //TODO: Registration email with activation link
 }

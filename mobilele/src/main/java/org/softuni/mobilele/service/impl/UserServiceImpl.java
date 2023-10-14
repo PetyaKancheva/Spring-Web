@@ -5,7 +5,7 @@ import org.softuni.mobilele.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserSericeImpl implements UserService {
+public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(UserRegistrationDTO userRegistrationDTO) {
 
