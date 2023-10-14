@@ -28,6 +28,6 @@ public class UserEntity extends BaseEntity {
     @Column
     private LocalDateTime modified;
 
-
+//TODO change username to e-Mail
 
 }
