@@ -8,12 +8,12 @@ import java.util.Set;
 @Entity
 @Table(name= "comments")
 public class Comment extends BaseEntity {
-    @Column
+    @Column(nullable = false)
     private Boolean approved;
-    @Column
+    @Column (nullable = false)
     private LocalDateTime created;
-    @Column(columnDefinition="TEXT")
-    private String text;
+    @Column(name = "text_content",nullable = false,columnDefinition="TEXT")
+    private String textContent;
     @ManyToOne()
     private User author;
     @ManyToOne()
@@ -40,12 +40,12 @@ public class Comment extends BaseEntity {
         return this;
     }
 
-    public String getText() {
-        return text;
+    public String getTextContent() {
+        return textContent;
     }
 
-    public Comment setText(String text) {
-        this.text = text;
+    public Comment setTextContent(String textContent) {
+        this.textContent = textContent;
         return this;
     }
 

@@ -1,31 +1,34 @@
 package bg.softuni.pathfinder.model;
 
+import bg.softuni.pathfinder.model.enums.UserLevels;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="users")
 
 public class User extends  BaseEntity{
-    @Column
+    @Column(unique = true,nullable = false)
     private String username;
-    @Column
+    @Column(nullable = false)
     private String password;
-    @Column (name = "full_name")
+    @Column (name = "full_name",nullable = false)
     private String fullName;
     @Column
     private String email;
     @Column
     private Integer age;
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> role;
+    private Set<Role> roles;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UserLevels level;
 
     public User(){
-
+        this.roles= new HashSet<>();
     }
 
     public String getUsername() {
@@ -74,11 +77,11 @@ public class User extends  BaseEntity{
     }
 
     public Set<Role> getRole() {
-        return role;
+        return roles;
     }
 
-    public User setRole(Set<Role> role) {
-        this.role = role;
+    public User setRole(Set<Role> roles) {
+        this.roles = roles;
         return this;
     }
 
