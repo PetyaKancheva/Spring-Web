@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 public interface UserService {
     void registerUser(UserRegistrationDTO userRegistrationDTO);
-    void loginUser(UserLoginDTO userLoginDTO);
+    boolean loginUser(UserLoginDTO userLoginDTO);
     void logOutUser();
 
 }
