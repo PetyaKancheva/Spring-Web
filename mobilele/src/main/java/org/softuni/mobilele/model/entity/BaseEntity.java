@@ -11,7 +11,7 @@ public  abstract class BaseEntity {
     public Long getId() {
         return id;
     }
-    //TODO check if this is correct
+
     public BaseEntity setId(Long id) {
         this.id = id;
         return this;

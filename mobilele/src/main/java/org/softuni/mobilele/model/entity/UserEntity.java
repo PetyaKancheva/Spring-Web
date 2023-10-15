@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
-    private String username;
+    private String email;
     @Column
     private String password;
     @Column(name = "first_name")
@@ -28,6 +28,75 @@ public class UserEntity extends BaseEntity {
     @Column
     private LocalDateTime modified;
 
-//TODO change username to e-Mail
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String eMail) {
+        this.email = eMail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Set<UserRoleEntity> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<UserRoleEntity> role) {
+        this.role = role;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getModified() {
+        return modified;
+    }
+
+    public void setModified(LocalDateTime modified) {
+        this.modified = modified;
+    }
 }
