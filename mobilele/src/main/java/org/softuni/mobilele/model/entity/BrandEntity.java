@@ -23,23 +23,26 @@ public class BrandEntity extends BaseEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public BrandEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public BrandEntity setCreated(LocalDateTime created) {
         this.created = created;
+        return this;
     }
 
     public LocalDateTime getModified() {
         return modified;
     }
 
-    public void setModified(LocalDateTime modified) {
+    public BrandEntity setModified(LocalDateTime modified) {
         this.modified = modified;
+        return this;
     }
 }

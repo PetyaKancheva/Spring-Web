@@ -43,87 +43,98 @@ public class OfferEntity extends BaseEntity {
         return description;
     }
 
-    public void setDescription(String description) {
+    public OfferEntity setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public EngineType getEngine() {
         return engine;
     }
 
-    public void setEngine(EngineType engine) {
+    public OfferEntity setEngine(EngineType engine) {
         this.engine = engine;
+        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public OfferEntity setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
     }
 
     public Integer getMileage() {
         return mileage;
     }
 
-    public void setMileage(Integer mileage) {
+    public OfferEntity setMileage(Integer mileage) {
         this.mileage = mileage;
+        return this;
     }
 
     public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public OfferEntity setPrice(Double price) {
         this.price = price;
+        return this;
     }
 
     public TransmissionType getTransmission() {
         return transmission;
     }
 
-    public void setTransmission(TransmissionType transmission) {
+    public OfferEntity setTransmission(TransmissionType transmission) {
         this.transmission = transmission;
+        return this;
     }
 
     public Integer getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public OfferEntity setYear(Integer year) {
         this.year = year;
+        return this;
     }
 
     public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public OfferEntity setCreated(LocalDateTime created) {
         this.created = created;
+        return this;
     }
 
     public LocalDateTime getModified() {
         return modified;
     }
 
-    public void setModified(LocalDateTime modified) {
+    public OfferEntity setModified(LocalDateTime modified) {
         this.modified = modified;
+        return this;
     }
 
     public ModelEntity getModel() {
         return model;
     }
 
-    public void setModel(ModelEntity model) {
+    public OfferEntity setModel(ModelEntity model) {
         this.model = model;
+        return this;
     }
 
     public UserEntity getSeller() {
         return seller;
     }
 
-    public void setSeller(UserEntity seller) {
+    public OfferEntity setSeller(UserEntity seller) {
         this.seller = seller;
+        return this;
     }
 }

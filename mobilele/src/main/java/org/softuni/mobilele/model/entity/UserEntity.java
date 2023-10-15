@@ -27,76 +27,88 @@ public class UserEntity extends BaseEntity {
     private LocalDateTime created;
     @Column
     private LocalDateTime modified;
+    public UserEntity(){
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String eMail) {
-        this.email = eMail;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public UserEntity setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserEntity setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public UserEntity setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public Boolean getActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public UserEntity setActive(Boolean active) {
         isActive = active;
+        return this;
     }
 
     public Set<UserRoleEntity> getRole() {
         return role;
     }
 
-    public void setRole(Set<UserRoleEntity> role) {
+    public UserEntity setRole(Set<UserRoleEntity> role) {
         this.role = role;
+        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public UserEntity setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
     }
 
     public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public UserEntity setCreated(LocalDateTime created) {
         this.created = created;
+        return this;
     }
 
     public LocalDateTime getModified() {
         return modified;
     }
 
-    public void setModified(LocalDateTime modified) {
+    public UserEntity setModified(LocalDateTime modified) {
         this.modified = modified;
+        return this;
     }
 }

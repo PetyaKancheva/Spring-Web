@@ -36,63 +36,71 @@ public class ModelEntity extends BaseEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public ModelEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public ModelCategory getCategory() {
         return category;
     }
 
-    public void setCategory(ModelCategory category) {
+    public ModelEntity setCategory(ModelCategory category) {
         this.category = category;
+        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public ModelEntity setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
     }
 
     public Integer getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(Integer startYear) {
+    public ModelEntity setStartYear(Integer startYear) {
         this.startYear = startYear;
+        return this;
     }
 
     public Integer getEndYear() {
         return endYear;
     }
 
-    public void setEndYear(Integer endYear) {
+    public ModelEntity setEndYear(Integer endYear) {
         this.endYear = endYear;
+        return this;
     }
 
     public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public ModelEntity setCreated(LocalDateTime created) {
         this.created = created;
+        return this;
     }
 
     public LocalDateTime getModified() {
         return modified;
     }
 
-    public void setModified(LocalDateTime modified) {
+    public ModelEntity setModified(LocalDateTime modified) {
         this.modified = modified;
+        return this;
     }
 
     public BrandEntity getBrand() {
         return brand;
     }
 
-    public void setBrand(BrandEntity brand) {
+    public ModelEntity setBrand(BrandEntity brand) {
         this.brand = brand;
+        return this;
     }
 }
