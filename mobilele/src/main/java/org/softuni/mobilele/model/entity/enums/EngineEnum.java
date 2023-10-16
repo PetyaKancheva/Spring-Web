@@ -1,5 +1,5 @@
 package org.softuni.mobilele.model.entity.enums;
 
-public enum EngineType {
+public enum EngineEnum {
     GASOLINE, DIESEL, ELECTRIC, HYBRID;
 }

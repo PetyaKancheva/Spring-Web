@@ -23,7 +23,7 @@ public class UserRegistrationController {
     }
     @PostMapping("/register")
     public String register(UserRegistrationDTO userRegistrationDTO){
-        userService.registerUser(userRegistrationDTO);
+        userService.register(userRegistrationDTO);
         return "redirect:/";
     }
     //TODO: Registration email with activation link

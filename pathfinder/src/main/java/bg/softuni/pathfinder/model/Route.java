@@ -3,12 +3,15 @@ package bg.softuni.pathfinder.model;
 import bg.softuni.pathfinder.model.enums.UserLevels;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "routes")
 public class Route extends BaseEntity {
-    @Column
+    @Column (columnDefinition = "TEXT")
     private String description;
-    @Column(name = "gpx_coordinates", columnDefinition = "TEXT")
+    @Column(name = "gpx_coordinates", columnDefinition = "LONGTEXT")
     private String gpxCoordinates;
     @Enumerated(EnumType.STRING)
     private UserLevels level;
@@ -17,9 +20,14 @@ public class Route extends BaseEntity {
 
     @ManyToOne
     private User author;
-    @Column(columnDefinition = "TEXT")
+    @ManyToMany()
+    private Set<Category> categories;
+
+
+    @Column(name="video_url",columnDefinition = "TEXT")
     private String videoURL;
     public Route(){
+        this.categories= new HashSet<>();
 
     }
 

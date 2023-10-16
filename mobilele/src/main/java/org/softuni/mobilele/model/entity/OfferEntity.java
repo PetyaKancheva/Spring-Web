@@ -1,8 +1,8 @@
 package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
-import org.softuni.mobilele.model.entity.enums.EngineType;
-import org.softuni.mobilele.model.entity.enums.TransmissionType;
+import org.softuni.mobilele.model.entity.enums.EngineEnum;
+import org.softuni.mobilele.model.entity.enums.TransmissionEnum;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +12,7 @@ public class OfferEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(EnumType.STRING)
-    private EngineType engine;
+    private EngineEnum engine;
     @Column(name="image_url",columnDefinition = "TEXT")
     private String imageUrl;
     @Column
@@ -20,7 +20,7 @@ public class OfferEntity extends BaseEntity {
     @Column
     private Double price;
     @Enumerated(EnumType.STRING)
-    private TransmissionType transmission;
+    private TransmissionEnum transmission;
     @Column
     private Integer year;
     @Column
@@ -48,11 +48,11 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public EngineType getEngine() {
+    public EngineEnum getEngine() {
         return engine;
     }
 
-    public OfferEntity setEngine(EngineType engine) {
+    public OfferEntity setEngine(EngineEnum engine) {
         this.engine = engine;
         return this;
     }
@@ -84,11 +84,11 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public TransmissionType getTransmission() {
+    public TransmissionEnum getTransmission() {
         return transmission;
     }
 
-    public OfferEntity setTransmission(TransmissionType transmission) {
+    public OfferEntity setTransmission(TransmissionEnum transmission) {
         this.transmission = transmission;
         return this;
     }

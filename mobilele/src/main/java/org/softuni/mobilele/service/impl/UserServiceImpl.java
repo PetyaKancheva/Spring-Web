@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registerUser(UserRegistrationDTO userRegistrationDTO) {
+    public void register(UserRegistrationDTO userRegistrationDTO) {
         userRepository.save(map(userRegistrationDTO));
 
     }
@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean loginUser(UserLoginDTO userLoginDTO) {
+    public boolean login(UserLoginDTO userLoginDTO) {
     return true;
     }
 
     @Override
-    public void logOutUser() {
+    public void logout() {
 
     }
 

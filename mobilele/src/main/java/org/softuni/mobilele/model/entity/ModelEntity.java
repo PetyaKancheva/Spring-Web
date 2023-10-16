@@ -1,7 +1,7 @@
 package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
-import org.softuni.mobilele.model.entity.enums.ModelCategory;
+import org.softuni.mobilele.model.entity.enums.ModelCategoryEnum;
 
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ public class ModelEntity extends BaseEntity {
     @Column
     private String name;
     @Enumerated(EnumType.STRING)
-    private ModelCategory category;
+    private ModelCategoryEnum category;
     //TODO check if it is correct
     @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageUrl;
@@ -41,11 +41,11 @@ public class ModelEntity extends BaseEntity {
         return this;
     }
 
-    public ModelCategory getCategory() {
+    public ModelCategoryEnum getCategory() {
         return category;
     }
 
-    public ModelEntity setCategory(ModelCategory category) {
+    public ModelEntity setCategory(ModelCategoryEnum category) {
         this.category = category;
         return this;
     }

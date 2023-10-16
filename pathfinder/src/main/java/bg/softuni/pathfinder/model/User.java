@@ -28,6 +28,7 @@ public class User extends  BaseEntity{
     private UserLevels level;
 
     public User(){
+
         this.roles= new HashSet<>();
     }
 
