@@ -17,3 +17,5 @@ public class MobileleApplication {
 //link offer templates
 //link other templates
 //build offer controller
+// UUID`??
+// wrapper for ID

@@ -19,8 +19,20 @@
     </h5>
 </div>
 
+<div class="container-fluid">
+    <h5 class="text-center text-white mt-5"> Date:
+        <th:block  th:text ="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}" ></th:block>
+
+    </h5>
+</div>
+
+
 <div>
-    <footer></footer>
+    <footer >
+                <div >
+                &copy;  <th:block  th:text ="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}" ></th:block>
+            </div>
+    </footer>
 </div>
 
 </body>
