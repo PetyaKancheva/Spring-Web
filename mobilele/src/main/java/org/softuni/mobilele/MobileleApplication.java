@@ -11,3 +11,9 @@ public class MobileleApplication {
     }
 
 }
+
+//TODO
+
+//link offer templates
+//link other templates
+//build offer controller

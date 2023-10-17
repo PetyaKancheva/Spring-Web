@@ -14,17 +14,20 @@ public class UserRegistrationController {
     private final UserService userService;
 
 
-    public UserRegistrationController(UserService userService){
+    public UserRegistrationController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/register")
     public String register() {
         return "auth-register";
     }
+
     @PostMapping("/register")
-    public String register(UserRegistrationDTO userRegistrationDTO){
+    public String register(UserRegistrationDTO userRegistrationDTO) {
+        //TODO: Registration email with activation link
         userService.register(userRegistrationDTO);
         return "redirect:/";
     }
-    //TODO: Registration email with activation link
 }
+
