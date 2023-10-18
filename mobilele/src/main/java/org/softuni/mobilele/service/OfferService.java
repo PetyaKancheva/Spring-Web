@@ -1,10 +1,13 @@
 package org.softuni.mobilele.service;
 
-import org.softuni.mobilele.model.dto.OfferAdditionDTO;
+import org.softuni.mobilele.model.dto.CreateOfferDTO;
+
+import java.util.UUID;
 
 public interface OfferService {
-    //TODO create UUID offer
-    void addOffer(OfferAdditionDTO offerAdditionDTO);
+
+    UUID addOffer(CreateOfferDTO createOfferDTO);
     void allOffers();
+
 
 }

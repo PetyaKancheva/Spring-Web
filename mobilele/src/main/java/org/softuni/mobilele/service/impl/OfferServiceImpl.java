@@ -1,9 +1,11 @@
 package org.softuni.mobilele.service.impl;
 
-import org.softuni.mobilele.model.dto.OfferAdditionDTO;
+import org.softuni.mobilele.model.dto.CreateOfferDTO;;
 import org.softuni.mobilele.repository.OfferRepository;
 import org.softuni.mobilele.service.OfferService;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -15,14 +17,23 @@ public class OfferServiceImpl implements OfferService {
 
 
     @Override
-    public void addOffer(OfferAdditionDTO offerAdditionDTO) {
-
+    public UUID addOffer(CreateOfferDTO createOfferDTO) {
+        return UUID.randomUUID();
     }
 
     @Override
     public void allOffers() {
-        offerRepository.findAll();
-
 
     }
+
+//    @Override
+//    public List<OfferEntity> findAll() {
+//        return null;
+//    }
+
+
+    //lic List<String> getModelAll(){
+  //  offerRepository.findAll().stream().map(el.getModel().getName()-> .adde));
+  //
+  //
 }

@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import org.softuni.mobilele.model.entity.enums.RoleEnum;
+import org.softuni.mobilele.model.enums.RoleEnum;
 
 @Entity
 @Table(name="roles")

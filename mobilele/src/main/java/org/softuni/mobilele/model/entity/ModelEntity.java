@@ -1,7 +1,7 @@
 package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
-import org.softuni.mobilele.model.entity.enums.ModelCategoryEnum;
+import org.softuni.mobilele.model.enums.ModelCategoryEnum;
 
 
 import java.time.LocalDateTime;

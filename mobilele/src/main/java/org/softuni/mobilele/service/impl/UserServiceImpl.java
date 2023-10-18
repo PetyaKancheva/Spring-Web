@@ -6,7 +6,6 @@ import org.softuni.mobilele.model.entity.UserEntity;
 import org.softuni.mobilele.repository.UserRepository;
 import org.softuni.mobilele.service.UserService;
 import org.softuni.mobilele.util.CurrentUser;
-import org.softuni.mobilele.util.MessageToUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +16,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUser currentUser;
-    private final MessageToUser messageToUser;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUser currentUser, MessageToUser flag) {
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUser currentUser ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.currentUser = currentUser;
-        this.messageToUser = flag;
+
     }
 
     @Override
@@ -40,26 +39,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean login(UserLoginDTO userLoginDTO) {
         var userEntity = userRepository.findByEmail(userLoginDTO.email()).orElse(null);
-        boolean loginSucess = false;
-        messageToUser.setSuccessfulLogin(false);
+        boolean loginSuccess = false;
 
         if (userEntity != null) {
             String rawPassword = userLoginDTO.password();
             String encodedPassword = userEntity.getPassword();
-            loginSucess =encodedPassword!=null &&  passwordEncoder.matches(rawPassword, encodedPassword);
+            loginSuccess =encodedPassword!=null &&  passwordEncoder.matches(rawPassword, encodedPassword);
 
-            if (loginSucess) {
+            if (loginSuccess) {
                 currentUser.setFirstName(userEntity.getFirstName())
                         .setLastName(userEntity.getLastName())
                         .setLogged(true);
-                messageToUser.setSuccessfulLogin(true);
             }else{
                 currentUser.logout();
             }
 
         }
 
-        return loginSucess;
+        return loginSuccess;
     }
 
     @Override

@@ -14,8 +14,13 @@ public class MobileleApplication {
 
 //TODO
 
-//link offer templates
-//link other templates
+
 //build offer controller
-// UUID`??
 // wrapper for ID
+// update form to get the selected values and
+//error check the selected values
+//switch on thymeleaf validation
+// set random UUID for offer creation
+// custom calidation
+// validate DTOs and Entities
+

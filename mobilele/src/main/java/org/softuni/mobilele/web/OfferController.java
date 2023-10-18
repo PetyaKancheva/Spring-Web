@@ -1,6 +1,6 @@
 package org.softuni.mobilele.web;
 
-import org.softuni.mobilele.model.dto.OfferAdditionDTO;
+import org.softuni.mobilele.model.dto.CreateOfferDTO;
 import org.softuni.mobilele.service.OfferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +27,12 @@ public class OfferController {
     }
 
     @PostMapping("/add")
-    private String addOffer(OfferAdditionDTO offerAdditionDTO){
-                offerService.addOffer(offerAdditionDTO);
+    private String addOffer(CreateOfferDTO createOfferDTO){
+        offerService.addOffer(createOfferDTO);
 
         return"offers";
     }
+
+    //GET DETAILS PAGE````
 
 }
