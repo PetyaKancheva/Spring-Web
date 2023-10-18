@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/offers")
+@RequestMapping("/offer")
 public class OfferController {
     private final OfferService offerService;
 
@@ -16,11 +16,7 @@ public class OfferController {
         this.offerService = offerService;
     }
 
-    @GetMapping("/all")
-    private String allOffers(){
 
-        return  "offers";
-    }
     @GetMapping("/add")
     private String addOffer(){
         return"offer-add";
@@ -30,7 +26,7 @@ public class OfferController {
     private String addOffer(CreateOfferDTO createOfferDTO){
         offerService.addOffer(createOfferDTO);
 
-        return"offers";
+        return"offer";
     }
 
     //GET DETAILS PAGE````

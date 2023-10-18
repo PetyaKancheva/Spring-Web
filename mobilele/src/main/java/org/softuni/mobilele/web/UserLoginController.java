@@ -1,13 +1,18 @@
 package org.softuni.mobilele.web;
 
+import jakarta.validation.Valid;
 import org.softuni.mobilele.model.dto.UserLoginDTO;
 import org.softuni.mobilele.service.UserService;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping("/users")
 @Controller
 public class UserLoginController {
 
@@ -17,19 +22,38 @@ public class UserLoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String login() {
+    @GetMapping("/users/login")
+    public String login(Model model){
+        if(!model.containsAttribute("userLoginDTO")){
+            model.addAttribute("userLoginDTO",UserLoginDTO.empty());
+        }
+
         return "auth-login";
     }
 
-    @PostMapping("/login")
-    public String login(UserLoginDTO userLoginDTO) {
-        if(userService.login(userLoginDTO)){
-            return"index";
+
+//    model.addAttribute("brands", brandService.getAllBrands());
+
+
+    @PostMapping("/users/login")
+    public String login(@Valid  UserLoginDTO userLoginDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
+
+        if(bindingResult.hasErrors()){
+            rAtt.addFlashAttribute("userLoginDTO", userLoginDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userLoginDTO", bindingResult);
+            return "redirect:/users/login";
         }
-        return "auth-login";
+
+        if(!userService.login(userLoginDTO)){
+            rAtt.addFlashAttribute("loginUnsuccessful",true);
+        }
+            return "redirect:/users/login";
+
+
+
+
     }
-    @GetMapping("/logout")
+    @GetMapping("/users/logout")
     public String logout() {
         userService.logout();
         return "index";
