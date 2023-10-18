@@ -14,6 +14,13 @@ public class MobileleApplication {
 
 //TODO
 
+// all brands
+//add offer
+//all offers
+//admin
+//register
+// login DONE
+//logout DONE
 
 //build offer controller
 // wrapper for ID
