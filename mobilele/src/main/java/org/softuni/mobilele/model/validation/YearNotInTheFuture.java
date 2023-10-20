@@ -2,6 +2,7 @@ package org.softuni.mobilele.model.validation;
 
 
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,4 +13,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = YearNotInTheFutureValidator.class )
 public @interface YearNotInTheFuture {
+
+    String message() default "Year must not be in the future.";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
+
 }
