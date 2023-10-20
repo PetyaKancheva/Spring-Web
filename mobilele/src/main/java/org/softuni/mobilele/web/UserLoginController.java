@@ -8,8 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+@RequestMapping("/users")
 @Controller
 public class UserLoginController {
 
@@ -19,7 +20,7 @@ public class UserLoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/users/login")
+    @GetMapping("/login")
     public String login(Model model){
         if(!model.containsAttribute("userLoginDTO")){
             model.addAttribute("userLoginDTO",UserLoginDTO.empty());
@@ -31,7 +32,7 @@ public class UserLoginController {
 
 
 
-    @PostMapping("/users/login")
+    @PostMapping("/login")
     public String login(@Valid  UserLoginDTO userLoginDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
 
         if(bindingResult.hasErrors()){
@@ -47,7 +48,7 @@ public class UserLoginController {
             return "redirect:/";
 
     }
-    @GetMapping("/users/logout")
+    @GetMapping("/logout")
     public String logout() {
         userService.logout();
         return "index";

@@ -17,8 +17,8 @@ public class MobileleApplication {
 // all brands
 //add offer
 //all offers
-//admin
-//register
+//admin - partial
+//register -only field matatch validator
 // login DONE
 //logout DONE
 
@@ -28,6 +28,6 @@ public class MobileleApplication {
 //error check the selected values
 //switch on thymeleaf validation
 // set random UUID for offer creation
-// custom calidation
+// custom validation
 // validate DTOs and Entities
 

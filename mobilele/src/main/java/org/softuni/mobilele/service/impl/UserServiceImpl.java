@@ -3,6 +3,7 @@ package org.softuni.mobilele.service.impl;
 import org.softuni.mobilele.model.dto.UserLoginDTO;
 import org.softuni.mobilele.model.dto.UserRegistrationDTO;
 import org.softuni.mobilele.model.entity.UserEntity;
+import org.softuni.mobilele.model.enums.RoleEnum;
 import org.softuni.mobilele.repository.UserRepository;
 import org.softuni.mobilele.service.UserService;
 import org.softuni.mobilele.util.CurrentUser;
@@ -47,9 +48,11 @@ public class UserServiceImpl implements UserService {
             loginSuccess =encodedPassword!=null &&  passwordEncoder.matches(rawPassword, encodedPassword);
 
             if (loginSuccess) {
+
                 currentUser.setFirstName(userEntity.getFirstName())
                         .setLastName(userEntity.getLastName())
-                        .setLogged(true);
+                        .setLogged(true)
+                        .setAdmin(userEntity.getRole().equals(RoleEnum.ADMIN));
             }else{
                 currentUser.logout();
             }
@@ -71,9 +74,8 @@ public class UserServiceImpl implements UserService {
                 .setLastName(userRegistrationDTO.lastName())
                 .setEmail(userRegistrationDTO.email())
                 .setPassword(passwordEncoder.encode(userRegistrationDTO.password()))
-                .setCreated(LocalDateTime.now());
-
-
+                .setCreated(LocalDateTime.now())
+                .setRole(RoleEnum.USER);
     }
 
 

@@ -1,6 +1,7 @@
 package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
+import org.softuni.mobilele.model.enums.RoleEnum;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -19,8 +20,8 @@ public class UserEntity extends BaseEntity {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany
-    private Set<UserRoleEntity> role;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
     @Column(name="image_url",columnDefinition="TEXT")
     private String imageUrl;
     @Column
@@ -29,6 +30,15 @@ public class UserEntity extends BaseEntity {
     private LocalDateTime modified;
     public UserEntity(){
 
+    }
+
+    public RoleEnum getRole() {
+        return role;
+    }
+
+    public UserEntity setRole(RoleEnum role) {
+        this.role = role;
+        return this;
     }
 
     public String getFirstName() {
@@ -76,14 +86,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public Set<UserRoleEntity> getRole() {
-        return role;
-    }
 
-    public UserEntity setRole(Set<UserRoleEntity> role) {
-        this.role = role;
-        return this;
-    }
 
     public String getImageUrl() {
         return imageUrl;

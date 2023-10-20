@@ -10,13 +10,13 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Constraint(validatedBy = FieldMatchValidator.class)
+//@Constraint(validatedBy = FieldMatchValidator.class)
 public @interface FieldMatch {
-    String first;
-    String second;
+//   private String first;
+//    private String second;
 
-    String message() default "Fields are not matching";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
-}
+//    String message() default "Fields are not matching";
+//    Class<?>[] groups() default {};
+//    Class<? extends Payload>[] payload() default {};
+//}
 }

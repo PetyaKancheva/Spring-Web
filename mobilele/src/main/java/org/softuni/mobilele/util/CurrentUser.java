@@ -10,6 +10,7 @@ public class CurrentUser {
     private String firstName;
     private String lastName;
     private boolean isLogged;
+    private boolean isAdmin;
 
     public String getFirstName() {
         return firstName;
@@ -33,6 +34,15 @@ public class CurrentUser {
         return this;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public CurrentUser setAdmin(boolean admin) {
+        isAdmin = admin;
+        return this;
+    }
+
     public boolean isLogged() {
         return isLogged;
     }
@@ -49,5 +59,6 @@ public class CurrentUser {
         setLogged(false);
         setFirstName(null);
         setLastName(null);
+        setAdmin(false);
     }
 }
