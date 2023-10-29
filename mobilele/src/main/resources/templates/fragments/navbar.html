@@ -46,20 +46,20 @@
                     <div class="form-inline my-2 my-lg-0 border px-3">
                         <div class="logged-user"
                              th:text="|Welcome, ${@currentUser.firstName}|" ></div>
-                        <a class="nav-link" href="/users/logout">Logout</a>
+                        <a class="nav-link" th:href="/users/logout">Logout</a>
                     </div>
                 </li>
                 <!--     EO: Logout           -->
 
                 <!--     Register           -->
                 <li class="nav-item" th:unless="${@currentUser.isLogged()}"  >
-                    <a class="nav-link" href="/users/register">Register</a>
+                    <a class="nav-link" th:href="/users/register">Register</a>
                 </li>
                 <!--     EO:Register           -->
 
                 <!--     Login           -->
                 <li class="nav-item" th:unless="${@currentUser.isLogged()}" >
-                    <a class="nav-link" href="/users/login">Login</a>
+                    <a class="nav-link" th:href="/users/login">Login</a>
                 </li>
                 <!--     EO: Login           -->
 
