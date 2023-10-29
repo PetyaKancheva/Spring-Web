@@ -8,7 +8,7 @@ public class DBinit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        //TODO for maybe some car models as alternative
 
     }
 }

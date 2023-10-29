@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping("/users")
@@ -23,12 +24,12 @@ public class UserRegistrationController {
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public ModelAndView register(Model model) {
 
         if (!model.containsAttribute("userRegistrationDTO")) {
             model.addAttribute("userRegistrationDTO",UserRegistrationDTO.empty());
         }
-        return "auth-register";
+        return new ModelAndView("auth-register");
     }
 
     @PostMapping("/register")
