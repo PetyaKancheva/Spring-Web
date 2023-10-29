@@ -9,6 +9,7 @@ import org.softuni.mobilele.service.BrandService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +41,10 @@ public class BrandServiceImpl implements BrandService {
 //        }
 
         return brandRepository.getAllBrands().stream()
-                .map(brandEntity -> new BrandDTO(brandEntity.getName(),
-                        brandEntity.getModels().stream()
-                                .map(modelEntity -> new ModelDTO(modelEntity.getId(), modelEntity.getName()))
-                                .collect(Collectors.toList()))).collect(Collectors.toList());
+                .map(b -> new BrandDTO(b.getName(),
+                 b.getModels().stream()
+                  .map(m -> new ModelDTO(m.getId(), m.getName(),m.getStartYear(),m.getEndYear(),m.getImageUrl()))
+                         .sorted(Comparator.comparing(ModelDTO::getId))
+                                .collect(Collectors.toList()))).sorted(Comparator.comparing(BrandDTO::getName)).collect(Collectors.toList());
     }
 }

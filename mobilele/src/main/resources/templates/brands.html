@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/head}"> </head>
+<head th:replace="~{fragments/head}"></head>
 
 <body>
 <div>
@@ -11,7 +11,7 @@
 <div class="container">
     <h2 class="text-center text-white m-3">All Brands</h2>
     <div class='row mb-4 d-flex justify-content-around'>
-        <div  class="brand-section col-md-5 mr-auto d-flex flex-column" th:each="b:${brands}" >
+        <div class="brand-section col-md-5 mr-auto d-flex flex-column" th:each="b:${brands}">
             <h2>Car brand:
                 <span th:text="${b.name}">Brand name</span>
             </h2>
@@ -25,14 +25,14 @@
                         <th>End Year</th>
                         <th>Picture</th>
                     </tr>
-                    <tr>
-                        <th>No</th>
-                        <th >Model Name</th>
-                        <th >Model Category</th>
-                        <th >Model Start Year</th>
-                        <th >Model End Year</th>
-                        <th><img alt="image" src="/"
-                                 class="img-thumbnail rounded"></th>
+                    <tr th:each="m:${b.models}">
+                        <td th:text="${m.id}">No</td>
+                        <td th:text="${m.name}">Model Name</td>
+                        <td>Car</td>
+                        <td th:text="${m.startYear}">Model Start Year</td>
+                        <td th:text="${m.endYear}">Model End Year</td>
+                        <td ><div><img th:src="@{${m.imageUrl}}" alt="image"  class="img-thumbnail rounded">            </div>
+                                     </td>
                     </tr>
                 </table>
             </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div>
-             <footer> </footer>
+        <footer></footer>
     </div>
 </div>
 </body>
