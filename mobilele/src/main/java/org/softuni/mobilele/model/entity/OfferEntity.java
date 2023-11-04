@@ -1,7 +1,8 @@
 package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.softuni.mobilele.model.enums.EngineEnum;
 import org.softuni.mobilele.model.enums.TransmissionEnum;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "offers")
 public class OfferEntity extends BaseEntity {
-    @NotEmpty
+    @NotNull
     @JdbcTypeCode(Types.VARCHAR)
     private UUID uuid;
     @Column(columnDefinition = "TEXT")

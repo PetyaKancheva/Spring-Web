@@ -6,22 +6,27 @@ import org.softuni.mobilele.model.enums.EngineEnum;
 import org.softuni.mobilele.model.enums.TransmissionEnum;
 import org.softuni.mobilele.service.BrandService;
 import org.softuni.mobilele.service.OfferService;
+import org.softuni.mobilele.util.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/offer")
 public class OfferController {
+    private final CurrentUser currentUser;
     private final OfferService offerService;
     private final BrandService brandService;
 
-    public OfferController(OfferService offerService, BrandService brandService) {
+    public OfferController(CurrentUser currentUser, OfferService offerService, BrandService brandService) {
+        this.currentUser = currentUser;
         this.offerService = offerService;
         this.brandService = brandService;
     }
@@ -50,12 +55,16 @@ public class OfferController {
     }
 
     @PostMapping("/add")
-    private String addOffer(CreateOfferDTO createOfferDTO) {
+    private ModelAndView addOffer(CreateOfferDTO createOfferDTO) {
+        if(!currentUser.isLogged()){
+            return  new ModelAndView("redirect:/users/login");
+        }
 
 
-        offerService.addOffer(createOfferDTO);
+       UUID id= offerService.addOffer(createOfferDTO);
 
-        return "redirect:offers/all";
+
+        return new ModelAndView("index");
     }
 
     //GET DETAILS PAGE````
