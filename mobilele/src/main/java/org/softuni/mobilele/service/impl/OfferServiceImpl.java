@@ -1,6 +1,7 @@
 package org.softuni.mobilele.service.impl;
 
 import org.softuni.mobilele.model.dto.CreateOfferDTO;;
+import org.softuni.mobilele.model.dto.OfferDetailsDTO;
 import org.softuni.mobilele.model.entity.ModelEntity;
 import org.softuni.mobilele.model.entity.OfferEntity;
 import org.softuni.mobilele.model.entity.UserEntity;
@@ -10,8 +11,10 @@ import org.softuni.mobilele.repository.OfferRepository;
 import org.softuni.mobilele.repository.UserRepository;
 import org.softuni.mobilele.service.OfferService;
 import org.softuni.mobilele.util.CurrentUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.sql.Types;
+
 
 
 import java.time.LocalDateTime;
@@ -38,28 +41,19 @@ public class OfferServiceImpl implements OfferService {
         ModelEntity modelEntity = modelRepository.findById(createOfferDTO.modelId()).orElseThrow(() ->
                 new IllegalArgumentException("Model with id " + createOfferDTO.modelId() + " not found!"));
         newOffer.setModel(modelEntity);
-        UserEntity userEntity =userRepository.findByEmail(currentUser.getEmail()).orElseThrow(()-> new IllegalArgumentException( "No seller found!"));
+        UserEntity userEntity = userRepository.findByEmail(currentUser.getEmail()).orElseThrow(() -> new IllegalArgumentException("No seller found!"));
         newOffer.setSeller(userEntity);
 
-       offerRepository.save(newOffer);
+        offerRepository.save(newOffer);
 
         return newOffer.getUuid();
     }
 
-    @Override
-    public void allOffers() {
+
+    public Page<OfferDetailsDTO> getAllOffers(Pageable pageable) {
+        return offerRepository.findAll(pageable).map(this::mapToOfferDetails);
     }
 
-//    @Override
-//    public List<OfferEntity> findAll() {
-//        return null;
-//    }
-
-
-    //lic List<String> getModelAll(){
-    //  offerRepository.findAll().stream().map(el.getModel().getName()-> .adde));
-    //
-    //
     private OfferEntity map(CreateOfferDTO createOfferDTO) {
         return new OfferEntity()
                 .setUuid(UUID.randomUUID())
@@ -71,5 +65,22 @@ public class OfferServiceImpl implements OfferService {
                 .setPrice(createOfferDTO.price())
                 .setCreated(LocalDateTime.now())
                 .setYear(createOfferDTO.year());
+    }
+
+    private OfferDetailsDTO mapToOfferDetails(OfferEntity offerEntity) {
+        return new OfferDetailsDTO(
+                offerEntity.getUuid(),
+                offerEntity.getEngine(),
+                offerEntity.getImageUrl(),
+                offerEntity.getMileage(),
+                offerEntity.getPrice(),
+                offerEntity.getTransmission(),
+                offerEntity.getYear(),
+                offerEntity.getCreated(),
+                offerEntity.getModified(),
+                offerEntity.getModel().getName(),
+                offerEntity.getModel().getBrand().getName(),
+                offerEntity.getSeller().getFirstName());
+        // TODO change to First and Last name of seller
     }
 }

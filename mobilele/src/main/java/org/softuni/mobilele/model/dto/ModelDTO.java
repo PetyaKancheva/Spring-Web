@@ -3,16 +3,12 @@ package org.softuni.mobilele.model.dto;
 public class ModelDTO{
     private Long id;
     private String name;
-    private Integer startYear;
-    private Integer endYear;
-    private String imageUrl;
+
 
     public ModelDTO(Long id, String name, Integer startYear, Integer endYear, String imageUrl) {
         this.id = id;
         this.name = name;
-        this.startYear = startYear;
-        this.endYear = endYear;
-        this.imageUrl = imageUrl;
+
     }
 
     public ModelDTO() {
@@ -39,27 +35,4 @@ public class ModelDTO{
         this.id = id;
     }
 
-    public Integer getStartYear() {
-        return startYear;
-    }
-
-    public void setStartYear(Integer startYear) {
-        this.startYear = startYear;
-    }
-
-    public Integer getEndYear() {
-        return endYear;
-    }
-
-    public void setEndYear(Integer endYear) {
-        this.endYear = endYear;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

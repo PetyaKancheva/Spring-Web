@@ -1,5 +1,6 @@
 package org.softuni.mobilele.web;
 
+import jakarta.validation.Valid;
 import org.softuni.mobilele.model.dto.BrandDTO;
 import org.softuni.mobilele.model.dto.CreateOfferDTO;
 import org.softuni.mobilele.model.enums.EngineEnum;
@@ -9,12 +10,12 @@ import org.softuni.mobilele.service.OfferService;
 import org.softuni.mobilele.util.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,13 +42,15 @@ public class OfferController {
     public TransmissionEnum[] transmissions() {
         return TransmissionEnum.values();
     }
+
     @ModelAttribute("brands")
     public List<BrandDTO> allBrands() {
-        return  brandService.getAllBrands();
+        return brandService.getAllBrands();
     }
+
     @GetMapping("/add")
     private String addOffer(Model model) {
-        if(!model.containsAttribute("createOfferDTO")){
+        if (!model.containsAttribute("createOfferDTO")) {
             model.addAttribute("createOfferDTO", CreateOfferDTO.empty());
         }
 
@@ -55,18 +58,28 @@ public class OfferController {
     }
 
     @PostMapping("/add")
-    private ModelAndView addOffer(CreateOfferDTO createOfferDTO) {
-        if(!currentUser.isLogged()){
-            return  new ModelAndView("redirect:/users/login");
+    private ModelAndView addOffer(@Valid CreateOfferDTO createOfferDTO, BindingResult bindingResult, RedirectAttributes rAtts) {
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
+        if (bindingResult.hasErrors()) {
+            rAtts.addFlashAttribute("createOfferDTO", createOfferDTO);
+            rAtts.addFlashAttribute("org.springframework.validation.BindingResult.createOfferDTO", bindingResult);
+
+            return new ModelAndView("redirect:/offer/add");
         }
 
-
-       UUID id= offerService.addOffer(createOfferDTO);
-
-
-        return new ModelAndView("index");
+        UUID uuid = offerService.addOffer(createOfferDTO);
+        boolean isAdded = !uuid.equals(null);
+                String view = isAdded ? "details/"+ uuid : "add";
+        return new ModelAndView(view);
     }
 
     //GET DETAILS PAGE````
-
+    @GetMapping("/{id}")
+    public ModelAndView details(@PathVariable("uuid") UUID uuid) {
+        //trow error
+        //Find
+        return new ModelAndView("details");
+    }
 }
