@@ -3,21 +3,25 @@ package org.softuni.mobilele.web;
 import jakarta.validation.Valid;
 import org.softuni.mobilele.model.dto.UserLoginDTO;
 import org.softuni.mobilele.service.UserService;
+import org.softuni.mobilele.util.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/users")
 @Controller
 public class UserLoginController {
 
     private final UserService userService;
+    private final CurrentUser currentUser;
 
-    public UserLoginController(UserService userService) {
+    public UserLoginController(UserService userService, CurrentUser currentUser) {
         this.userService = userService;
+        this.currentUser = currentUser;
     }
 
     @GetMapping("/login")
@@ -48,10 +52,13 @@ public class UserLoginController {
             return "redirect:/";
 
     }
-    @GetMapping("/logout")
-    public String logout() {
+    @PostMapping("/logout")
+    public ModelAndView logout() {
+        if(!currentUser.isLogged()){
+            return new ModelAndView(("redirect:/users/login"));
+        }
         userService.logout();
-        return "index";
+        return new ModelAndView("redirect:/");
     }
 
 

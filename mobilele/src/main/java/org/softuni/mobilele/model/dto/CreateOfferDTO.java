@@ -8,7 +8,7 @@ import org.softuni.mobilele.model.validation.YearNotInTheFuture;
 public record CreateOfferDTO(
         @Positive
         @NotNull
-        Long modelID,
+        Long modelId,
         @Positive
         @NotNull
         Integer price,
