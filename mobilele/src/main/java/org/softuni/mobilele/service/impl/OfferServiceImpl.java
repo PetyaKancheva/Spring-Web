@@ -85,10 +85,22 @@ public class OfferServiceImpl implements OfferService {
         // TODO change to First and Last name of seller
     }
 
-    public OfferDetailsDTO getOffer(UUID uudi) {
-        OfferEntity offerEntity = offerRepository.findByUuid(uudi).orElseThrow();
+    public OfferDetailsDTO getOffer(UUID uuid) {
+        OfferEntity offerEntity = offerRepository.findByUuid(uuid).orElseThrow();
         // TODO fix
         return mapToOfferDetails(offerEntity);
+
+    }
+
+    @Override
+    public boolean update(UUID uuid) {
+        return false;
+    }
+
+    @Override
+    public void delete(UUID uuid) {
+        OfferEntity offerEntity =offerRepository.findByUuid(uuid).orElseThrow();
+        offerRepository.delete(offerEntity);
 
     }
 

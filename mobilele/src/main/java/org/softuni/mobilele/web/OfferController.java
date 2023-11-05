@@ -73,24 +73,38 @@ public class OfferController {
 
         UUID uuid = offerService.addOffer(createOfferDTO);
         boolean isAdded = uuid != null;
-                String view = isAdded ? "redirect:/"+ uuid : "redirect:/offers/add";
+                String view = isAdded ? "redirect:/": "redirect:/offers/add";
         return new ModelAndView(view);
     }
 
-    //GET DETAILS PAGE````
-    @GetMapping("/{id}")
+
+    @GetMapping("/{uuid}")
     public ModelAndView details(@PathVariable("uuid") UUID uuid) {
 
         if (!currentUser.isLogged()) {
             return new ModelAndView("redirect:/users/login");
         }
-        //trow error
-        //Find
         OfferDetailsDTO detailsDTO=offerService.getOffer(uuid);
-        // model?
-
-
         return new ModelAndView( "details",  "offer",  detailsDTO);
+    }
+
+    @GetMapping("/update/{uuid}")
+    public ModelAndView update(@PathVariable ("uuid") UUID uuid){
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
+
+        return new ModelAndView("redirect:/");
+
+    }
+    @GetMapping("/delete/{uuid}")
+    private ModelAndView delete(@PathVariable("uuid") UUID uuid){
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
+            offerService.delete(uuid);
+        return new ModelAndView("redirect:/offers");
+
     }
 
 
