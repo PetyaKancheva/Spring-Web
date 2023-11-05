@@ -24,7 +24,8 @@
                     <div class="card-text"><span>• Price - </span><th:block th:text="*{price}"> </th:block> </div>
                     <div class="card-text"><span>• Engine type - </span><th:block th:text="*{engine}"> </th:block> </div>
                     <div class="card-text"><span>• Transmission type - </span><th:block th:text="*{transmission}"> </th:block> </div>
-                    <div class="card-text"><span>• Offer created - </span><th:block th:text="*{created}"> </th:block> </div>
+<!--                    <div class="card-text"><span>• Offer created - </span><th:block th:text="*{created}"> </th:block> </div>-->
+                    <div class="card-text"><span>• Offer created - </span><th:block th:text="${#dates.format('1999-10-31','yyyy-MM-dd')}"> </th:block> </div>
                     <div class="card-text"><span>• Offer modified - </span><th:block th:text="*{modified}"> </th:block> </div>
                     <div class="card-text"><span>• Seller - </span><th:block th:text="*{seller}"> </th:block> </div>
                 </li>

@@ -106,6 +106,7 @@ public class OfferController {
         return new ModelAndView("redirect:/offers");
 
     }
+//    only the same person can update/delete the offer?
 
 
 }
