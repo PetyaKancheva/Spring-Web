@@ -22,6 +22,7 @@ public class OffersController {
     private String allOffers(Model model, @PageableDefault(  sort = "uuid", size = 3) Pageable pageable){
 
        var allOffersPage = offerService.getAllOffers(pageable);
+       model.addAttribute("offers",allOffersPage);
 
 
             return "offers";

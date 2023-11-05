@@ -90,7 +90,7 @@ public class OfferController {
         // model?
 
 
-        return new ModelAndView(String "details", String "offer", Object detailsDTO);
+        return new ModelAndView( "details",  "offer",  detailsDTO);
     }
 
 
