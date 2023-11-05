@@ -1,5 +1,7 @@
 package org.softuni.mobilele.model.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 import org.softuni.mobilele.model.enums.EngineEnum;
 import org.softuni.mobilele.model.enums.TransmissionEnum;
@@ -12,12 +14,14 @@ public record CreateOfferDTO(
         @Positive
         @NotNull
         Integer price,
-        @NotEmpty
+
+        @Enumerated(EnumType.STRING)
         EngineEnum engine,
-        @NotEmpty
+        @Enumerated(EnumType.STRING)
+
         TransmissionEnum transmission,
 
-        @NotNull(message="Year must be provided.")
+        @NotNull(message = "Year must be provided.")
         @Min(1945)
         @YearNotInTheFuture
         Integer year,

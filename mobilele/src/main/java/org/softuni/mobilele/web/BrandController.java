@@ -10,17 +10,17 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/brands")
 public class BrandController {
-    private BrandService brandService;
+    private final BrandService brandService;
 
     public BrandController(BrandService brandService) {
         this.brandService = brandService;
     }
 
     @GetMapping("/all")
-    private ModelAndView allBrands(Model model){
+    private String allBrands(Model model){
         model.addAttribute("brands", brandService.getAllBrands());
 
 
-        return new ModelAndView("brands");
+        return "brands";
     }
 }

@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -50,6 +49,8 @@ public class OfferServiceImpl implements OfferService {
     }
 
 
+
+    @Override
     public Page<OfferDetailsDTO> getAllOffers(Pageable pageable) {
         return offerRepository.findAll(pageable).map(this::mapToOfferDetails);
     }
@@ -83,4 +84,12 @@ public class OfferServiceImpl implements OfferService {
                 offerEntity.getSeller().getFirstName());
         // TODO change to First and Last name of seller
     }
+
+    public OfferDetailsDTO getOffer(UUID uudi) {
+        OfferEntity offerEntity = offerRepository.findByUuid(uudi).orElseThrow();
+        // TODO fix
+        return mapToOfferDetails(offerEntity);
+
+    }
+
 }

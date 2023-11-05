@@ -3,6 +3,7 @@ package org.softuni.mobilele.web;
 import jakarta.validation.Valid;
 import org.softuni.mobilele.model.dto.BrandDTO;
 import org.softuni.mobilele.model.dto.CreateOfferDTO;
+import org.softuni.mobilele.model.dto.OfferDetailsDTO;
 import org.softuni.mobilele.model.enums.EngineEnum;
 import org.softuni.mobilele.model.enums.TransmissionEnum;
 import org.softuni.mobilele.service.BrandService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.print.attribute.Attribute;
 import javax.swing.*;
 import java.util.List;
 import java.util.UUID;
@@ -70,16 +72,26 @@ public class OfferController {
         }
 
         UUID uuid = offerService.addOffer(createOfferDTO);
-        boolean isAdded = !uuid.equals(null);
-                String view = isAdded ? "details/"+ uuid : "add";
+        boolean isAdded = uuid != null;
+                String view = isAdded ? "redirect:/"+ uuid : "redirect:/offers/add";
         return new ModelAndView(view);
     }
 
     //GET DETAILS PAGE````
     @GetMapping("/{id}")
     public ModelAndView details(@PathVariable("uuid") UUID uuid) {
+
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
         //trow error
         //Find
-        return new ModelAndView("details");
+        OfferDetailsDTO detailsDTO=offerService.getOffer(uuid);
+        // model?
+
+
+        return new ModelAndView(String "details", String "offer", Object detailsDTO);
     }
+
+
 }
