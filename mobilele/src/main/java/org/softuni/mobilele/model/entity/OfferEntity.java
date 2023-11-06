@@ -1,14 +1,21 @@
 package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.softuni.mobilele.model.enums.EngineEnum;
 import org.softuni.mobilele.model.enums.TransmissionEnum;
-
+import java.sql.Types;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "offers")
 public class OfferEntity extends BaseEntity {
+    @NotNull
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID uuid;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(EnumType.STRING)
@@ -18,7 +25,7 @@ public class OfferEntity extends BaseEntity {
     @Column
     private Integer mileage;
     @Column
-    private Double price;
+    private Integer price;
     @Enumerated(EnumType.STRING)
     private TransmissionEnum transmission;
     @Column
@@ -75,11 +82,11 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public OfferEntity setPrice(Double price) {
+    public OfferEntity setPrice(Integer price) {
         this.price = price;
         return this;
     }
@@ -90,6 +97,15 @@ public class OfferEntity extends BaseEntity {
 
     public OfferEntity setTransmission(TransmissionEnum transmission) {
         this.transmission = transmission;
+        return this;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public OfferEntity setUuid(UUID uuid) {
+        this.uuid = uuid;
         return this;
     }
 

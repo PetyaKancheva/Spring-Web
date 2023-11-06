@@ -24,22 +24,6 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public List<BrandDTO> getAllBrands() {
 
-//        List<BrandDTO> bandDTOList = new ArrayList<>();
-//        for (BrandEntity b : brandRepository.getAllBrands()) {
-//            BrandDTO brandDTO = new BrandDTO();
-//            brandDTO.setName(b.getName());
-//            List<ModelDTO> models = new ArrayList<>();
-//            for (ModelEntity model : b.getModels()) {
-//                ModelDTO modelDTO = new ModelDTO();
-//                modelDTO.setId(model.getId());
-//                modelDTO.setName(model.getName());
-//                models.add(modelDTO);
-//
-//            }
-//            brandDTO.setModels(models);
-//            bandDTOList.add(brandDTO);
-//        }
-
         return brandRepository.getAllBrands().stream()
                 .map(b -> new BrandDTO(b.getName(),
                  b.getModels().stream()
