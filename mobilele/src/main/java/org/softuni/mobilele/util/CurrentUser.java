@@ -11,10 +11,10 @@ public class CurrentUser {
     private String lastName;
     private boolean isLogged;
     private boolean isAdmin;
+    private String email;
 
-    public String getFirstName() {
-        return firstName;
-    }
+
+
 
     public CurrentUser(){
 
@@ -22,6 +22,19 @@ public class CurrentUser {
 
     public CurrentUser setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public CurrentUser setEmail(String email) {
+        this.email = email;
         return this;
     }
 

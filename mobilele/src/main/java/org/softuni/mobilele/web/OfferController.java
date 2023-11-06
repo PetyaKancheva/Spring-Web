@@ -1,23 +1,37 @@
 package org.softuni.mobilele.web;
 
+import jakarta.validation.Valid;
+import org.softuni.mobilele.model.dto.BrandDTO;
 import org.softuni.mobilele.model.dto.CreateOfferDTO;
+import org.softuni.mobilele.model.dto.OfferDetailsDTO;
 import org.softuni.mobilele.model.enums.EngineEnum;
 import org.softuni.mobilele.model.enums.TransmissionEnum;
+import org.softuni.mobilele.service.BrandService;
 import org.softuni.mobilele.service.OfferService;
+import org.softuni.mobilele.util.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.print.attribute.Attribute;
+import javax.swing.*;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/offer")
 public class OfferController {
+    private final CurrentUser currentUser;
     private final OfferService offerService;
+    private final BrandService brandService;
 
-    public OfferController(OfferService offerService) {
+    public OfferController(CurrentUser currentUser, OfferService offerService, BrandService brandService) {
+        this.currentUser = currentUser;
         this.offerService = offerService;
+        this.brandService = brandService;
     }
 
     @ModelAttribute("engines")
@@ -31,9 +45,14 @@ public class OfferController {
         return TransmissionEnum.values();
     }
 
+    @ModelAttribute("brands")
+    public List<BrandDTO> allBrands() {
+        return brandService.getAllBrands();
+    }
+
     @GetMapping("/add")
     private String addOffer(Model model) {
-        if(!model.containsAttribute("createOfferDTO")){
+        if (!model.containsAttribute("createOfferDTO")) {
             model.addAttribute("createOfferDTO", CreateOfferDTO.empty());
         }
 
@@ -41,12 +60,53 @@ public class OfferController {
     }
 
     @PostMapping("/add")
-    private String addOffer(CreateOfferDTO createOfferDTO) {
-        offerService.addOffer(createOfferDTO);
+    private ModelAndView addOffer(@Valid CreateOfferDTO createOfferDTO, BindingResult bindingResult, RedirectAttributes rAtts) {
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
+        if (bindingResult.hasErrors()) {
+            rAtts.addFlashAttribute("createOfferDTO", createOfferDTO);
+            rAtts.addFlashAttribute("org.springframework.validation.BindingResult.createOfferDTO", bindingResult);
 
-        return "offer-add";
+            return new ModelAndView("redirect:/offer/add");
+        }
+
+        UUID uuid = offerService.addOffer(createOfferDTO);
+        boolean isAdded = uuid != null;
+                String view = isAdded ? "redirect:/": "redirect:/offers/add";
+        return new ModelAndView(view);
     }
 
-    //GET DETAILS PAGE````
+
+    @GetMapping("/{uuid}")
+    public ModelAndView details(@PathVariable("uuid") UUID uuid) {
+
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
+        OfferDetailsDTO detailsDTO=offerService.getOffer(uuid);
+        return new ModelAndView( "details",  "offer",  detailsDTO);
+    }
+
+    @GetMapping("/update/{uuid}")
+    public ModelAndView update(@PathVariable ("uuid") UUID uuid){
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
+
+        return new ModelAndView("redirect:/");
+
+    }
+    @GetMapping("/delete/{uuid}")
+    private ModelAndView delete(@PathVariable("uuid") UUID uuid){
+        if (!currentUser.isLogged()) {
+            return new ModelAndView("redirect:/users/login");
+        }
+            offerService.delete(uuid);
+        return new ModelAndView("redirect:/offers");
+
+    }
+//    only the same person can update/delete the offer?
+
 
 }

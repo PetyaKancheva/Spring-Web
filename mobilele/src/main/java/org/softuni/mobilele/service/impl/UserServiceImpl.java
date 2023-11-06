@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(map(userRegistrationDTO));
         currentUser.setLogged(true)
                     .setFirstName(userRegistrationDTO.firstName())
-                    .setLastName(userRegistrationDTO.lastName());
+                    .setLastName(userRegistrationDTO.lastName())
+                    .setEmail(userRegistrationDTO.email());
 
     }
 
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
                 currentUser.setFirstName(userEntity.getFirstName())
                         .setLastName(userEntity.getLastName())
+                        .setEmail(userEntity.getEmail())
                         .setLogged(true)
                         .setAdmin(userEntity.getRole().equals(RoleEnum.ADMIN));
             }else{

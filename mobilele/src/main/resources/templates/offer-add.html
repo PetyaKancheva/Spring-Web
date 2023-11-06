@@ -12,21 +12,33 @@
 <div class="container">
     <h2 class="text-center text-white">Upload Offer</h2>
     <form th:method="post"
-          th:action="@{/offers/add}"
+          th:action="@{/offer/add}"
           th:object="${createOfferDTO}"
 
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <!--        Model        -->
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="model">Model</label>
-                <select id="model" class="form-control">
+                <label class="text-center text-white font-weight-bold" for="modelId">Model</label>
+                <select id="modelId"
+                        th:name="modelId"
+                        th:errorclass="is-invalid"
+                        class="form-control">
                     <option value="">- Select a model -</option>
-                    <optgroup label="Brand name">
-                        <option>Model</option>
+                    <optgroup
+                            th:each="brand:${brands}"
+                            th:label="${brand.name}">
+                        <option
+
+                                th:each="model : ${brand.models}"
+                                th:text="${model.name}"
+                                th:value="${model.id}"
+                                th:selected="*{modelId} " >
+                            Model
+                        </option>
                     </optgroup>
                 </select>
-                <p class="errors alert alert-danger">
+                <p class="invalid-feedback errors alert alert-danger">
                     Vechicle model is required.
                 </p>
             </div>
@@ -59,7 +71,7 @@
                     <option th:each="e:${engines}"
                             th:text="${e}"
                             th:value="${e}"
-                            th:selected = "${e} == *{engine}">
+                            th:selected="${e} == *{engine}">
                     </option>
                 </select>
                 <p class="invalid-feedback errors alert alert-danger">
@@ -77,9 +89,9 @@
                         class="form-control">
                     <option value="">- Select transmission type -</option>
                     <option th:each="t:${transmissions}"
-                            th:text ="${t}"
-                            th:value ="${t}"
-                            th:selected = "${t} == *{transmission}"
+                            th:text="${t}"
+                            th:value="${t}"
+                            th:selected="${t} == *{transmission}"
                     >
                     </option>
                 </select>
@@ -94,9 +106,9 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="year" class="text-white font-weight-bold">Year</label>
                 <input id="year"
-                       th:field ="*{year}"
+                       th:field="*{year}"
                        th:errorclass="is invalid"
-                       type="number" min="1900" max="2099" step="1" class="form-control"
+                       type="number" step="1" class="form-control"
                        placeholder="Manufacturing year"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Manufacturing year is required.
@@ -109,7 +121,7 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="mileage" class="text-white font-weight-bold">Mileage</label>
                 <input id="mileage"
-                       th:field = "*{mileage}"
+                       th:field="*{mileage}"
                        th:errorclass="is-invalid"
                        type="number"
                        step="1000"

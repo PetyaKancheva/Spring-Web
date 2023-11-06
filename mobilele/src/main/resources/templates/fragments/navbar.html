@@ -33,7 +33,7 @@
                         Admin
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/">Action</a>
+                        <a class="dropdown-item" th:href="@{/user/update}">Update User Role</a>
                         <a class="dropdown-item" href="/">Another action</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/">Something else here</a>
@@ -46,7 +46,11 @@
                     <div class="form-inline my-2 my-lg-0 border px-3">
                         <div class="logged-user"
                              th:text="|Welcome, ${@currentUser.firstName}|" ></div>
-                        <a class="nav-link" th:href="@{/users/logout}">Logout</a>
+                        <form th:method = "post" th:action = "@{/users/logout}">
+                            <input type="submit" class="btn btn-dark btn-sm" value="Logout"/>
+
+                        </form>
+
                     </div>
                 </li>
                 <!--     EO: Logout           -->
