@@ -53,8 +53,7 @@ public class UserServiceImpl implements UserService {
                 currentUser.setFirstName(userEntity.getFirstName())
                         .setLastName(userEntity.getLastName())
                         .setEmail(userEntity.getEmail())
-                        .setLogged(true)
-                        .setAdmin(userEntity.getRole().equals(RoleEnum.ADMIN));
+                        .setLogged(true);
             }else{
                 currentUser.logout();
             }
@@ -77,7 +76,7 @@ public class UserServiceImpl implements UserService {
                 .setEmail(userRegistrationDTO.email())
                 .setPassword(passwordEncoder.encode(userRegistrationDTO.password()))
                 .setCreated(LocalDateTime.now())
-                .setRole(RoleEnum.USER);
+               ;
     }
 
 

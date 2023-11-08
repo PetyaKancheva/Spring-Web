@@ -1,9 +1,13 @@
 package org.softuni.mobilele.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 import org.softuni.mobilele.model.enums.RoleEnum;
+import org.springframework.data.repository.cdi.Eager;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,24 +24,29 @@ public class UserEntity extends BaseEntity {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @Enumerated(EnumType.STRING)
-    private RoleEnum role;
-    @Column(name="image_url",columnDefinition="TEXT")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<UserRoleEntity> roles;
+    @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageUrl;
     @Column
     private LocalDateTime created;
     @Column
     private LocalDateTime modified;
-    public UserEntity(){
 
+    public UserEntity() {
+        this.roles = new ArrayList<>();
     }
 
-    public RoleEnum getRole() {
-        return role;
+
+    public List<UserRoleEntity> getRoles() {
+        return roles;
     }
 
-    public UserEntity setRole(RoleEnum role) {
-        this.role = role;
+    public UserEntity setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
         return this;
     }
 
@@ -85,7 +94,6 @@ public class UserEntity extends BaseEntity {
         isActive = active;
         return this;
     }
-
 
 
     public String getImageUrl() {
