@@ -10,6 +10,7 @@ public class LineItem extends BaseEntity {
     @NotNull
     private Integer quantity;
     @OneToOne
+    @JoinColumn(name="id")
     private Product product;
 
     public Integer getQuantity() {
