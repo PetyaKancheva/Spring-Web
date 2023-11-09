@@ -1,0 +1,44 @@
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/bikeshop?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    password: ${MYSQL_PASSWORD}
+    username: ${MYSQL_USER}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+      open-in-view: false
+      properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: never
+  thymeleaf: # Thymeleaf
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
+    resources: # Static resources
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor: TRACE
+        SQL: DEBUG
+      nodeValue: WARN
+    blog: WARN
+server:
+  port: 8080
+
+
++
