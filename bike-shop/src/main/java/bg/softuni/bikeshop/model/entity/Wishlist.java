@@ -1,4 +1,5 @@
 package bg.softuni.bikeshop.model.entity;
 
-public class Brands {
+public class Wishlist {
+    //TODO
 }
