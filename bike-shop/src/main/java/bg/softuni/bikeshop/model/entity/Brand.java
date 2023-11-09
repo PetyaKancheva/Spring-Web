@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="brand")
+@Table(name="brands")
 public class Brand extends BaseEntity{
     @NotEmpty
     private String name;

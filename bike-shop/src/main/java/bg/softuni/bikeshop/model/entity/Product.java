@@ -26,6 +26,39 @@ public class Product extends BaseEntity {
     private List<Category> categories = new ArrayList<>();
 
 
+    public String getName() {
+        return name;
+    }
 
+    public Product setName(String name) {
+        this.name = name;
+        return this;
+    }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Product setPrice(BigDecimal price) {
+        this.price = price;
+        return this;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public Product setBrand(Brand brand) {
+        this.brand = brand;
+        return this;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public Product setCategories(List<Category> categories) {
+        this.categories = categories;
+        return this;
+    }
 }

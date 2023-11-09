@@ -13,7 +13,7 @@ public class OrderEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private UserEntity buyer;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="orders")
+    @OneToMany(mappedBy = "order")
     private List<LineItem> items = new ArrayList<>();
     private Boolean isSent;
     private Boolean isCancelled;
