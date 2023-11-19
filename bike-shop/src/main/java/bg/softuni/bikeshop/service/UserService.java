@@ -4,5 +4,5 @@ import bg.softuni.bikeshop.model.dto.RegisterUserDTO;
 
 public interface UserService {
 
-    boolean register(RegisterUserDTO registerUserDTO);
+    void register(RegisterUserDTO registerUserDTO);
 }

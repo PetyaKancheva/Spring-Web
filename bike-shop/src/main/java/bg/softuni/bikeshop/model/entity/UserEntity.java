@@ -21,6 +21,16 @@ public class UserEntity extends BaseEntity {
     private String password;
     @Column(name="first_name")
     private String firstName;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
     @Column(name="last_name")
     private String LastName;
     @Column
@@ -59,6 +69,15 @@ public class UserEntity extends BaseEntity {
         return LastName;
     }
 
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public UserEntity setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
+        return this;
+    }
+
     public UserEntity setLastName(String lastName) {
         LastName = lastName;
         return this;
@@ -95,8 +114,7 @@ public class UserEntity extends BaseEntity {
         return roles;
     }
 
-    public UserEntity setRoles(List<UserRoleEntity> roles) {
+    public void setRoles(List<UserRoleEntity> roles) {
         this.roles = roles;
-        return this;
     }
 }

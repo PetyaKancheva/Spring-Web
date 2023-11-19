@@ -24,11 +24,12 @@ public class UserController {
     }
     @PostMapping("/register")
     public ModelAndView register(RegisterUserDTO registerUserDTO){
+        userService.register(registerUserDTO);
 
-        boolean successfullyRegistered = userService.register(registerUserDTO);
-        if(!successfullyRegistered){
-            return new ModelAndView("register");
-        }
+//        boolean successfullyRegistered =
+//        if(!successfullyRegistered){
+//            return new ModelAndView("register");
+//        }
 
         return new ModelAndView("/");
     }
