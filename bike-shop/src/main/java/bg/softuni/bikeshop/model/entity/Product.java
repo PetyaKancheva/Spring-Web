@@ -22,7 +22,7 @@ public class Product extends BaseEntity {
     private BigDecimal price;
     @ManyToOne
     private Brand brand;
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany()
     private List<Category> categories = new ArrayList<>();
 
 

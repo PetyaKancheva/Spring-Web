@@ -1,6 +1,8 @@
 package bg.softuni.bikeshop.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.type.YesNoConverter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,11 +13,14 @@ import java.util.List;
 public class OrderEntity extends BaseEntity {
     private LocalDateTime created;
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(nullable = false)
     private UserEntity buyer;
-    @OneToMany(mappedBy = "order")
+    @OneToMany()
+    @JoinColumn(nullable = false)
     private List<LineItem> items = new ArrayList<>();
+    @Convert(converter = YesNoConverter.class)
     private Boolean isSent;
+    @Convert(converter = YesNoConverter.class)
     private Boolean isCancelled;
     private BigDecimal totalPrice;
 

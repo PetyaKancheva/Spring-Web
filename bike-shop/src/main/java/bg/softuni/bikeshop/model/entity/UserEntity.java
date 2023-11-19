@@ -23,7 +23,7 @@ public class UserEntity extends BaseEntity {
     private String firstName;
     @Column(name="last_name")
     private String LastName;
-
+    @Column
     private String address;
     @NotNull
     private LocalDateTime created;
@@ -34,7 +34,7 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "roles_id")
     )
     private List<UserRoleEntity> roles =new ArrayList<>();
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "buyer")
     private List<OrderEntity>orders = new ArrayList<>();
 
     public String getEmail() {
