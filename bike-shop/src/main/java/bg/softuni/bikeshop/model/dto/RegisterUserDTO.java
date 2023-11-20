@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class RegisterUserDTO {
-    //TODO annotations
+    // TODO annotations
     @Email
     private String email;
     @Size(min = 6, max = 15)

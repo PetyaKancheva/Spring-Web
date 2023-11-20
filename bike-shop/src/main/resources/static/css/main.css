@@ -22,8 +22,7 @@ body {
 }
 
 
-
-.container, .container-fluid {
+ .container, .container-fluid {
      padding-top: 90px;
 }
 
@@ -76,4 +75,8 @@ footer {
      color: var(--light);
      text-align: center;
      padding: 1rem;
+}
+
+.nav-link{
+     color: white;
 }
