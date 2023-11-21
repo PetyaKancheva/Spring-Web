@@ -37,6 +37,9 @@ public class OrderEntity extends BaseEntity {
         return buyer;
     }
 
+    public OrderEntity() {
+    }
+
     public OrderEntity setBuyer(UserEntity buyer) {
         this.buyer = buyer;
         return this;

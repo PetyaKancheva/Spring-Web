@@ -20,6 +20,9 @@ public class Category extends BaseEntity{
         return name;
     }
 
+    public Category() {
+    }
+
     public Category setName(String name) {
         this.name = name;
         return this;

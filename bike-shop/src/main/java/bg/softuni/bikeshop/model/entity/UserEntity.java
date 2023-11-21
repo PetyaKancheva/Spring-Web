@@ -5,7 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,22 +23,33 @@ public class UserEntity extends BaseEntity {
     @Column(name="first_name")
     private String firstName;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public UserEntity setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
     @Column(name="last_name")
     private String LastName;
+
     @Column
     private String address;
     @NotNull
-    private LocalDateTime created;
-    private LocalDateTime modified;
+    private LocalDate created;
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public UserEntity setCreated(LocalDate created) {
+        this.created = created;
+        return this;
+    }
+
+    public LocalDate getModified() {
+        return modified;
+    }
+
+    public UserEntity setModified(LocalDate modified) {
+        this.modified = modified;
+        return this;
+    }
+
+    private LocalDate modified;
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -53,6 +65,18 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public UserEntity() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
         return this;
     }
 
@@ -92,23 +116,8 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
 
-    public UserEntity setCreated(LocalDateTime created) {
-        this.created = created;
-        return this;
-    }
 
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public UserEntity setModified(LocalDateTime modified) {
-        this.modified = modified;
-        return this;
-    }
 
     public List<UserRoleEntity> getRoles() {
         return roles;

@@ -25,6 +25,8 @@ public class Product extends BaseEntity {
     @ManyToMany()
     private List<Category> categories = new ArrayList<>();
 
+    public Product() {
+    }
 
     public String getName() {
         return name;

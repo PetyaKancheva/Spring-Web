@@ -16,6 +16,8 @@ public class LineItem extends BaseEntity {
         return quantity;
     }
 
+    public LineItem() {
+    }
 
     public LineItem setQuantity(Integer quantity) {
         this.quantity = quantity;

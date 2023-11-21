@@ -9,7 +9,7 @@ public class RegisterUserDTO {
     // TODO annotations
     @Email
     private String email;
-    @Size(min = 6, max = 15)
+//    @Size(min = 6, max = 15)
     private String password;
     @NotEmpty
     private String firstName;
