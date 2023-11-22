@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
-    private final  UserRepository userRepository;
+    private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
 
     public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleRepository userRoleRepository) {
@@ -26,26 +26,22 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void register(RegisterUserDTO registerUserDTO) {
-        UserEntity newUser=map(registerUserDTO);
-        UserRoleEntity role=new UserRoleEntity();
-        role.setRole(RoleEnum.USER);
-        userRoleRepository.save(role);
-        newUser.getRoles().add(role);
+        UserEntity newUser = map(registerUserDTO);
+        // TODO check better way to hard code USER role
+        newUser.getRoles().add(userRoleRepository.findById((long) 1).orElseThrow());
+        userRepository.save(newUser);
 
-
-            userRepository.save(newUser);
-            //TODO add User ROle
 
     }
 
-    private UserEntity map(RegisterUserDTO registerUserDTO){
-            return new UserEntity()
-                    .setEmail(registerUserDTO.getEmail())
-                    .setFirstName(registerUserDTO.getFirstName())
-                    .setLastName(registerUserDTO.getLastName())
-                    .setAddress(registerUserDTO.getAddress())
-                    .setPassword(passwordEncoder.encode(registerUserDTO.getPassword()))
-                    .setCreated(LocalDate.now());
+    private UserEntity map(RegisterUserDTO registerUserDTO) {
+        return new UserEntity()
+                .setEmail(registerUserDTO.getEmail())
+                .setFirstName(registerUserDTO.getFirstName())
+                .setLastName(registerUserDTO.getLastName())
+                .setAddress(registerUserDTO.getAddress())
+                .setPassword(passwordEncoder.encode(registerUserDTO.getPassword()))
+                .setCreated(LocalDate.now());
     }
 
 }

@@ -36,6 +36,6 @@ public class UserController {
 //            return new ModelAndView("register");
 //        }
 
-        return new ModelAndView("demo");
+        return new ModelAndView("redirect:/");
     }
 }
