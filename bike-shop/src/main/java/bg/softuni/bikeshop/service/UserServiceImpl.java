@@ -1,11 +1,12 @@
 package bg.softuni.bikeshop.service;
 
-import bg.softuni.bikeshop.model.RoleEnum;
+import bg.softuni.bikeshop.model.dto.LoginUserDTO;
 import bg.softuni.bikeshop.model.dto.RegisterUserDTO;
 import bg.softuni.bikeshop.model.entity.UserEntity;
 import bg.softuni.bikeshop.model.entity.UserRoleEntity;
 import bg.softuni.bikeshop.repository.UserRepository;
 import bg.softuni.bikeshop.repository.UserRoleRepository;
+import bg.softuni.bikeshop.util.LoggedUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +17,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final LoggedUser loggedUser;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleRepository userRoleRepository, LoggedUser loggedUser) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.loggedUser = loggedUser;
     }
 
 
@@ -32,6 +35,22 @@ public class UserServiceImpl implements UserService {
         userRepository.save(newUser);
 
 
+    }
+
+    @Override
+    public boolean login(LoginUserDTO loginUserDTO) {
+         UserEntity userByEmail = userRepository.findByEmail(loginUserDTO.getEmail()).orElse(null);
+
+           if(userByEmail!=null){
+                loggedUser.setLogged(true);
+                loggedUser.setFirstName(userByEmail.getFirstName());
+                loggedUser.setLastName(userByEmail.getLastName());
+                // TODO check if Admin
+//                loggedUser.setAdmin(userByEmail.getRoles().contains(UserRoleEntity.g))
+               return true;
+           };
+
+        return false;
     }
 
     private UserEntity map(RegisterUserDTO registerUserDTO) {

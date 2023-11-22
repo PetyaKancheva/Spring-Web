@@ -9,8 +9,20 @@ public class RegisterUserDTO {
     // TODO annotations
     @Email
     private String email;
-//    @Size(min = 6, max = 15)
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public RegisterUserDTO setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        return this;
+    }
+
+    //    @Size(min = 6, max = 15)
     private String password;
+    // TODO check confirmed pass
+    private String confirmPassword;
     @NotEmpty
     private String firstName;
     @NotEmpty

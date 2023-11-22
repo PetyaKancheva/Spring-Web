@@ -21,7 +21,10 @@ body {
      color:white;
 }
 
+.nav-link:hover{
+     color: #71dd8a;
 
+}
  .container, .container-fluid {
      padding-top: 90px;
 }

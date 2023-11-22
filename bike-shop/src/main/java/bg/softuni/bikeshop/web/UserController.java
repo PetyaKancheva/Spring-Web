@@ -1,5 +1,6 @@
 package bg.softuni.bikeshop.web;
 
+import bg.softuni.bikeshop.model.dto.LoginUserDTO;
 import bg.softuni.bikeshop.model.dto.RegisterUserDTO;
 
 import bg.softuni.bikeshop.service.UserService;
@@ -38,4 +39,21 @@ public class UserController {
 
         return new ModelAndView("redirect:/");
     }
+
+    @GetMapping("/login")
+    public ModelAndView login(Model model){
+        if(!model.containsAttribute("loginUserDTO")){
+            model.addAttribute("loginUserDTO",new LoginUserDTO());
+        }
+        return new ModelAndView("login");
+    }
+    @PostMapping("/login")
+    public ModelAndView login(LoginUserDTO loginUserDTO){
+        if(!userService.login(loginUserDTO)){
+            return new ModelAndView("redirect:/login");
+        }
+
+        return new ModelAndView("redirect:/");
+    }
+
 }
