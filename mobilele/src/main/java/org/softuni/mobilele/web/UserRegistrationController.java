@@ -27,7 +27,7 @@ public class UserRegistrationController {
     public ModelAndView register(Model model) {
 
         if (!model.containsAttribute("userRegistrationDTO")) {
-            model.addAttribute("userRegistrationDTO",UserRegistrationDTO.empty());
+                model.addAttribute("userRegistrationDTO",UserRegistrationDTO.empty());
         }
         return new ModelAndView("auth-register");
     }
