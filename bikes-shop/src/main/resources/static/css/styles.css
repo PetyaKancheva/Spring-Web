@@ -1,0 +1,27 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+html {
+    font: 14px/1.5 "Lato", sans-serif;
+}
+.site-nav , .site-footer {
+    background-color: black;
+    color: white;
+}
+body{
+  background-color: red;
+}
+.nav-list {
+    display: flex;
+    list-style: none outside;
+    gap: 2em;
+    align-items: center;
+    padding-right: 2em;
+
+}
+
+
+.site-footer {
+    text-align: center;
+    padding: 2em;
+}
