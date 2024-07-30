@@ -1,0 +1,14 @@
+html {
+    font: 16px 1.5em Arial, Helvetica, sans-serif;
+}
+
+body,
+input,
+button,
+table {
+    font: inherit;
+}
+
+body {
+    margin: 2em;
+}

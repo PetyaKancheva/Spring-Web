@@ -1,26 +1,43 @@
 package bg.softuni.bikes_shop.model.entity;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.apache.catalina.User;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name= "orders")
 public class OrderEntity extends BaseEntity{
-    //TODO check if Item is necessary
-    @Column(name="items")
-    private Map<Long , Integer > items;
-    @Column(name="total")
-   private Long totalSum;
 
-    public Map<Long, Integer> getItems() {
+    @ManyToOne
+    @JoinColumn(name="buyer_id",nullable = false)
+    private UserEntity buyer;
+    @OneToMany(mappedBy = "order")
+    private List<ItemsEntity> items;
+    @Column(name="total")
+    private Long totalSum;
+    @Column(name="date_created")
+    private LocalDate dateCreated;
+    @Column(name="status")
+    private String status;
+
+    public UserEntity getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(UserEntity buyer) {
+        this.buyer = buyer;
+    }
+
+    public List<ItemsEntity> getItems() {
         return items;
     }
 
-    public void setItems(Map<Long, Integer> items) {
+    public void setItems(List<ItemsEntity> items) {
         this.items = items;
     }
 
@@ -30,5 +47,21 @@ public class OrderEntity extends BaseEntity{
 
     public void setTotalSum(Long totalSum) {
         this.totalSum = totalSum;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

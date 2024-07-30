@@ -18,14 +18,12 @@ public class UserEntity extends BaseEntity{
     private String password;
     @Column(name="eMail")
     private String eMail;
-    @ManyToOne
+    @OneToMany(mappedBy = "buyer")
     private Set<OrderEntity> orders;
     @Column(name="is_logged")
-   private Boolean isLoggedIn;
+   private Boolean isLogged;
     @ManyToMany
-   @Enumerated
-   @Column(name="roles")
-   private Set<UserRoleEnum>roles;
+   private Set<UserRoleEntity>roles;
 
     public String getFirstName() {
         return firstName;
@@ -76,18 +74,12 @@ public class UserEntity extends BaseEntity{
     }
 
     public Boolean getLoggedIn() {
-        return isLoggedIn;
+        return isLogged;
     }
 
     public void setLoggedIn(Boolean loggedIn) {
-        isLoggedIn = loggedIn;
+        isLogged = loggedIn;
     }
 
-    public Set<UserRoleEnum> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<UserRoleEnum> roles) {
-        this.roles = roles;
-    }
 }
