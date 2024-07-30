@@ -6,8 +6,8 @@ import org.apache.catalina.User;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+
 
 @Entity
 @Table(name= "orders")
@@ -17,7 +17,7 @@ public class OrderEntity extends BaseEntity{
     @JoinColumn(name="buyer_id",nullable = false)
     private UserEntity buyer;
     @OneToMany(mappedBy = "order")
-    private List<ItemsEntity> items;
+    private Set<ItemsEntity> items;
     @Column(name="total")
     private Long totalSum;
     @Column(name="date_created")
@@ -33,11 +33,12 @@ public class OrderEntity extends BaseEntity{
         this.buyer = buyer;
     }
 
-    public List<ItemsEntity> getItems() {
+
+    public Set<ItemsEntity> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemsEntity> items) {
+    public void setItems(Set<ItemsEntity> items) {
         this.items = items;
     }
 

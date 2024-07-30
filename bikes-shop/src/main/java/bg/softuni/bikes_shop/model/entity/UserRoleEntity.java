@@ -11,4 +11,5 @@ import jakarta.persistence.Table;
 public class UserRoleEntity extends BaseEntity {
         @Enumerated(EnumType.STRING)
         private UserRoleEnum name;
+
 }

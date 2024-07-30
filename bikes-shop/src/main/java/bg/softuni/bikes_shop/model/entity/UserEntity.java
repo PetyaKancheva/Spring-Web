@@ -22,8 +22,12 @@ public class UserEntity extends BaseEntity{
     private Set<OrderEntity> orders;
     @Column(name="is_logged")
    private Boolean isLogged;
-    @ManyToMany
-   private Set<UserRoleEntity>roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<UserRoleEntity>roles;
 
     public String getFirstName() {
         return firstName;
