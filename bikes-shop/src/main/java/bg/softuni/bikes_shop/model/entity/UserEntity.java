@@ -3,6 +3,7 @@ package bg.softuni.bikes_shop.model.entity;
 import jakarta.persistence.*;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,61 +31,79 @@ public class UserEntity extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<UserRoleEntity>roles;
 
+    public UserEntity() {
+        this.roles= new HashSet<>();
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public UserEntity setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public UserEntity setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getAddress() {
         return Address;
     }
 
-    public void setAddress(String address) {
+    public UserEntity setAddress(String address) {
         Address = address;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public UserEntity setPassword(String password) {
         this.password = password;
+        return this;
     }
 
-    public String geteMail() {
+    public String getEmail() {
         return eMail;
     }
 
-    public void seteMail(String eMail) {
+    public UserEntity setEmail(String eMail) {
         this.eMail = eMail;
+        return this;
     }
 
     public Set<OrderEntity> getOrders() {
         return orders;
     }
 
-    public void setOrders(Set<OrderEntity> orders) {
+    public UserEntity setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
+        return this;
     }
 
-    public Boolean getLoggedIn() {
+    public Boolean getLogged() {
         return isLogged;
     }
 
-    public void setLoggedIn(Boolean loggedIn) {
-        isLogged = loggedIn;
+    public UserEntity setLogged(Boolean logged) {
+        isLogged = logged;
+        return this;
     }
 
+    public Set<UserRoleEntity> getRoles() {
+        return roles;
+    }
 
+    public UserEntity setRoles(Set<UserRoleEntity> roles) {
+        this.roles = roles;
+        return this;
+    }
 }
