@@ -9,14 +9,14 @@ public record UserRegisterDTO(
         @Email
         String email,
         @NotEmpty(message ="Cannot be null.")
-        @Size(min = 2, message= "Must be at least 2 characters.")
+        @Size(min = 3, message= "Must be at least 3 characters.")
         String firstName,
         @NotEmpty(message ="Cannot be null.")
-        @Size(min = 2, message= "Must be at least 2 characters.")
+        @Size(min = 3, message= "Must be at least 3 characters.")
         String lastName,
        // @UniqueUserEmail TODO
         @NotEmpty(message ="Cannot be null.")
-        @Size(min = 2, message= "Must be at least 2 characters.")
+        @Size(min = 3, message= "Must be at least 3 characters.")
         String password,
         @NotEmpty(message ="Cannot be empty.")
         String confirmPassword)
