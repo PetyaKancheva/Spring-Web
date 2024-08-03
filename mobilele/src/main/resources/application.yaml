@@ -2,8 +2,8 @@ spring:
   datasource:
       driverClassName: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/mobilele?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
-      password: ${MYSQL_PASSWORD:12345}
-      username: ${MYSQL_USER:root}
+      password: ${MYSQL_PASSWORD:}
+      username: ${MYSQL_USER:}
   jpa:
    database-platform: org.hibernate.dialect.MySQL8Dialect
    defer-datasource-initialization: true

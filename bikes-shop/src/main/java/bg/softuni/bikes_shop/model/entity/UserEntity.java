@@ -9,16 +9,15 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 public class UserEntity extends BaseEntity{
-    @Column(name="first_name")
-
+    @Column(name="first_name", nullable = false)
     private String firstName;
-    @Column(name="last_name")
+    @Column(name="last_name", nullable = false)
     private String lastName;
-    @Column(name="address")
+    @Column(name="address", nullable = false)
     private String Address;
-    @Column(name="password")
+    @Column(name="password", nullable = false)
     private String password;
-    @Column(name="eMail")
+    @Column(name="eMail", nullable = false)
     private String eMail;
     @OneToMany(mappedBy = "buyer")
     private Set<OrderEntity> orders;

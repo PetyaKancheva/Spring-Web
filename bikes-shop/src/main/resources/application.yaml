@@ -19,6 +19,7 @@ spring:
     init:
       mode: always
 
+
   thymeleaf: # Thymeleaf
     cache: false
     mode: HTML

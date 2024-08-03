@@ -20,7 +20,7 @@ public class OrderEntity extends BaseEntity{
     private Set<ItemsEntity> items;
     @Column(name="total")
     private Long totalSum;
-    @Column(name="date_created")
+    @Column(name="date_created", nullable = false)
     private LocalDate dateCreated;
     @Column(name="status")
     private String status;
