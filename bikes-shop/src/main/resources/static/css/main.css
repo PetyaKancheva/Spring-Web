@@ -14,7 +14,7 @@
 }
 
 .container, .container-fluid {
-     padding-top: 90px;
+     padding-top: 20px;
 }
 
 .bg-text {
@@ -46,9 +46,12 @@ td, th {
 }
 
 form.main-form {
-     background-image: linear-gradient(to bottom right, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8));
-     padding:10px 30px;
-     border-radius: 20px;
+    /*border:solid 1px black; */
+    padding:10px 30px;
+
+}
+form-group{
+text-align:center;
 }
 
 .field-error {
@@ -59,13 +62,14 @@ form.main-form {
      color: white;
 }
 
+
 /* Footer */
 footer {
-    /*  margin-top: 2rem; */
+   margin-top: 2rem;
      /*background: var(--dark);*/
      color: var(--light);
      text-align: center;
-     padding: 1rem;
+
 }
 
 */
