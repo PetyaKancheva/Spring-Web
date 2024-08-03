@@ -1,16 +1,16 @@
 
-/* body {
+ /* body {
      background-image: url('/images/1.jpg');
      background-position: center center;
      background-repeat: no-repeat;
      background-attachment: fixed;
      background-size: cover;
      background-color: #464646;
- }
+ } */
 
 .navbar .logo {
      max-height: 50px;
-     padding-right: 100px;
+
 }
 
 .container, .container-fluid {
@@ -61,7 +61,7 @@ form.main-form {
 
 /* Footer */
 footer {
-     margin-top: 2rem;
+    /*  margin-top: 2rem; */
      /*background: var(--dark);*/
      color: var(--light);
      text-align: center;
