@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,22 +29,17 @@ public class UserServiceImpl implements UserService {
     public void register(UserRegisterDTO userRegisterDTO) {
 
         userRepository.save(map(userRegisterDTO));
-
-//        currentUser.setLogged(true)
-//                .setFirstName(userRegistrationDTO.firstName())
-//                .setLastName(userRegistrationDTO.lastName())
-//                .setEmail(userRegistrationDTO.email());
-
     }
 
     private UserEntity map(UserRegisterDTO userRegisterDTO ) {
         UserEntity newUser = new UserEntity();
-        newUser.setLogged(true);
+        newUser.setLogged(false);
         newUser.setFirstName(userRegisterDTO.firstName());
         newUser.setLastName(userRegisterDTO.lastName());
         newUser.setEmail(userRegisterDTO.email());
-        newUser .setRoles(Set.of(userRoleService.getUserRoleByName("USER")));
-        newUser  .setPassword(passwordEncoder.encode(userRegisterDTO.password()));
+        newUser.setAddress(userRegisterDTO.address());
+        newUser.setRoles(new HashSet<>(Arrays.asList(userRoleService.getUserRoleByName("USER"))));
+        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.password()));
 
         return  newUser;
 

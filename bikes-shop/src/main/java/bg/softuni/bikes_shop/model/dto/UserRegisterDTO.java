@@ -14,6 +14,8 @@ public record UserRegisterDTO(
         @NotEmpty(message ="Cannot be null.")
         @Size(min = 3, message= "Must be at least 3 characters.")
         String lastName,
+        @Size(min = 4, message= "Must be at least 4 characters.")
+        String address,
        // @UniqueUserEmail TODO
         @NotEmpty(message ="Cannot be null.")
         @Size(min = 3, message= "Must be at least 3 characters.")
@@ -22,7 +24,7 @@ public record UserRegisterDTO(
         String confirmPassword)
             {
     public static UserRegisterDTO empty() {
-        return new UserRegisterDTO(null, null, null, null, null);
+        return new UserRegisterDTO(null, null, null, null, null,null);
     }
 
 

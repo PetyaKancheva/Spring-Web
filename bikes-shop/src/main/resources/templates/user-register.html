@@ -11,7 +11,7 @@
      <a  class="btn btn-block btn-dark" th:href="@{/about}">Log in</a>
     </div>
 
-    <h4 class="text-center text-dark pt-5">I am a new Customer</h4>
+    <h4 class="text-center text-dark pt-5 ">I am a new Customer</h4>
 
     <form
             th:action="@{/register}"
@@ -19,7 +19,7 @@
             th:object ="${userRegisterDTO}"
             class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center">
 
-            <div class="form-group  ">
+            <div class="form-group pt-3 border-top ">
                 <input id="firstName"
                        th:name="firstName"
                        th:errorclass="is-invalid "
@@ -79,7 +79,19 @@
 
 
             <p class="card-text"><small class="text-muted text-">* this is a mandatory field</small></p>
+        <h4 class="text-center text-dark ">Your Address</h4>
+
+        <div class="form-group pt-3 border-top">
+            <input id="address"
+                   th:name="address"
+                   th:errorclass="is-invalid"
+                   type="text"
+                   class="form-control"
+                   placeholder="Enter your address"/>
+            <p th:if="${#fields.hasErrors('address')}"  th:errors="*{address}" class="invalid-feedback errors alert alert-danger" >            </p>
+        </div>
             <div class="button-holder d-flex">
+
                 <input type="submit" class="btn btn-danger btn-lg  btn-block" value="Register"/>
 
             </div>
