@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -30,17 +29,17 @@ public class UserLoginController {
 
     }
     @PostMapping("/login")
-    public String register(@Valid UserRegisterDTO userRegisterDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
+    public String login(@Valid UserLoginDTO userLoginDTO  , BindingResult bindingResult, RedirectAttributes rAtt) {
 
         if(bindingResult.hasErrors()){
-            rAtt.addFlashAttribute("userRegisterDTO",userRegisterDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
-            return "redirect:/register";
+            rAtt.addFlashAttribute("userLoginDTO",userLoginDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userLoginDTO", bindingResult);
+            return "redirect:/login";
         }
 
-        //TODO: Registration email with activation link
-        userService.register(userRegisterDTO);
-        return "welcome-register";
+
+        userService.login(userLoginDTO);
+        return "redirect:/";
     }
 
 

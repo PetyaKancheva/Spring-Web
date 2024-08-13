@@ -68,6 +68,9 @@ color:white;
 .contacts p{
 margin:0;
 }
+.navlist li{
+padding:2em
+}
 .contacts h6{
 border-bottom: solid 1px darkgrey;
 margin-bottom:1em;

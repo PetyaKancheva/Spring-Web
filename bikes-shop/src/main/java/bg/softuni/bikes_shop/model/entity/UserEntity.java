@@ -18,7 +18,7 @@ public class UserEntity extends BaseEntity{
     @Column(name="password", nullable = false)
     private String password;
     @Column(name="eMail", nullable = false)
-    private String eMail;
+    private String email;
     @OneToMany(mappedBy = "buyer")
     private Set<OrderEntity> orders;
     @Column(name="is_logged")
@@ -71,11 +71,11 @@ public class UserEntity extends BaseEntity{
     }
 
     public String getEmail() {
-        return eMail;
+        return email;
     }
 
     public UserEntity setEmail(String eMail) {
-        this.eMail = eMail;
+        this.email = eMail;
         return this;
     }
 

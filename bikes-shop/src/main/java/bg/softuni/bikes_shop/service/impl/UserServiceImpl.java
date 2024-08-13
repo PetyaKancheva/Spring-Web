@@ -1,5 +1,6 @@
 package bg.softuni.bikes_shop.service.impl;
 
+import bg.softuni.bikes_shop.model.dto.UserLoginDTO;
 import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.repository.UserRepository;
@@ -15,6 +16,21 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
+    @Override
+    public boolean login(UserLoginDTO userLoginDTO) {
+        String email = userLoginDTO.email();
+        UserEntity user = userRepository.findUserByEmail(email);
+        if (user != null
+                && passwordEncoder.matches(userLoginDTO.password(), user.getPassword())) {
+//            currentUser.login(email);
+            return true;
+        }
+
+        return false;
+    }
+
+    
+
     private final UserRepository userRepository;
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
