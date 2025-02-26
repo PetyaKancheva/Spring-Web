@@ -7,7 +7,15 @@
      background-size: cover;
      background-color: #464646;
  } */
+.page-wrap{
+    background: none transparent;
+    transition: left 400ms cubic-bezier(.16, .04, .14, 1);
+    position: relative;
+    left: 0;
+    min-width: 20rem;
 
+
+}
 .navbar .logo {
      max-height: 50px;
 
