@@ -19,3 +19,4 @@ VALUES
     (3, 'CAR', 2, 'Focus','1998','2199','https://en.wikipedia.org/wiki/Ford_Focus#/media/File:2018_Ford_Focus_ST-Line_X_1.0.jpg'),
     (4, 'CAR', 2, 'Fiesta','1976','2023','https://en.wikipedia.org/wiki/Ford_Fiesta#/media/File:Ford_Fiesta_ST-Line_(VII,_Facelift)_%E2%80%93_f_30012023.jpg');
 
+
