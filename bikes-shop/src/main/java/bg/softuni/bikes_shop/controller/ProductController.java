@@ -26,7 +26,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/product/{id}")
     public String singleProduct(@PathVariable("id") String id, Model model) {
 
 //        if (!currentUser.isLogged()) {
@@ -37,7 +37,7 @@ public class ProductController {
                .orElseThrow(()->new ProductNotFoundException("Product with id "+id +" not found!"));
 
             model.addAttribute("singleProduct",singleProductDTO);
-            return "product";
+        return "product";
     }
     //get all Categories
 

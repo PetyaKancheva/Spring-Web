@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<div>
+    <div class="container ">
+        <form
+                th:action="@{/product/add}"
+                th:method="POST"
+                th:object="${productAddDTO}"
+                class="main-form col-md-6 d-flex flex-column ">
+            <div class="form-group pt-3 border-bottom ">
+                <input id="name"
+                       th:name="name"
+                       th:errorclass="is-invalid "
+                       type="text"
+                       th:field="*{name}"
+                       class="form-control"
+                       placeholder="Product name*"/>
+                <span>*Enter product short name eg. Trek Domane.</span>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                   class="invalid-feedback errors alert alert-danger"></p>
+
+            </div>
+            <div class="form-group pt-3 border-bottom ">
+                <input id="description"
+                       th:name="description"
+                       th:errorclass="is-invalid "
+                       type="text"
+                       th:field="*{description}"
+                       class="form-control"
+                       placeholder="Product description*"/>
+                <span>*Enter product description taken from the manufacturer.</span>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{description}"
+                   class="invalid-feedback errors alert alert-danger"></p>
+            </div>
+            <div class="form-group pt-3 border-bottom ">
+                <input id="price"
+                       th:name="price"
+                       th:errorclass="is-invalid "
+                       type="text"
+                       th:field="*{price}"
+                       class="form-control"
+                       placeholder="Price*"/>
+                <span>*Enter price from the supplier.</span>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{price}"
+                   class="invalid-feedback errors alert alert-danger"></p>
+            </div>
+            <div class="form-group pt-3 border-bottom ">
+                <input id="category"
+                       th:name="category"
+                       th:errorclass="is-invalid "
+                       type="text"
+                       th:field="*{category}"
+                       class="form-control"
+                       placeholder="Category*"/>
+                <span>*Enter product category eg.bike.</span>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{description}"
+                   class="invalid-feedback errors alert alert-danger"></p>
+                    <!--check for dropdown -->
+            </div>
+            <div class="form-group pt-3 border-bottom ">
+                <input id="pictureURL"
+                       th:name="pictureURL"
+                       th:errorclass="is-invalid "
+                       type="text"
+                       th:field="*{pictureURL}"
+                       class="form-control"
+                       placeholder="Picture URL"/>
+                <span>*Enter picture URL from the manufacturer.</span>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{pictureURL}"
+                   class="invalid-feedback errors alert alert-danger"></p>
+            </div>
+            <div class="button-holder d-flex">
+                <input type="submit" class="btn btn-primary btn-lg mx-auto" value="Add new product"/>
+
+            </div>
+        </form>
+    </div>
+    <div>
+        <footer th:replace="~{fragments/footer}"></footer>
+    </div>
+
+</body>
+</html>

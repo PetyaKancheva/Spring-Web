@@ -40,7 +40,7 @@ public class UserRegisterController {
 
         //TODO: Registration email with activation link
         userService.register(userRegisterDTO);
-        return "welcome-register";
+        return "welcome-register"; //TODO remove welcome register and go to login page with some statement
     }
 
 

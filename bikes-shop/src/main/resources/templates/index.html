@@ -7,7 +7,7 @@
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
 <div>
-    <div class="container justify-content-center">
+    <div class="main-container container justify-content-center">
         <div class="col-sm">
             <div class="sidebar-categories-navigation">
                 Sidebar
@@ -16,10 +16,10 @@
                 <div>Clothes</div>
             </div>
         </div>
-        <div class="col-md "><!--            <div class="container text-center ">-->
+     <div class="container text-center ">
             <div class="row row-cols-sm-3  ">
                     <div class="col" th:each="p:${products}">
-                        <a class="product-link" th:href="@{/{pid}(pid=${p.id})}">
+                        <a class="product-link" th:href="@{/product/{pid}(pid=${p.id})}">
                         <div class="container" >
 
                         <div><img th:src="@{${p.pictureURL}}" alt="image"
