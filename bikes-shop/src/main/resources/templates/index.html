@@ -16,11 +16,11 @@
                 <div>Clothes</div>
             </div>
         </div>
-        <div class="col-md ">
-            <!--            <div class="container text-center ">-->
+        <div class="col-md "><!--            <div class="container text-center ">-->
             <div class="row row-cols-sm-3  ">
-                <a class="product-link" th:href="@{\${p.id}}">
                     <div class="col" th:each="p:${products}">
+                        <a class="product-link" th:href="@{/{pid}(pid=${p.id})}">
+                        <div class="container" >
 
                         <div><img th:src="@{${p.pictureURL}}" alt="image"
                                   class="img-thumbnail rounded " style="width: 300px;"></div>
@@ -28,7 +28,9 @@
                         <div th:text="${p.id}"></div>
                         <div th:text="${p.price}">Price</div>
                     </div>
-                </a>
+                        </a>
+                    </div>
+
             </div>
         </div>
     </div>

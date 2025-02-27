@@ -27,13 +27,13 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public String singleProduct(@PathVariable("id") Long id, Model model) {
+    public String singleProduct(@PathVariable("id") String id, Model model) {
 
 //        if (!currentUser.isLogged()) {
 //            return new ModelAndView("redirect:/users/login");
 //        }
        ProductDTO singleProductDTO= productService.
-               getSingleProduct(id)
+               getSingleProduct(Long.parseLong(id))
                .orElseThrow(()->new ProductNotFoundException("Product with id "+id +" not found!"));
 
             model.addAttribute("singleProduct",singleProductDTO);
