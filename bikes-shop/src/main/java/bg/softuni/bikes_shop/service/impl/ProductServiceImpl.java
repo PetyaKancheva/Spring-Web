@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.aspectj.runtime.internal.Conversions.doubleValue;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
@@ -20,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Set<ProductDTO> getAllProducts() {
        return productRepository.findAll().stream()
-               .map(p -> new ProductDTO(p.getId(),p.getName(),p.getDescription(),p.getPictureURL())).collect(Collectors.toSet());
+               .map(p -> new ProductDTO(p.getId(),p.getName(),p.getDescription(),doubleValue(p.getPrice()),p.getPictureURL())).collect(Collectors.toSet());
 
     }
 }
