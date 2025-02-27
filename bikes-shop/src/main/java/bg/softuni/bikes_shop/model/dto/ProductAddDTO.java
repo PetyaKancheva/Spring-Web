@@ -12,7 +12,7 @@ public record ProductAddDTO(
         @NotEmpty(message ="Cannot be empty.")
         @Size(min = 3, message= "Must be at least 3 characters.")
         String description,
-        @Positive
+        @Positive (message ="Must be a positive number.")
         Double price,
         @NotEmpty(message ="Cannot be empty.")
         String  category,

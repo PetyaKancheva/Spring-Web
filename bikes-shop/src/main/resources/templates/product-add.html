@@ -35,7 +35,7 @@
                        class="form-control"
                        placeholder="Product description*"/>
                 <span>*Enter product description taken from the manufacturer.</span>
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{description}"
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
             <div class="form-group pt-3 border-bottom ">
@@ -47,7 +47,7 @@
                        class="form-control"
                        placeholder="Price*"/>
                 <span>*Enter price from the supplier.</span>
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{price}"
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
             <div class="form-group pt-3 border-bottom ">
@@ -59,7 +59,7 @@
                        class="form-control"
                        placeholder="Category*"/>
                 <span>*Enter product category eg.bike.</span>
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{description}"
+                <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"
                    class="invalid-feedback errors alert alert-danger"></p>
                     <!--check for dropdown -->
             </div>
@@ -72,7 +72,7 @@
                        class="form-control"
                        placeholder="Picture URL"/>
                 <span>*Enter picture URL from the manufacturer.</span>
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{pictureURL}"
+                <p th:if="${#fields.hasErrors('pictureURL')}" th:errors="*{pictureURL}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
             <div class="button-holder d-flex">

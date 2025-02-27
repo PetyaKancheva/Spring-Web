@@ -34,14 +34,14 @@ private String addProduct(@Valid ProductAddDTO productAddDTO, BindingResult bind
         if (bindingResult.hasErrors()){
             rAtt.addFlashAttribute("productAddDTO",productAddDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.productAddDTO", bindingResult);
-            return "redirect:/product/add";
+            return "product-add";
         }
         // check if product name exists
 
 
 
         productService.addProduct(productAddDTO);
-        return "redirect:/product/add";
+        return "redirect:/";
 
 }
 }
