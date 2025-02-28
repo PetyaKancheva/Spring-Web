@@ -7,10 +7,10 @@
      background-size: cover;
      background-color: #464646;
  } */
- header.header-main {
+  /* body header.header-main {
      background: none #1d1f24;
      height: 6.5rem;
- }
+ } */
 .page-wrap{
     background: none transparent;
     transition: left 400ms cubic-bezier(.16, .04, .14, 1);
@@ -19,9 +19,9 @@
     min-width: 20rem;
 
 }
-.navbar .logo {
+/*.navbar .logo {
      max-height: 50px;
-}
+}*/
 
 .container, .container-fluid {
      padding-top: 20px;
@@ -69,15 +69,15 @@ a {
 text-decoration: none;
 
  }
- .main-container a{
+/* .main-container a{
   color:black;
- }
+ }*/
 footer a {
   color:white;
   }
-  .navlist li a {
+ /* .navlist li a {
    color:white;
-  }
+  }*/
 
 
 .field-error {
