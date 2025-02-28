@@ -6,8 +6,10 @@
 <div>
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
-<div>
+
+
     <div class="container ">
+        <div class="container text-center w-25 p-3 bg-success rounded-pill  " th:if="${@currentSessionMessage.isProductCreated()}" > New Product created!</div>
         <form
                 th:action="@{/product/add}"
                 th:method="POST"
@@ -58,7 +60,7 @@
                        th:field="*{category}"
                        class="form-control"
                        placeholder="Category*"/>
-                <span>*Enter product category eg.bike.</span>
+                <span>*Enter product category eg. bike.</span>
                 <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"
                    class="invalid-feedback errors alert alert-danger"></p>
                     <!--check for dropdown -->
