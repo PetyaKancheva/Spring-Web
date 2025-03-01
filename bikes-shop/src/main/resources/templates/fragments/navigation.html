@@ -7,26 +7,37 @@
 <body>
 <header th:fragment="navigation" class=" header-main  ">
 
-    <nav class="navbar navbar-expand-lg bg-body-dark text-body-danger">
+    <nav class="navbar navbar-expand-lg bg-dark ">
         <div class="container-fluid">
-            <a class="navbar-brand"  th:href="@{/}"><img alt="logo" src="/images/logo.png" class="logo"  height="50"></a>
-
+        <a class="navbar-brand"  th:href="@{/}"><img alt="logo" src="/images/logo.png" class="logo"  height="50"></a>
+            
+        <div class="row-ms-auto">
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control col-sm me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <div>simple text</div>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            </div>
+        <div class="row-ms-auto">
+            <div class="col-12 justify-content-end " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-light">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">FIRST</a>
+                    <li class="nav-item ">
+                        <a class="nav-link  text-light link-underline-danger " aria-current="page" th:href="@{/product/add}">PRODUCT ADD</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link link-underline-opacity-100-hover text-light" th:href="@{/}">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/register}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/login}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+                    <!--<li class="nav-item   dropdown">
+                        <a class="nav-link text-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Dropdown
                         </a>
                         <ul class="dropdown-menu">
@@ -36,12 +47,13 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                    </li>
-                </ul>
+                    <li class="nav-item ">
+                        <a class="nav-link  disabled" aria-current="page" href="#">Disabled</a>
+                    </li>-->
 
             </div>
+            </div>
+        </div>
         </div>
     </nav>
 

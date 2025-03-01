@@ -65,10 +65,10 @@ form-group{
 text-align:center;
 }
 
-a {
+/*a {
 text-decoration: none;
 
- }
+ }*/
 /* .main-container a{
   color:black;
  }*/
@@ -98,7 +98,6 @@ padding:2em
 border-bottom: solid 1px darkgrey;
 margin-bottom:1em;
 }
-
 
 /* Footer */
 footer {
