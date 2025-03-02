@@ -28,13 +28,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Set<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(p -> new ProductDTO(p.getId(), p.getName(), p.getDescription(), doubleValue(p.getPrice()), p.getPictureURL())).collect(Collectors.toSet());
+                .map(p -> new ProductDTO(p.getId(), p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL())).collect(Collectors.toSet());
 
     }
 
     @Override
     public Optional<ProductDTO> getSingleProduct(Long id) {
-        return productRepository.findById(id).map(p -> new ProductDTO(id, p.getName(), p.getDescription(), doubleValue(p.getPrice()), p.getPictureURL()));
+        return productRepository.findById(id).map(p -> new ProductDTO(id, p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL()));
     }
 
     @Override
@@ -50,6 +50,17 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(newProduct);
 
 
+    }
+
+    @Override
+    public Set<String> getDistinctCategories() {
+        return productRepository.getDistinctCategories();
+    }
+
+    @Override
+    public Set<ProductDTO> getProductsFromCategory(String category) {
+        return productRepository.findByCategory(category).stream().
+                map(p -> new ProductDTO(p.getId(), p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL())).collect(Collectors.toSet());
     }
 
 

@@ -20,8 +20,8 @@ public class ProductController {
 
     @GetMapping("/")
     private String allProducts(Model model){
-        //get all products
         model.addAttribute("products",productService.getAllProducts());
+        model.addAttribute("categories",productService.getDistinctCategories());
         return "index";
     }
 

@@ -12,4 +12,8 @@ public interface ProductService {
    Optional<ProductDTO> getSingleProduct(Long id);
 
     void addProduct(ProductAddDTO productAddDTO);
+
+    Set<String> getDistinctCategories();
+
+    Set<ProductDTO>  getProductsFromCategory(String category);
 }

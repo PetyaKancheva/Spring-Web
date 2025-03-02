@@ -9,7 +9,7 @@
 
 
     <div class="container ">
-        <div class="container text-center w-25 p-3 bg-success rounded-pill  " th:if="${@currentSessionMessage.isProductCreated()}" > New Product created!</div>
+        <div class="container text-center w-25 p-3 border-success border-5 rounded  " th:if="${@currentSessionMessage.isProductCreated()}" > New Product created!</div>
         <form
                 th:action="@{/product/add}"
                 th:method="POST"
