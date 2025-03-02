@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/product/")
 public class ProductAddController {
     private final ProductService productService;
-    private final CurrentSessionMessage currentSessionMessage  ;
+    private final CurrentSessionMessage currentSessionMessage;
 
     public ProductAddController(ProductService productService, CurrentSessionMessage currentSessionMessage) {
         this.productService = productService;
@@ -24,18 +24,19 @@ public class ProductAddController {
     }
 
     @GetMapping("/add")
-    private String addProduct(Model model){
-            // add check if employee
+    private String addProduct(Model model) {
+        // add check if employee
         // sucessfuööy created to show different message
         model.addAttribute("productAddDTO", ProductAddDTO.empty());
-            currentSessionMessage.setProductCreated(true);
+        currentSessionMessage.setProductCreated(true);
         return "product-add";
     }
-@PostMapping ("/add")
-private String addProduct(@Valid ProductAddDTO productAddDTO, BindingResult bindingResult, RedirectAttributes rAtt){
-    // add check if employee
-        if (bindingResult.hasErrors()){
-            rAtt.addFlashAttribute("productAddDTO",productAddDTO);
+
+    @PostMapping("/add")
+    private String addProduct(@Valid ProductAddDTO productAddDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
+        // add check if employee
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("productAddDTO", productAddDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.productAddDTO", bindingResult);
 //            isCreated=true;
             return "product-add";
@@ -44,9 +45,8 @@ private String addProduct(@Valid ProductAddDTO productAddDTO, BindingResult bind
         // check if product name exists
 
 
-
         productService.addProduct(productAddDTO);
         return "redirect:/";
 
-}
+    }
 }

@@ -8,23 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Optional;
-
 @Controller
-public class ProductController {
+public class ProductDetailsController {
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductDetailsController(ProductService productService) {
         this.productService = productService;
     }
-
-    @GetMapping("/")
-    private String allProducts(Model model){
-        model.addAttribute("products",productService.getAllProducts());
-        model.addAttribute("categories",productService.getDistinctCategories());
-        return "index";
-    }
-
 
     @GetMapping("/product/{id}")
     public String singleProduct(@PathVariable("id") String id, Model model) {
@@ -32,17 +22,13 @@ public class ProductController {
 //        if (!currentUser.isLogged()) {
 //            return new ModelAndView("redirect:/users/login");
 //        }
-       ProductDTO singleProductDTO= productService.
-               getSingleProduct(Long.parseLong(id))
-               .orElseThrow(()->new ProductNotFoundException("Product with id "+id +" not found!"));
+        ProductDTO singleProductDTO = productService.
+                getSingleProduct(Long.parseLong(id))
+                .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found!"));
 
-            model.addAttribute("singleProduct",singleProductDTO);
-        return "product";
+        model.addAttribute("singleProduct", singleProductDTO);
+        return "product-details";
     }
-    //get all Categories
 
 }
-
-
-
 

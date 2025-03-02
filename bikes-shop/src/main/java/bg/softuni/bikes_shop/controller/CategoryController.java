@@ -16,7 +16,7 @@ public class CategoryController {
         this.productService = productService;
     }
 
-    @GetMapping("/product/{category}")
+    @GetMapping("/{category}")
     private String category(@PathVariable("category") String category,Model model){
         model.addAttribute("products",productService.getProductsFromCategory(category));
         model.addAttribute("categories",productService.getDistinctCategories());
