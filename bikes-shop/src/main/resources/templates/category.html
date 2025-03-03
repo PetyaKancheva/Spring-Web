@@ -9,15 +9,9 @@
 <div>
     <div class="main-container container justify-content-center ">
         <div class="row ">
-            <div class="col-2 ">
-                <div class="container bg-danger  " th:each="c:${categories}">
-                    <a class="category-link  link-underline-opacity-0 " th:href="@{/{cat}(cat=${c})}">
-                    <div class="" th:text="${c}" ></div>
-                    </a>
-                </div>
+            <div th:replace="~{fragments/sidebar}"></div>
 
-            </div>
-            <div class="col-10 bg-dark text-center ">
+            <div class="col-10 bg-secondary-subtle text-center ">
                 <div class="row row-cols-sm-3  ">
                     <div class="col" th:each="p:${products}">
                         <a class="product-link" th:href="@{/product/{pid}(pid=${p.id})}">
@@ -26,8 +20,9 @@
                                 <div><img th:src="@{${p.pictureURL}}" alt="image"
                                           class="img-thumbnail rounded " style="width: 200px, height: 200px;"></div>
                                 <div th:text="${p.name}"></div>
-                                <div th:text="${p.id}"></div>
-                                <div th:text="${p.price}" >Price</div>
+                                <div><span> Price: </span>
+                                    <th:block th:text="${p.price}"></th:block>
+                                </div>
                             </div>
                         </a>
                     </div>

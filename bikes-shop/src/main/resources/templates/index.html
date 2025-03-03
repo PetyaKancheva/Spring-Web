@@ -9,14 +9,8 @@
 <div>
     <div class="main-container container justify-content-center ">
         <div class="row  ">
-            <div class="col-2 ">
-                <div class="container bg-secondary-subtle " th:each="c:${categories}">
-                    <a class="category-link   " th:href="@{/{cat}(cat=${c})}">
-                        <div class="category-name link-underline-opacity-0" th:text="${#strings.capitalize(c)}"></div>
-                    </a>
-                </div>
+            <div th:replace="~{fragments/sidebar}"></div>
 
-            </div>
             <div class="col-10 bg-secondary-subtle text-center ">
                 <div class="row row-cols-sm-3  ">
                     <div class="col" th:each="p:${products}">
@@ -26,8 +20,9 @@
                                 <div><img th:src="@{${p.pictureURL}}" alt="image"
                                           class="img-thumbnail rounded " style="width: 200px, height: 200px;"></div>
                                 <div th:text="${p.name}"></div>
-                                <div th:text="${p.id}"></div>
-                                <div th:text="${p.price}">Price</div>
+                                <div><span> Price: </span>
+                                    <th:block th:text="${p.price}"></th:block>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -40,21 +35,23 @@
                         <li class="page-item" th:classappend="${products.isFirst() ? 'disabled' : ''}">
                             <a th:if="${products.isFirst()}" class="page-link" href="#" aria-label="First"><span
                                     aria-hidden="true">Previous</span></a>
-                            <a th:unless="${products.isFirst()}" class="page-link" th:href="@{/(page=${products.getNumber()-1})}"
+                            <a th:unless="${products.isFirst()}" class="page-link"
+                               th:href="@{/(page=${products.getNumber()-1})}"
                                aria-label="Previous"><span aria-hidden="true">Previous</span></a>
                         </li>
 
 
                         <!--loop pages -->
-                        <li class="page-item"  th:classappend="${products.getNumber()==page ? 'active' : '' }"
-                        th:each="page:${#numbers.sequence(0,products.getTotalPages()-1)}"><a
+                        <li class="page-item" th:classappend="${products.getNumber()==page ? 'active' : '' }"
+                            th:each="page:${#numbers.sequence(0,products.getTotalPages()-1)}"><a
                                 class="page-link" th:href="@{/(page=${page})}" th:text="${page}+1"></a>
                         </li>
                         <!-- next page -->
                         <li class="page-item" th:classappend="${products.isLast() ? 'disabled' : ''}">
                             <a th:if="${products.isLast()}" class="page-link" href="#" aria-label="Next"><span
                                     aria-hidden="true">Next</span></a>
-                            <a th:unless="${products.isLast()}" class="page-link" th:href="@{/(page=${products.getNumber()+1})}"
+                            <a th:unless="${products.isLast()}" class="page-link"
+                               th:href="@{/(page=${products.getNumber()+1})}"
                                aria-label="Next"><span aria-hidden="true">Next</span></a>
                         </li>
                     </ul>
