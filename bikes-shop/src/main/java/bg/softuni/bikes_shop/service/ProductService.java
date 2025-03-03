@@ -19,5 +19,5 @@ public interface ProductService {
 
     Set<String> getDistinctCategories();
 
-    Set<ProductDTO>  getProductsFromCategory(String category);
+    Page<ProductDTO>  getProductsFromCategoryPageable(Pageable pageable,String category);
 }

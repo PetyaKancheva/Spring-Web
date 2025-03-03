@@ -19,10 +19,9 @@ public class HomeController {
 
     @GetMapping("/")
     private String allProducts(Model model, @PageableDefault(size = 3,sort = "id") Pageable pageable  ) {
-        Page<ProductDTO> products=productService.getProductsPageable(pageable);
-            products.previousPageable();
-        model.addAttribute("products",products);
-//        model.addAttribute("products",productService.getAllProducts());
+
+        model.addAttribute("products",productService.getProductsPageable(pageable));
+
         model.addAttribute("categories", productService.getDistinctCategories());
         return "index";
     }

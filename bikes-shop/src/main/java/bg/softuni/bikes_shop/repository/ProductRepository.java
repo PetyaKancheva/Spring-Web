@@ -17,10 +17,7 @@ import java.util.Set;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
-    @Override
-    List<ProductEntity> findAll();// TODO change to paginatio
 
-//    Page<ProductEntity> getAllProducts(Pageable pageable);
     @Override
     Optional<ProductEntity> findById(Long aLong);
 
@@ -28,5 +25,5 @@ public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
             , nativeQuery = true)
     Set<String> getDistinctCategories();
 
-    List<ProductEntity> findByCategory(String name);
+    Page<ProductEntity> findByCategory(Pageable pageable,String name);
 }

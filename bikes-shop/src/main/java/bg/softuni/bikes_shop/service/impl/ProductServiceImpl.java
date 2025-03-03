@@ -54,10 +54,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.getDistinctCategories();
     }
 
-    @Override
-    public Set<ProductDTO> getProductsFromCategory(String category) {
-        return productRepository.findByCategory(category)
-                .stream().map(ProductServiceImpl::mapToDTO).collect(Collectors.toSet());
+   @Override
+    public Page<ProductDTO> getProductsFromCategoryPageable(Pageable pageable,String category) {
+        return productRepository.findByCategory(pageable,category)
+                .map(ProductServiceImpl::mapToDTO);
     }
 
     private static ProductDTO mapToDTO(ProductEntity p){
