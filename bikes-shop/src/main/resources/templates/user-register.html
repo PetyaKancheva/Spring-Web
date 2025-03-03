@@ -6,6 +6,7 @@
 <div> <nav th:replace="~{fragments/navigation}"></nav></div>
 
 <div class="container justify-content-center ">
+    <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1" th:if="${@currentSessionMessage.isSuccessfullyRegistered}" >Congratulations! You are now registered in Bikes-Shop.</div>
     <div class=" w-25 m-auto text-center ">
         <h4 class="text-dark">I'm already a Customer</h4>
      <a  class="btn btn-block btn-dark" th:href="@{/login}">Log in</a>

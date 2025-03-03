@@ -6,7 +6,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 public class CurrentSessionMessage {
     private boolean isProductCreated;
-    private boolean isUserCreated;
+    private boolean isSuccessfullyRegistered;
 
     public CurrentSessionMessage() {
     }
@@ -19,12 +19,12 @@ public class CurrentSessionMessage {
         isProductCreated = productCreated;
     }
 
-    public boolean isUserCreated() {
-        return isUserCreated;
+    public boolean isSuccessfullyRegistered() {
+        return isSuccessfullyRegistered;
     }
 
-    public void setUserCreated(boolean userCreated) {
-        isUserCreated = userCreated;
+    public void setSuccessfullyRegistered(boolean successfullyRegistered) {
+        isSuccessfullyRegistered = successfullyRegistered;
     }
 }
 

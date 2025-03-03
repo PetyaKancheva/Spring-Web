@@ -20,4 +20,18 @@ public class HomeController {
         model.addAttribute("categories",productService.getDistinctCategories());
         return "index";
     }
+
+
+    @GetMapping("/about")
+    private String about(){
+        return "about";
+    }
+    @GetMapping("/services")
+    private String services(){
+        return "services";
+    }
+    @GetMapping("/contacts")
+    private String contacts(){
+        return "contacts";
+    }
 }

@@ -9,7 +9,7 @@
 
 
     <div class="container ">
-        <div class="container text-center w-25 p-3 border-success border-5 rounded  " th:if="${@currentSessionMessage.isProductCreated()}" > New Product created!</div>
+        <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1" th:if="${@currentSessionMessage.isProductCreated()}" >New Product created!</div>
         <form
                 th:action="@{/product/add}"
                 th:method="POST"
@@ -23,7 +23,7 @@
                        th:field="*{name}"
                        class="form-control"
                        placeholder="Product name*"/>
-                <span>*Enter product short name eg. Trek Domane.</span>
+                <label>*Enter product short name eg. Trek Domane.</label>
                 <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                    class="invalid-feedback errors alert alert-danger"></p>
 
@@ -36,7 +36,7 @@
                        th:field="*{description}"
                        class="form-control"
                        placeholder="Product description*"/>
-                <span>*Enter product description taken from the manufacturer.</span>
+                <label>*Enter product description taken from the manufacturer.</label>
                 <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
@@ -48,7 +48,7 @@
                        th:field="*{price}"
                        class="form-control"
                        placeholder="Price*"/>
-                <span>*Enter price from the supplier.</span>
+                <label>*Enter price from the supplier.</label>
                 <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
@@ -60,7 +60,7 @@
                        th:field="*{category}"
                        class="form-control"
                        placeholder="Category*"/>
-                <span>*Enter product category eg. bike.</span>
+                <label>*Enter product category eg. bike.</label>
                 <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"
                    class="invalid-feedback errors alert alert-danger"></p>
                     <!--check for dropdown -->
@@ -73,7 +73,7 @@
                        th:field="*{pictureURL}"
                        class="form-control"
                        placeholder="Picture URL"/>
-                <span>*Enter picture URL from the manufacturer.</span>
+                <label>*Enter picture URL from the manufacturer.</label>
                 <p th:if="${#fields.hasErrors('pictureURL')}" th:errors="*{pictureURL}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
