@@ -13,13 +13,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
+
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
     @Override
-    List<ProductEntity> findAll();// TODO change to pagination
+    List<ProductEntity> findAll();// TODO change to paginatio
 
+//    Page<ProductEntity> getAllProducts(Pageable pageable);
     @Override
     Optional<ProductEntity> findById(Long aLong);
 

@@ -34,7 +34,7 @@ public class ProductAddController {
 
     @PostMapping("/add")
     private String addProduct(@Valid ProductAddDTO productAddDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
-        // add check if employee
+        // TODO:add check if employee
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("productAddDTO", productAddDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.productAddDTO", bindingResult);
@@ -42,7 +42,7 @@ public class ProductAddController {
             return "product-add";
 
         }
-        // check if product name exists
+        // TODO:check if product name exists
 
 
         productService.addProduct(productAddDTO);

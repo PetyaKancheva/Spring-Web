@@ -21,7 +21,6 @@ public class HomeController {
         return "index";
     }
 
-
     @GetMapping("/about")
     private String about(){
         return "about";

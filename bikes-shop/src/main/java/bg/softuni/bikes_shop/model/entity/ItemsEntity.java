@@ -17,23 +17,26 @@ public class ItemsEntity extends BaseEntity{
         return product;
     }
 
-    public void setProduct(ProductEntity product) {
+    public ItemsEntity setProduct(ProductEntity product) {
         this.product = product;
+        return this;
     }
 
     public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public ItemsEntity setQuantity(Integer quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public OrderEntity getOrder() {
         return order;
     }
 
-    public void setOrder(OrderEntity order) {
+    public ItemsEntity setOrder(OrderEntity order) {
         this.order = order;
+        return this;
     }
 }

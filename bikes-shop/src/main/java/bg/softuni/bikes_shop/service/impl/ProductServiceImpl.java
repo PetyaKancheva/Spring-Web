@@ -1,18 +1,17 @@
 package bg.softuni.bikes_shop.service.impl;
 
-import bg.softuni.bikes_shop.exceptions.ProductNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.model.entity.ProductEntity;
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.service.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.aspectj.runtime.internal.Conversions.doubleValue;
@@ -24,31 +23,29 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+    @Override
+    public Page<ProductDTO> getProductsPageable(Pageable pageable) {
+        return productRepository
+                .findAll(pageable)
+                .map(ProductServiceImpl::mapToDTO);
+    }
 
     @Override
     public Set<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(p -> new ProductDTO(p.getId(), p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL())).collect(Collectors.toSet());
+                .map(ProductServiceImpl::mapToDTO).collect(Collectors.toSet());
 
     }
 
     @Override
     public Optional<ProductDTO> getSingleProduct(Long id) {
-        return productRepository.findById(id).map(p -> new ProductDTO(id, p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL()));
+        return productRepository.findById(id).map(ProductServiceImpl::mapToDTO);
     }
 
     @Override
     public void addProduct(ProductAddDTO productAddDTO) {
-
-        ProductEntity newProduct = new ProductEntity();
-        newProduct.setName(productAddDTO.name());
-        newProduct.setDescription(productAddDTO.description());
-        newProduct.setPrice(BigDecimal.valueOf(productAddDTO.price()));
-        newProduct.setCategory(productAddDTO.category());
-        newProduct.setPictureURL(productAddDTO.pictureURL());
-
+            ProductEntity newProduct=mapToEntity(productAddDTO);
         productRepository.save(newProduct);
-
 
     }
 
@@ -59,8 +56,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Set<ProductDTO> getProductsFromCategory(String category) {
-        return productRepository.findByCategory(category).stream().
-                map(p -> new ProductDTO(p.getId(), p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL())).collect(Collectors.toSet());
+        return productRepository.findByCategory(category):
+                        .
+                map(ProductServiceImpl::mapToDTO);
+    }
+
+    private static ProductDTO mapToDTO(ProductEntity p){
+             return new ProductDTO(p.getId(), p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL());
+    }
+    private static ProductEntity mapToEntity(ProductAddDTO productAddDTO) {
+        return new ProductEntity()
+                .setName(productAddDTO.name())
+                .setDescription(productAddDTO.description())
+                .setPrice(BigDecimal.valueOf(productAddDTO.price()))
+                .setCategory(productAddDTO.category())
+                .setPictureURL(productAddDTO.pictureURL());
     }
 
 
