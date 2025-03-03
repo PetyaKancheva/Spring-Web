@@ -56,9 +56,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Set<ProductDTO> getProductsFromCategory(String category) {
-        return productRepository.findByCategory(category):
-                        .
-                map(ProductServiceImpl::mapToDTO);
+        return productRepository.findByCategory(category)
+                .stream().map(ProductServiceImpl::mapToDTO).collect(Collectors.toSet());
     }
 
     private static ProductDTO mapToDTO(ProductEntity p){
