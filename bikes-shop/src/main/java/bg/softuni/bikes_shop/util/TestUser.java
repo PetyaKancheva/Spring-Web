@@ -3,18 +3,22 @@ package bg.softuni.bikes_shop.util;
 import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.Set;
 
 @Component("testUser")
+@SessionScope
 public class TestUser {
     String email;
     String firstName;
     String lastName;
     String address;
-    Set<UserRoleEntity> roles; // TODO check to change to ENUM
-    Boolean isLogged;
     int orderCount;
+    Boolean isLogged;
+    Boolean isAdmin;
+    Boolean isEmployee;
+    Boolean isUser;
 
     public TestUser() {
     }
@@ -56,12 +60,29 @@ public class TestUser {
         return this;
     }
 
-    public Set<UserRoleEntity> getRoles() {
-        return roles;
+    public Boolean getAdmin() {
+        return isAdmin;
     }
 
-    public TestUser setRoles(Set<UserRoleEntity> roles) {
-        this.roles = roles;
+    public TestUser setAdmin(Boolean admin) {
+        isAdmin = admin;
+        return this;
+    }
+
+    public Boolean getEmployee() {
+        return isEmployee;
+    }
+
+    public TestUser setEmployee(Boolean employee) {
+        isEmployee = employee;
+        return this;
+    }
+    public Boolean getUser() {
+        return isUser;
+    }
+
+    public TestUser setUser(Boolean user) {
+        isUser = user;
         return this;
     }
 
@@ -84,8 +105,10 @@ public class TestUser {
     }
 
 
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
+}
 
-    public String getFullName(){
-        return getFirstName() +" " + getLastName();
-    }
-    }
+
+

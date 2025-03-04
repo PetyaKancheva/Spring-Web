@@ -31,17 +31,18 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.testUser = testUser;
     }
+
     @Override
     public boolean login(UserLoginDTO userLoginDTO) {
         String email = userLoginDTO.email();
         UserEntity user = userRepository.findUserByEmail(email);
         if (user != null
                 && passwordEncoder.matches(userLoginDTO.password(), user.getPassword())) {
-//            currentUser.login(email);
-
+            // TODO only one USER in database!!!!
+            mapToTestUser(testUser, user);
             return true;
         }
-            // TODO some error msg
+        // TODO some error msg
         return false;
     }
 
@@ -49,6 +50,9 @@ public class UserServiceImpl implements UserService {
     public void register(UserRegisterDTO userRegisterDTO) {
 
         userRepository.save(map(userRegisterDTO));
+    }
+    public void logout(test){
+
     }
 
     private UserEntity map(UserRegisterDTO userRegisterDTO) {
@@ -64,17 +68,33 @@ public class UserServiceImpl implements UserService {
         return newUser;
 
     }
-    private TestUser mapToTestUser(UserEntity user) {
-        TestUser testUser = new TestUser();
+
+    private void mapToTestUser(TestUser testUser, UserEntity user) {
         testUser.setLogged(true);
         testUser.setFirstName(user.getFirstName());
         testUser.setLastName(user.getLastName());
         testUser.setEmail(user.getEmail());
         testUser.setAddress(user.getAddress());
         testUser.setOrderCount(user.getOrders().size());
-        testUser.setRoles(user.getRoles());
-        return testUser;
+        user.getRoles().forEach(
+                userRoleEntity -> {
+                    if (userRoleEntity.getName().equals(UserRoleEnum.ADMIN)) {
+                        testUser.setAdmin(true);
+                    } else {
+                        testUser.setAdmin(false);
+                    }
+                    if (userRoleEntity.getName().equals(UserRoleEnum.EMPLOYEE)) {
+                        testUser.setEmployee(true);
+                    } else {
+                        testUser.setEmployee(false);
+                    }
+                    if (userRoleEntity.getName().equals(UserRoleEnum.USER)) {
+                        testUser.setUser(true);
+                    } else {
+                        testUser.setUser(false);
+                    }
 
+                });
     }
 
 }

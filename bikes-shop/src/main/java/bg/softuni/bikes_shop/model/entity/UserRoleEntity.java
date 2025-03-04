@@ -10,4 +10,12 @@ public class UserRoleEntity extends BaseEntity {
         @Column(nullable = false)
         private UserRoleEnum name;
 
+        public UserRoleEnum getName() {
+                return name;
+        }
+
+        public UserRoleEntity setName(UserRoleEnum name) {
+                this.name = name;
+                return this;
+        }
 }

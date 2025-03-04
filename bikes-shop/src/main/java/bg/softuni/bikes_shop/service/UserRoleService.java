@@ -8,5 +8,5 @@ public interface UserRoleService {
 
     UserRoleEntity getUserRoleByName (String name);
 
-    Set<UserRoleEntity> getAllUserRoles(String name);
+
 }

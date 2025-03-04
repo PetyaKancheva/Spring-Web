@@ -11,5 +11,5 @@ import java.util.Set;
 public interface UserRoleRepository extends JpaRepository<UserRoleEntity,Long> {
     UserRoleEntity findByName(UserRoleEnum userRoleEnum);
 
-    Set<UserRoleEntity> findAllByEmail(String email);
+
 }
