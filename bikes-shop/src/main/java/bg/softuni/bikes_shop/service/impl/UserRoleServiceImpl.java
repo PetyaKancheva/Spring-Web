@@ -6,6 +6,8 @@ import bg.softuni.bikes_shop.repository.UserRoleRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
     private final UserRoleRepository userRoleRepository;
@@ -17,5 +19,10 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public UserRoleEntity getUserRoleByName(String name) {
         return userRoleRepository.findByName(UserRoleEnum.valueOf(name));
+    }
+    @Override
+    public Set<UserRoleEntity> getAllUserRoles(String name){
+        return userRoleRepository.findAllByName(name);
+
     }
 }

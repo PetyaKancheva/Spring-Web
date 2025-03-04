@@ -6,9 +6,9 @@
 </head>
 <body>
 <div class="col-2" th:fragments="sidebar">
-    <div class="container sidebar-main bg-secondary-subtle "  th:each="c:${categories}">
-        <a class="category-link   " th:href="@{/{cat}(cat=${c})}">
-            <div class="category-name link-underline-opacity-0" th:text="${#strings.capitalize(c)}"></div>
+    <div class="container sidebar-main"  th:each="c:${categories}">
+        <a class="category-link  link-underline-opacity-0  " th:href="@{/{cat}(cat=${c})}">
+            <div class="category-name "  th:text="${#strings.capitalize(c)}"></div>
         </a>
     </div>
 </div>

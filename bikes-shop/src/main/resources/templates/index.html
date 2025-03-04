@@ -11,7 +11,7 @@
         <div class="row  ">
             <div th:replace="~{fragments/sidebar}"></div>
 
-            <div class="col-10 bg-secondary-subtle text-center ">
+            <div class="col-10 text-center ">
                 <div class="row row-cols-sm-3  ">
                     <div class="col" th:each="p:${products}">
                         <a class="product-link" th:href="@{/product/{pid}(pid=${p.id})}">
