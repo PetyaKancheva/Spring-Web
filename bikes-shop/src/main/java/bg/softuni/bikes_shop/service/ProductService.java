@@ -20,4 +20,6 @@ public interface ProductService {
     Set<String> getDistinctCategories();
 
     Page<ProductDTO>  getProductsFromCategoryPageable(Pageable pageable,String category);
+
+    void buy(Long id, String email);
 }

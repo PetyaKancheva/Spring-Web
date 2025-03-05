@@ -8,6 +8,7 @@ public class CurrentSessionMessage {
     private boolean isProductCreated;
     private boolean isSuccessfullyRegistered;
     private boolean isSuccessfullyUpdatedUser;
+    private boolean isProductBought;
 
     public CurrentSessionMessage() {
 
@@ -35,6 +36,14 @@ public class CurrentSessionMessage {
 
     public void setSuccessfullyUpdatedUser(boolean successfullyUpdatedUser) {
         isSuccessfullyUpdatedUser = successfullyUpdatedUser;
+    }
+
+    public boolean isProductBought() {
+        return isProductBought;
+    }
+
+    public void setProductBought(boolean productBought) {
+        isProductBought = productBought;
     }
 }
 

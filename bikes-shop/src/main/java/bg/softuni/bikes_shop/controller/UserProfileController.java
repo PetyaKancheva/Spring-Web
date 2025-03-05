@@ -29,6 +29,7 @@ public class UserProfileController {
         if(!model.containsAttribute("userUpdateDTO")){
             model.addAttribute("userUpdateDTO",UserUpdateDTO.empty());
         }
+        currentSessionMessage.setSuccessfullyUpdatedUser(false);
         return "user-profile";
     }
      @PostMapping("/user")
@@ -41,7 +42,7 @@ public class UserProfileController {
         }
         userService.update(userUpdateDTO,testUser.getEmail());
         currentSessionMessage.setSuccessfullyUpdatedUser(true);
-//        update Testuser.
+
         return "user-profile";
 
      }
