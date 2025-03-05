@@ -21,7 +21,6 @@ public class UserLoginController {
 
     @GetMapping("/login")
     private String login(Model model){
-
         if (!model.containsAttribute("userLoginDTO")) {
             model.addAttribute("userLoginDTO", UserLoginDTO.empty());
         }

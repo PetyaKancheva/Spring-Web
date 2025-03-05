@@ -3,20 +3,17 @@ package bg.softuni.bikes_shop.service.impl;
 import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.dto.UserLoginDTO;
 import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
+import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
-import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.repository.UserRepository;
-import bg.softuni.bikes_shop.repository.UserRoleRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
 import bg.softuni.bikes_shop.util.TestUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -51,9 +48,32 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(map(userRegisterDTO));
     }
-    public void logout(test){
+    @Override
+    public void update(UserUpdateDTO userUpdateDTO, String email) {
+        UserEntity user = userRepository.findUserByEmail(email);
+        // compare??
+        user.setFirstName(userUpdateDTO.firstName());
+        user.setLastName(userUpdateDTO.lastName());
+
+        String newEmail = userUpdateDTO.email();
+        if (userRepository.findUserByEmail(newEmail) == null) {
+            user.setEmail(newEmail);
+        } else {
+//            give error email already in use
+        }
+        user.setAddress(userUpdateDTO.address());
+
+//        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), user.getPassword())) {
+//            user.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
+//        } else {
+//           // gove error same pass
+//        }
+         // update Test User
+            mapToTestUser(testUser,user);
+            userRepository.save(user);
 
     }
+
 
     private UserEntity map(UserRegisterDTO userRegisterDTO) {
         UserEntity newUser = new UserEntity();
@@ -76,25 +96,28 @@ public class UserServiceImpl implements UserService {
         testUser.setEmail(user.getEmail());
         testUser.setAddress(user.getAddress());
         testUser.setOrderCount(user.getOrders().size());
-        user.getRoles().forEach(
-                userRoleEntity -> {
-                    if (userRoleEntity.getName().equals(UserRoleEnum.ADMIN)) {
-                        testUser.setAdmin(true);
-                    } else {
-                        testUser.setAdmin(false);
-                    }
-                    if (userRoleEntity.getName().equals(UserRoleEnum.EMPLOYEE)) {
-                        testUser.setEmployee(true);
-                    } else {
-                        testUser.setEmployee(false);
-                    }
-                    if (userRoleEntity.getName().equals(UserRoleEnum.USER)) {
-                        testUser.setUser(true);
-                    } else {
-                        testUser.setUser(false);
-                    }
+        user.getRoles().forEach(u -> {
+            if (u.getName().equals(UserRoleEnum.ADMIN)) {
+                testUser.setAdmin(true);
 
-                });
+            } else {
+                testUser.setAdmin(false);
+            }
+        });
+        user.getRoles().forEach(u -> {
+            if (u.getName().equals(UserRoleEnum.EMPLOYEE)) {
+                testUser.setEmployee(true);
+            } else {
+                testUser.setEmployee(false);
+            }
+        });
+        user.getRoles().forEach(u -> {
+            if (u.getName().equals(UserRoleEnum.USER)) {
+                testUser.setUser(true);
+            } else {
+                testUser.setUser(false);
+            }
+        });
     }
 
 }

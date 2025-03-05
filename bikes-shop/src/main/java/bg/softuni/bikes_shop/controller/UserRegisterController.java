@@ -24,13 +24,13 @@ public class UserRegisterController {
     }
 
     @GetMapping("/register")
-    private ModelAndView register(Model model){
+    private String register(Model model){
 
         if (!model.containsAttribute("userRegisterDTO")) {
             model.addAttribute("userRegisterDTO", UserRegisterDTO.empty());
         }
         currentSessionMessage.setSuccessfullyRegistered(false);
-        return new ModelAndView("user-register");
+        return "user-register";
 
     }
     @PostMapping("/register")

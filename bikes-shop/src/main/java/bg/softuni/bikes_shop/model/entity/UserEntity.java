@@ -22,7 +22,7 @@ public class UserEntity extends BaseEntity{
     @OneToMany(mappedBy = "buyer")
     private Set<OrderEntity> orders;
     @Column(name="is_logged")
-   private Boolean isLogged;
+   private Boolean isLogged; //TODO check if it is needed
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",

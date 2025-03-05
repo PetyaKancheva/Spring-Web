@@ -4,6 +4,7 @@ import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.service.ProductService;
+import bg.softuni.bikes_shop.service.UserService;
 import bg.softuni.bikes_shop.util.TestUser;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
@@ -18,9 +19,11 @@ public class HomeController {
     private final ProductService productService;
     private final TestUser testUser;
 
-    public HomeController(ProductService productService, TestUser testUser) {
+
+    public HomeController(ProductService productService, TestUser testUser, UserService userService) {
         this.productService = productService;
         this.testUser = testUser;
+
     }
 
     @GetMapping("/")
@@ -47,5 +50,10 @@ public class HomeController {
     @GetMapping("/contacts")
     private String contacts() {
         return "contacts";
+    }
+    @GetMapping("/logout")
+    private String logout(){
+       testUser.logout();
+       return "redirect:/";
     }
 }

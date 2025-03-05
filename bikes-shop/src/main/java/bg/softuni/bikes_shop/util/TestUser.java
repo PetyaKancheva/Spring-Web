@@ -108,6 +108,12 @@ public class TestUser {
     public String getFullName() {
         return getFirstName() + " " + getLastName();
     }
+    public void logout(){
+        setUser(false);
+        setAdmin(false);
+        setEmployee(false);
+        setLogged(false);
+    }
 }
 
 

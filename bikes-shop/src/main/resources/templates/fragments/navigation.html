@@ -20,48 +20,39 @@
             <div class="row-ms-auto">
                 <div class="col-12 justify-content-end " id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-light">
-                        <li class="nav-item ">
-                            <a class="nav-link  text-light link-underline-danger " th:href="@{/product/add}">PRODUCT
-                                ADD</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link link-underline-opacity-100-hover text-light" th:href="@{/}">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" th:unless="${@testUser.getLogged()}">
                             <a class="nav-link text-light" th:href="@{/register}">Register</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" th:unless="${@testUser.getLogged()}">
                             <a class="nav-link text-light" th:href="@{/login}">Login</a>
                         </li>
+
                         <li class="nav-item" th:if="${@testUser.getUser()}">
                             <a class="nav-link text-light link-underline-danger " th:href="@{/user}">User profile</a>
+                        </li>
+                        <li class="nav-item" th:if="${@testUser.getAdmin()}">
+                            <a class="nav-link text-light link-underline-danger " th:href="@{/admin}">Admin profile</a>
+                        </li>
+                        <li class="nav-item" th:if="${@testUser.getEmployee()}">
+                            <a class="nav-link  text-light link-underline-danger " th:href="@{/product/add}">Add
+                                product</a>
                         </li>
                         <li class="nav-item" th:if="${@testUser.getLogged()}">
                             <a class="nav-link text-light" th:href="@{/logout}">Logout</a>
                         </li>
                     </ul>
-
-                    <div class="text-light "><span> Hello: </span>
+                </div>
+                <div class="row-ms-auto">
+                    <div class="col-12 justify-content-end text-light "><span>   Hello: </span>
                         <th:block th:if="${@testUser.getLogged()}" th:text="${@testUser.getFullName()}"></th:block>
                         <th:block th:unless="${@testUser.getLogged()}">Anonymus</th:block>
                     </div>
-                    <!--<li class="nav-item   dropdown">
-                 <a class="nav-link text-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     Dropdown
-                 </a>
-                 <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="#">Action</a></li>
-                     <li><a class="dropdown-item" href="#">Another action</a></li>
-                     <li><hr class="dropdown-divider"></li>
-                     <li><a class="dropdown-item" href="#">Something else here</a></li>
-                 </ul>
-             </li>
-             <li class="nav-item ">
-                 <a class="nav-link  disabled" aria-current="page" href="#">Disabled</a>
-             </li>-->
-
                 </div>
             </div>
+        </div>
         </div>
     </nav>
 
