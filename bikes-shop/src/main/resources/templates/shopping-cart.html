@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<div>
+    <div class=" container  justify-content-center">
+        <!--        <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"-->
+        <!--             th:if="${@currentSessionMessage.isProductBought}">-->
+        <!--            <span>Successfully bought product </span>-->
+        <!--&lt;!&ndash;            <th:block th:text="${@singleProduct.name}"></th:block>&ndash;&gt;-->
+        <!--            <span> ! Please go to order list to see your current order.</span>-->
+        <!--        </div>-->
+
+
+        <div class="row text-center ">
+            <h3>Current items:</h3>
+            <div th:unless="${@currentOrder.getItems}"> No Items</div>
+
+            <div th:if="${@currentOrder.getItems}">
+
+                <table class="  border border-dark mx-auto">
+                    <tr class="border border-dark fw-bold">
+                        <th>Item ID</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Remove</th>
+                    </tr>
+
+                    <tr class="border border-dark" th:each="item,i:${@currentOrder.getItems}" >
+                        <td th:text="${i.index+1}"></td>
+                        <td th:text="${item.getProductName}"></td>
+                        <td th:text="${item.getPrice}"></td>
+                        <td th:text="${item.getQuantity}"></td>
+                        <td class="button"  value="Remove">Remve button</td>
+                    </tr>
+
+                </table>
+                <div class="text-center fw-bold"><span> Total: </span>
+                    <th:block th:text="${@currentOrder.getTotalPrice}"></th:block>
+                </div>
+<!--                 to hide button when cart is empty-->
+                <div class="  py-2 text-center">
+                    <button class="btn btn-danger " type="button" href="#">Buy All</button>
+                </div>
+            </div>
+        </div>
+        <div class="  py-2  text-center">
+            <button class="btn btn-dark " type="button" onclick="javascript:history.back()">Back</button>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div>
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,18 +13,18 @@ import java.util.Set;
 @SessionScope
 public class CurrentOrder {
 
-    Set<ItemDTO> items;
+    List<ItemDTO> items;
     Double totalPrice;
 
 
     public CurrentOrder() {
     }
 
-    public Set<ItemDTO> getItems() {
+    public List<ItemDTO> getItems() {
         return items;
     }
 
-    public void setItems(Set<ItemDTO> items) {
+    public void setItems(List<ItemDTO> items) {
         this.items = items;
     }
 
@@ -35,26 +36,33 @@ public class CurrentOrder {
         this.totalPrice = totalPrice;
     }
 
-    public void add(ItemDTO itemDTO) {
-        if(this.items==null){
-           this.items=new HashSet<>();
-           this.items.add(itemDTO);
+    public void add(ItemDTO newItemDTO) {
 
+
+        if(this.items==null){
+           this.items=new ArrayList<>();
+           this.items.add(newItemDTO);
+            this.totalPrice=newItemDTO.getPrice()*newItemDTO.getQuantity();
         }else{
-            // seearch for name existing
-         for(ItemDTO i:items){
-                 if(i.productID()==itemDTO.productID()){
-                     //TODO fix
-                     int qty=i.quantity();
-                     = itemDTO.quantity();
+         for(ItemDTO item:items){
+                 if(item.getProductID()==newItemDTO.getProductID()){
+                     int qty=item.getQuantity();
+                     item.setQuantity(qty+newItemDTO.getQuantity());
+                     this.totalPrice+=newItemDTO.getPrice()*newItemDTO.getQuantity();
                      return;
+                     //TODO check for improvement
                  }
             }
-            items.add(itemDTO);
+            items.add(newItemDTO);
+            this.totalPrice+=newItemDTO.getPrice()*newItemDTO.getQuantity();
+
         }
 
-    }
-    public void delete(Long productID){
 
+
+    }
+    public void delete(ItemDTO itemDTO){
+        this.totalPrice-=itemDTO.getPrice()*itemDTO.getQuantity();
+        items.remove(itemDTO);
     }
 }

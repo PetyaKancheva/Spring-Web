@@ -12,13 +12,6 @@ public class ItemDTO{
     @NotEmpty
     Integer quantity;
 
-//
-//    public static ItemDTO empty(){
-//        return new ItemDTO(null,null,null,null);
-//    }
-//
-
-
     public ItemDTO() {
     }
 

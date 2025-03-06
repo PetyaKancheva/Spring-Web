@@ -35,6 +35,8 @@
                           th:method="POST"
                           id="buy-form"
                     >
+                        <input  type="hidden" th:name="productName" th:value="${singleProduct.name}" >
+                        <input  type="hidden" th:name="productPrice" th:value="${singleProduct.price}">
                             <label> Select quantity: </label>
                             <input  type="number" th:name="quantity" >
 

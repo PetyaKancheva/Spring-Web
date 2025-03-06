@@ -42,28 +42,25 @@ public class ProductDetailsController {
 
         model.addAttribute("singleProduct", singleProductDTO);
 
-        ItemDTO newItemDTO=new ItemDTO();
-        newItemDTO.setProductID(singleProductDTO.id());
-        newItemDTO.setProductName(singleProductDTO.name());
-        newItemDTO.setPrice(singleProductDTO.price());
-
-
-            model.addAttribute("itemDTO",newItemDTO);
-
-
         return "product-details";
     }
     @PostMapping("/product/{id}")
-    public String buy(@PathVariable("id") String id,ItemDTO itemDTO, Integer quantity) {
+    public String buy(@PathVariable("id") String id,String productName,String productPrice, Integer quantity) {
         if (!testUser.getLogged()) {
             return "redirect:/login";
         }
 
-        itemDTO.setQuantity(quantity);
-        currentOrder.add(itemDTO);
+        ItemDTO newItemDTO=new ItemDTO();
+        newItemDTO.setProductID(Long.valueOf(id));
+        newItemDTO.setProductName(productName);
+        newItemDTO.setPrice(Double.parseDouble(productPrice));
+
+        //TODO check if quantity >0
+        newItemDTO.setQuantity(quantity);
+        currentOrder.add(newItemDTO);
         currentSessionMessage.setProductBought(true);
 
-        return "order-details";
+        return "shopping-cart";
     }
 
 
