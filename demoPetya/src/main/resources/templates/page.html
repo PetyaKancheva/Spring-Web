@@ -8,9 +8,9 @@
 <h1 >This is Page</h1>
 
 <div>First Name</div>
-<div th:text ="${first}"></div>
+<div th:text ="${@user.getFirstName}"></div>
 <div>Last Name</div>
-<div th:text ="${last}"></div>
+<div th:text ="${@user.getLastName}"></div>
 
 
 </body>

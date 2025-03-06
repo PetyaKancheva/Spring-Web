@@ -40,9 +40,23 @@ public class ProductDetailsController {
                 .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found!"));
 
         model.addAttribute("singleProduct", singleProductDTO);
-        model.addAttribute("quantity",0);
+
         return "product-details";
     }
+    @PostMapping("/product/{id}")
+    public String buy(@PathVariable("id") String id, String productId, String productName,Integer quantity) {
+        if (!testUser.getLogged()) {
+            return "redirect:/login";
+        }
+
+        currentOrder.setProductId(Long.valueOf(productId));
+        currentOrder.setProductName(productName);
+        currentOrder.setQuantity(quantity);
+
+        return "order-details";
+    }
+
+
 
 
 }

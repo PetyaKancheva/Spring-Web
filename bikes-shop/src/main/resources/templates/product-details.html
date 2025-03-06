@@ -11,54 +11,52 @@
         <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
              th:if="${@currentSessionMessage.isProductBought}">
             <span>Successfully bought product </span>
-<!--            <th:block th:text="${@singleProduct.name}"></th:block>-->
+            <!--            <th:block th:text="${@singleProduct.name}"></th:block>-->
             <span> ! Please go to order list to see your current order.</span>
         </div>
 
 
-        <div class="container text-center ">
-            <div class="row-sm  ">
-                <div class="col"     th:object="${singleProduct}">
-                    <div><img th:src="*{pictureURL}" alt="image" class="img-thumbnail rounded " style="width: 300px;">
+        <div class="container mx-auto">
+                <div class="col-4 mx-auto  text-center"
+                     th:object="${singleProduct}">
+                    <h5  class="text-center"
+                         th:text="*{name}">
+                    </h5>
+                    <div class="  py-2">
+                        <img th:src="*{pictureURL}" alt="image" class="img-thumbnail rounded " style="width: 300px;">
                     </div>
-
-                    <div
-                            th:text="*{name}"></div>
-                    <div><span> </span>
-                        <th:block th:text="*{description}"></th:block>
+                    <div class=" text-start py-2" th:text="*{description}"></th:block>
                     </div>
-                    <div><span> Price: </span>
+                    <div class="py-2"><span>Price: </span>
                         <th:block th:text="*{price}"></th:block>
                     </div>
+                    <!--   Form Start -->
+                    <form th:action="@{/product/{pid}(pid=${singleProduct.id})}"
+                          th:method="POST"
+                          id="buy-form"
+                    >
+                        <input  type="hidden" th:name="productId" th:value="${singleProduct.id}">
 
-                    <form   th:action="@{/order}"
-                            th:method="POST"
-                            id="quantity-form"
-                   >
-                        <input th:name="productId"  th:value="21" class="hidden" >
+                        <input  type="hidden" th:name="productName" th:value="${singleProduct.name}" >
 
-                        <div><span> Name: </span>
-                            <th:block
-                                    th:name="name"
-                                    th:value="testName}"></th:block>
-                        </div>
-
+                            <label> Select quantity: </label>
+                            <input  type="number" th:name="quantity" >
 
 
-
-<!-- th:value="${quantity}"&ndash;&gt;-->
-<!--                            <p th:if="${#fields.hasErrors('quantity')}" th:errors="{quantity}"-->
-<!--                               class="invalid-feedback errors alert alert-danger"></p>-->
-
-                        <input class="btn btn-danger"  type="submit" value="Buy">
+                        <input class="btn btn-danger" type="submit" value="Buy">
 
                     </form>
 
 
                 </div>
-                <button class="btn btn-dark " type="button" onclick="javascript:history.back()">Back</button>
+
+                <div class=" justify-content-end">
+                 <button class="btn btn-dark justify-end  float-right " type="button"
+                        onclick="javascript:history.back()">Back
+                </button>
+                    <div >
             </div>
-        </div>
+
     </div>
 </div>
 </div>

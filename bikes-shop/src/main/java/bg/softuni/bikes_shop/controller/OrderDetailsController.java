@@ -32,18 +32,7 @@ public class OrderDetailsController {
         // add attribute current order or not?
         return "order-details";
     }
-    @PostMapping("/order")
-    public String buy(@PathVariable("id") String id, ProductDTO productDTO) {
-        if (!testUser.getLogged()) {
-            return "redirect:/login";
-        }
 
-        currentOrder.setProductId(productDTO.id());
-        currentOrder.setProductName(productDTO.name());
-        currentOrder.setQuantity(1);
-
-        return "order-details";
-    }
 
 
 }
