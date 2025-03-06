@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.exceptions.ProductNotFoundException;
+import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.service.ProductService;
@@ -41,17 +42,26 @@ public class ProductDetailsController {
 
         model.addAttribute("singleProduct", singleProductDTO);
 
+        ItemDTO newItemDTO=new ItemDTO();
+        newItemDTO.setProductID(singleProductDTO.id());
+        newItemDTO.setProductName(singleProductDTO.name());
+        newItemDTO.setPrice(singleProductDTO.price());
+
+
+            model.addAttribute("itemDTO",newItemDTO);
+
+
         return "product-details";
     }
     @PostMapping("/product/{id}")
-    public String buy(@PathVariable("id") String id, String productId, String productName,Integer quantity) {
+    public String buy(@PathVariable("id") String id,ItemDTO itemDTO, Integer quantity) {
         if (!testUser.getLogged()) {
             return "redirect:/login";
         }
 
-        currentOrder.setProductId(Long.valueOf(productId));
-        currentOrder.setProductName(productName);
-        currentOrder.setQuantity(quantity);
+        itemDTO.setQuantity(quantity);
+        currentOrder.add(itemDTO);
+        currentSessionMessage.setProductBought(true);
 
         return "order-details";
     }
