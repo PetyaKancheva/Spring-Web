@@ -15,6 +15,7 @@
             <span> ! Please go to order list to see your current order.</span>
         </div>
 
+
         <div class="container text-center ">
             <div class="row-sm  ">
                 <div class="col"     th:object="${singleProduct}">
@@ -29,11 +30,25 @@
                     <div><span> Price: </span>
                         <th:block th:text="*{price}"></th:block>
                     </div>
+
                     <form   th:action="@{/product/{pid}(pid=*{id})}"
                             th:method="POST"
+
+                            id="quantity-form"
                    >
-                        <input type="number" th:name="valueFromForm" th:value=2 >
+                        <div class="form-group we-25 py-2 ">
+                            <input id="quantity"
+                                   type="number"
+                                   class="form-control"
+                                    value=1
+                                        />
+<!-- th:value="${quantity}"&ndash;&gt;-->
+<!--                            <p th:if="${#fields.hasErrors('quantity')}" th:errors="{quantity}"-->
+<!--                               class="invalid-feedback errors alert alert-danger"></p>-->
+                        </div>
+
                         <input class="btn btn-danger"  type="submit" value="Buy">
+
                     </form>
 
 

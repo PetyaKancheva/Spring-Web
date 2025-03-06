@@ -21,5 +21,5 @@ public interface ProductService {
 
     Page<ProductDTO>  getProductsFromCategoryPageable(Pageable pageable,String category);
 
-    void buy(Long id, String email);
+
 }

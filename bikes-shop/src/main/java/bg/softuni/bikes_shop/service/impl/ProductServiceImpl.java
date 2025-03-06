@@ -15,9 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,14 +23,12 @@ import static org.aspectj.runtime.internal.Conversions.doubleValue;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+      private final ProductRepository productRepository;
 
-    public ProductServiceImpl(OrderRepository orderRepository, ProductRepository productRepository, UserRepository userRepository) {
-        this.orderRepository = orderRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.userRepository = userRepository;
+
     }
     @Override
     public Page<ProductDTO> getProductsPageable(Pageable pageable) {
@@ -72,34 +67,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(ProductServiceImpl::mapToDTO);
     }
 
-    @Override
-    public void buy(Long id, String email) {
-        // TODO check if this should be in other service
-            UserEntity buyer =userRepository.findUserByEmail(email);
-            //if order does not exist create new order
-        // FIND order??
-        // ALWAY Crete new item
-        OrderEntity newOrder = new OrderEntity();
-        ItemsEntity newItem = new ItemsEntity();
 
-        newItem.setProduct(productRepository.findById(id).orElseThrow());
-        newItem.setQuantity(1); // later to add quantity functionality
-        newItem.setOrder(newOrder);
-        // need to fetch existing items Set
-        if (newOrder.getItems()==null){
-            // create new
-            newOrder.setItems(new HashSet<>(Arrays.asList(newItem)));
-        }else{
-            //Fetch existing
-            newOrder.getItems().add(newItem);
-        }
-            newOrder.setBuyer(buyer);
-            newOrder.setStatus("open");
-            newOrder.setDateCreated(LocalDate.now());
-            orderRepository.save(newOrder);
-
-
-    }
 
     private static ProductDTO mapToDTO(ProductEntity p){
              return new ProductDTO(p.getId(), p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL());

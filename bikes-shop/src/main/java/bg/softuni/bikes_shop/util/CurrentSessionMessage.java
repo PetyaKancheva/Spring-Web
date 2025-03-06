@@ -10,6 +10,7 @@ public class CurrentSessionMessage {
     private boolean isSuccessfullyUpdatedUser;
     private boolean isProductBought;
 
+
     public CurrentSessionMessage() {
 
     }
