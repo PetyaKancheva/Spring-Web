@@ -3,16 +3,18 @@ package bg.softuni.bikes_shop.util;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-@Component("currentOffer")
+@Component("currentOrder")
 @SessionScope
-public class CurrentOffer {
+public class CurrentOrder {
     // TODO check if could be made better
     // TODO check if list of items is possible
     Long productId;
+    String productName;
     Integer quantity;
 
-    public CurrentOffer() {
+    public CurrentOrder() {
     }
+
 
     public Long getProductId() {
         return productId;
@@ -20,6 +22,14 @@ public class CurrentOffer {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public Integer getQuantity() {

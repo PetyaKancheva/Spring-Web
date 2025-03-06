@@ -28,7 +28,6 @@ public class HomeController {
 
     @GetMapping("/")
     private String allProducts(Model model, @PageableDefault(size = 3,sort = "id") Pageable pageable  ) {
-
         model.addAttribute("products",productService.getProductsPageable(pageable));
 
         model.addAttribute("categories", productService.getDistinctCategories());

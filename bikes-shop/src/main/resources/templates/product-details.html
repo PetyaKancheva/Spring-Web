@@ -31,21 +31,24 @@
                         <th:block th:text="*{price}"></th:block>
                     </div>
 
-                    <form   th:action="@{/product/{pid}(pid=*{id})}"
+                    <form   th:action="@{/order}"
                             th:method="POST"
-
                             id="quantity-form"
                    >
-                        <div class="form-group we-25 py-2 ">
-                            <input id="quantity"
-                                   type="number"
-                                   class="form-control"
-                                    value=1
-                                        />
+                        <input th:name="productId"  th:value="21" class="hidden" >
+
+                        <div><span> Name: </span>
+                            <th:block
+                                    th:name="name"
+                                    th:value="testName}"></th:block>
+                        </div>
+
+
+
+
 <!-- th:value="${quantity}"&ndash;&gt;-->
 <!--                            <p th:if="${#fields.hasErrors('quantity')}" th:errors="{quantity}"-->
 <!--                               class="invalid-feedback errors alert alert-danger"></p>-->
-                        </div>
 
                         <input class="btn btn-danger"  type="submit" value="Buy">
 
