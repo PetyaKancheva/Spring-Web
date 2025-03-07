@@ -46,9 +46,9 @@ public class ProductDetailsController {
     }
     @PostMapping("/product/{id}")
     public String buy(@PathVariable("id") String id,String productName,String productPrice, Integer quantity) {
-        if (!testUser.getLogged()) {
-            return "redirect:/login";
-        }
+//        if (!testUser.getLogged()) {
+//            return "redirect:/login";
+//        }
 
         ItemDTO newItemDTO=new ItemDTO();
         newItemDTO.setProductID(Long.valueOf(id));

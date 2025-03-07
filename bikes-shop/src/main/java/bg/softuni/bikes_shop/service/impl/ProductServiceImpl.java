@@ -2,11 +2,8 @@ package bg.softuni.bikes_shop.service.impl;
 
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
-import bg.softuni.bikes_shop.model.entity.ItemsEntity;
-import bg.softuni.bikes_shop.model.entity.OrderEntity;
 import bg.softuni.bikes_shop.model.entity.ProductEntity;
-import bg.softuni.bikes_shop.model.entity.UserEntity;
-import bg.softuni.bikes_shop.repository.OrderRepository;
+
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.ProductService;

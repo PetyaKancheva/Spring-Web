@@ -44,6 +44,7 @@ public class CurrentOrder {
            this.items.add(newItemDTO);
             this.totalPrice=newItemDTO.getPrice()*newItemDTO.getQuantity();
         }else{
+
          for(ItemDTO item:items){
                  if(item.getProductID()==newItemDTO.getProductID()){
                      int qty=item.getQuantity();
@@ -59,9 +60,9 @@ public class CurrentOrder {
         }
 
 
-
     }
-    public void delete(ItemDTO itemDTO){
+    public void delete(Long  itemProductID   ){
+        ItemDTO itemDTO=items.stream().filter(i->i.getProductID()==itemProductID).findFirst().orElseThrow();
         this.totalPrice-=itemDTO.getPrice()*itemDTO.getQuantity();
         items.remove(itemDTO);
     }

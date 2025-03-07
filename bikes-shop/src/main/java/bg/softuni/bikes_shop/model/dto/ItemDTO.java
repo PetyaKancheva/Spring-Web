@@ -1,7 +1,7 @@
 package bg.softuni.bikes_shop.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-
+// TODO check if it can be made with record
 public class ItemDTO{
     @NotEmpty
     Long productID;

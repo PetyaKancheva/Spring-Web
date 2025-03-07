@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import org.apache.catalina.User;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -17,9 +18,9 @@ public class OrderEntity extends BaseEntity{
     @JoinColumn(name="buyer_id",nullable = false)
     private UserEntity buyer;
     @OneToMany(mappedBy = "order")
-    private Set<ItemsEntity> items;
+    private List<ItemsEntity> items;
     @Column(name="total")
-    private Long totalSum;
+    private BigDecimal totalSum;
     @Column(name="date_created", nullable = false)
     private LocalDate dateCreated;
     @Column(name="status")
@@ -34,20 +35,20 @@ public class OrderEntity extends BaseEntity{
         return this;
     }
 
-    public Set<ItemsEntity> getItems() {
+    public List<ItemsEntity> getItems() {
         return items;
     }
 
-    public OrderEntity setItems(Set<ItemsEntity> items) {
+    public OrderEntity setItems(List<ItemsEntity> items) {
         this.items = items;
         return this;
     }
 
-    public Long getTotalSum() {
+    public BigDecimal getTotalSum() {
         return totalSum;
     }
 
-    public OrderEntity setTotalSum(Long totalSum) {
+    public OrderEntity setTotalSum(BigDecimal totalSum) {
         this.totalSum = totalSum;
         return this;
     }

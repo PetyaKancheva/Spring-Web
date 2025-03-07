@@ -31,26 +31,34 @@
                         <th>Remove</th>
                     </tr>
 
-                    <tr class="border border-dark" th:each="item,i:${@currentOrder.getItems}" >
+                    <tr class="border border-dark" th:each="item,i:${@currentOrder.getItems}">
                         <td th:text="${i.index+1}"></td>
                         <td th:text="${item.getProductName}"></td>
                         <td th:text="${item.getPrice}"></td>
                         <td th:text="${item.getQuantity}"></td>
-                        <td >  <a class="btn text-light" th:href="@{/shopping-cart}"><i class="fa-solid fa-cart-shopping"></i></i></a> </td>
+                        <td>
+                            <form th:action="@{/shopping-cart}"
+                                  th:method="POST"
+                                  >
+                                <input type="hidden" th:name="productID" th:value="${item.getProductID}">
+                                <button type="submit" class="border border-0 bg-body" ><i
+                                    class=" fa-solid fa-trash"></i> </button>
+                            </form>
+                        </td>
                     </tr>
 
                 </table>
                 <div class="text-center fw-bold"><span> Total: </span>
                     <th:block th:text="${@currentOrder.getTotalPrice}"></th:block>
                 </div>
-<!--                 to hide button when cart is empty-->
+                <!--                 to hide button when cart is empty-->
                 <div class="  py-2 text-center">
-                    <button class="btn btn-danger " type="button" href="#">Buy All</button>
+                    <a class="btn btn-danger " type="button" th:href="@{/orders}">Finalise purchase</a>
                 </div>
             </div>
         </div>
         <div class="  py-2  text-center">
-            <button class="btn btn-dark " type="button" onclick="javascript:history.back()">Back</button>
+            <button class=" btn btn-dark " type="button" onclick="javascript:history.back()">Back</button>
         </div>
 
 
