@@ -31,20 +31,11 @@ public class OrdersController {
 //        if (!testUser.getLogged()) {
 //            return "redirect:/login";
 //        }
-        List<OrderDTO> allOrders=new ArrayList<>();
-
-        if (currentOrder.getItems()!=null ){
-            orderService.buy(testUser.getEmail(),currentOrder.getItems());
-
-        }
-
+        List<OrderDTO> allOrders= new ArrayList<>();
 
 
         allOrders= orderService.getAllByUser(testUser.getEmail());
 
-
-//            allOrders.add(new OrderDTO("ivan", null,2000.0));
-//            allOrders.add(new OrderDTO("ivan", null,222000.0));
 
             model.addAttribute("allOrders", allOrders);
             // TODO fix refresh adds new product

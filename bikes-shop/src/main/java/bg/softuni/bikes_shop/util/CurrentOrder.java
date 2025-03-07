@@ -45,7 +45,7 @@ public class CurrentOrder {
             this.totalPrice=newItemDTO.getPrice()*newItemDTO.getQuantity();
         }else{
 
-         for(ItemDTO item:items){
+         for(ItemDTO item:this.items){
                  if(item.getProductID()==newItemDTO.getProductID()){
                      int qty=item.getQuantity();
                      item.setQuantity(qty+newItemDTO.getQuantity());
@@ -54,16 +54,22 @@ public class CurrentOrder {
                      //TODO check for improvement
                  }
             }
-            items.add(newItemDTO);
+            this.items.add(newItemDTO);
             this.totalPrice+=newItemDTO.getPrice()*newItemDTO.getQuantity();
 
         }
 
 
     }
-    public void delete(Long  itemProductID   ){
+    public void deleteItem(Long  itemProductID   ){
         ItemDTO itemDTO=items.stream().filter(i->i.getProductID()==itemProductID).findFirst().orElseThrow();
         this.totalPrice-=itemDTO.getPrice()*itemDTO.getQuantity();
         items.remove(itemDTO);
+    }
+
+    public void clear() {
+        this.items.clear();
+        this.totalPrice=0.0;
+
     }
 }

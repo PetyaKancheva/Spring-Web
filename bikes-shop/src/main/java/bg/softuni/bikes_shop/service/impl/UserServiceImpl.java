@@ -76,16 +76,16 @@ public class UserServiceImpl implements UserService {
 
 
     private UserEntity map(UserRegisterDTO userRegisterDTO) {
-        UserEntity newUser = new UserEntity();
-        newUser.setLogged(false);
-        newUser.setFirstName(userRegisterDTO.firstName());
-        newUser.setLastName(userRegisterDTO.lastName());
-        newUser.setEmail(userRegisterDTO.email());
-        newUser.setAddress(userRegisterDTO.address());
-        newUser.setRoles(new HashSet<>(Arrays.asList(userRoleService.getUserRoleByName("USER"))));
-        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.password()));
+        return   new UserEntity()
+                    .setLogged(false)
+                    .setFirstName(userRegisterDTO.firstName())
+                    .setLastName(userRegisterDTO.lastName())
+                    .setEmail(userRegisterDTO.email())
+                    .setAddress(userRegisterDTO.address())
+                    .setRoles(new HashSet<>(Arrays.asList(userRoleService.getUserRoleByName("USER"))))
+                    .setPassword(passwordEncoder.encode(userRegisterDTO.password()));
 
-        return newUser;
+
 
     }
 
@@ -96,6 +96,7 @@ public class UserServiceImpl implements UserService {
         testUser.setEmail(user.getEmail());
         testUser.setAddress(user.getAddress());
         testUser.setOrderCount(user.getOrders().size());
+        // TODO if needs fixing
         user.getRoles().forEach(u -> {
             if (u.getName().equals(UserRoleEnum.ADMIN)) {
                 testUser.setAdmin(true);

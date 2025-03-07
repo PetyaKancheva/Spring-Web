@@ -28,7 +28,7 @@
             <div class="row" th:text="${@testUser.getEmail()}"></div>
             <div class="row" th:text="${@testUser.getAddress()}"></div>
         </div>
-
+        <a class="btn btn-block btn-dark m-2" th:href="@{/orders}">View all orders</a>
         <a class="btn btn-block btn-dark"> JS class list toggle Update profile</a>
 
         <form

@@ -21,8 +21,8 @@
                         <th>Quantity</th>
                     </tr>
 
-                    <tr class="border border-dark" th:each="item,iI:${order.items}">
-                        <td th:text="${iI.index+1}"></td>
+                    <tr class="border border-dark" th:each="item,i:${order.items}">
+                        <td th:text="${i.index+1}"></td>
                         <td th:text="${item.getProductName}"></td>
                         <td th:text="${item.getPrice}"></td>
                         <td th:text="${item.getQuantity}"></td>

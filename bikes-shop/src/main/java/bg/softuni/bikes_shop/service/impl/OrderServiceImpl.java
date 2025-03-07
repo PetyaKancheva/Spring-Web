@@ -12,6 +12,7 @@ import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.OrderService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,33 +36,31 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void buy(String email, List<ItemDTO> itemsDTO) {
+    public void buy(String email, List<ItemDTO> itemsDTO, Double totalPrice) {
 
-        UserEntity buyer = userRepository.findUserByEmail(email);
-        // TODO: of order exist get order
-        OrderEntity newOrder = new OrderEntity();
-        newOrder.setBuyer(buyer);
-        newOrder.setStatus("open");
-        newOrder.setDateCreated(LocalDate.now());
-
-        List<ItemsEntity>itemsEntities=new ArrayList<>();
-        // map Item DTO to newItem for each item
-        for( ItemDTO itemDTO:itemsDTO){
-            ItemsEntity newItem= new ItemsEntity();
-            newItem.setProduct(productRepository.findById(itemDTO.getProductID()).orElseThrow());
-            newItem.setQuantity(itemDTO.getQuantity());
-            newItem.setOrder(newOrder);
-            itemRepository.save(newItem);
-
-        }
-        newOrder.setItems(itemsEntities);
+        OrderEntity newOrder = new OrderEntity()
+                .setBuyer(userRepository.findUserByEmail(email))
+                .setStatus("open")
+                .setDateCreated(LocalDate.now())
+                .setTotalSum(BigDecimal.valueOf(totalPrice));
 
         orderRepository.save(newOrder);
+
+        for (ItemDTO itemDTO : itemsDTO) {
+            itemRepository.save(new ItemsEntity()
+                    .setProduct(productRepository.findById(itemDTO.getProductID()).orElseThrow())
+                    .setQuantity(itemDTO.getQuantity())
+                    .setOrder(newOrder));
+        }
+
     }
 
     @Override
     public List<OrderDTO> getAllByUser(String email) {
-        return orderRepository.findAllByUser(email).stream().map(OrderServiceImpl::mapToDTO).toList();
+        return orderRepository
+                .findAllByBuyerEmail(email)
+                .stream().map(OrderServiceImpl::mapToDTO)
+                .toList();
     }
 
     private static OrderDTO mapToDTO(OrderEntity orderEntity) {
