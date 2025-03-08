@@ -8,6 +8,6 @@ demo:
 frankfurter:
         schema: https
         host: api.frankfurter.dev
-        path: v1/latest
+        path: /v1/latest
         symbols: BGN,USD,PLN
         enabled: true

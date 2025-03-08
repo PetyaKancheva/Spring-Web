@@ -1,37 +1,31 @@
 package com.example.demo.web;
 
 import com.example.demo.config.ExchangeRateConfig;
+import com.example.demo.model.ExchangeRatesDTO;
+import com.example.demo.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.client.RestOperations;
 
 @Controller
 public class HomeController {
+        private final CurrencyService currencyService;
 
-     private final ExchangeRateConfig exchangeRateConfig;
+    public HomeController(CurrencyService currencyService) {
 
-    public HomeController(ExchangeRateConfig exchangeRateConfig){
-        this.exchangeRateConfig = exchangeRateConfig;
+        this.currencyService = currencyService;
     }
 
     @GetMapping("/")
-    public String test(Model model){
-        String URLTemplate= String.valueOf(new  StringBuilder()
-                .append(exchangeRateConfig.getSchema())
-                .append("://")
-                .append(exchangeRateConfig.getHost())
-                .append(exchangeRateConfig.getPath())
-                .append("?base=EUR&")
-                .append(exchangeRateConfig.getSymbols().j)
+    public String test(Model model) {
 
 
-        );
+//        currencyService.refreshRates(exchangeRatesDTO);
+        model.addAttribute("greeting", "Hello");
 
-//        https://api.frankfurter.dev/v1/latest?base=EUR&symbols=BGN,USD,PLN
-
-        model.addAttribute( "greeting","Hello");
-        model.addAttribute( "url",URLTemplate);
+        model.addAttribute("attribute", "currencyService.print()");
 
         return "index";
 

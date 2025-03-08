@@ -7,7 +7,8 @@
 
 <h1 th:text ="${greeting}">rest of message</h1>
 
-<div th:text ="${url}"></div>
+<div th:text ="${attribute}"></div>
+<th:block th:text="${#numbers.formatCurrency(price)}"></th:block>
 
 </body>
 </html>
