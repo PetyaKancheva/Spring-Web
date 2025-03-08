@@ -1,3 +1,13 @@
 demo:
     greeting:
          message: Hello, softuni!
+
+#https://api:
+#  frankfurter:
+#    dev/v1/latest?base=EUR&symbols=BGN,USD,PLN:
+frankfurter:
+        schema: https
+        host: api.frankfurter.dev
+        path: v1/latest
+        symbols: BGN,USD,PLN
+        enabled: true
