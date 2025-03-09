@@ -11,3 +11,19 @@ frankfurter:
         path: /v1/latest
         symbols: BGN,USD,PLN
         enabled: true
+
+jsonplaceholder:
+    schema: https
+    host: jsonplaceholder.typicode.com
+    path: /posts/
+    enabled: true
+
+logging:
+    level:
+        org:
+            hibernate:
+                type:
+                    descriptor: TRACE
+                SQL: DEBUG
+            nodeValue: WARN
+        blog: WARN

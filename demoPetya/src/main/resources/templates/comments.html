@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+
+
+<div th:object="${comment}">Comments below</div>
+<div><span>User id:</span>
+<th:block  th:text="*{comment.getId}"></th:block>
+</div>
+
+
+</body>
+</html>
