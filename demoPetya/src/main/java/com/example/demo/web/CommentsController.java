@@ -19,22 +19,21 @@ public class CommentsController {
 
         this.commentService = commentService;
     }
+    @GetMapping("/api/comments/")
+    public String comments( Model model){
 
-    @GetMapping("/api/comments/{id}")
-    public String comments(@PathVariable("id")Long id, Model model){
-       CommentDTO test= commentService.getComment(id);
-        CommentDTO comment =new CommentDTO();
-            model.addAttribute("comment", test);
-            model.addAttribute("commentDTO", new CommentDTO());
-
-
+        List<CommentDTO> allComments= commentService.getAll();
+        model.addAttribute("comments", allComments);
+        model.addAttribute("commentDTO", new CommentDTO());
 
         return "comments";
     }
-    @PostMapping("/api/comments/{id}")
+
+    @PostMapping("/api/comments/")
     public String create(CommentDTO commentDTO) {
             commentService.send(commentDTO);
-        return "reload:/api/comments/{id}";
+        return "redirect:/api/comments/";
     }
+
 
 }

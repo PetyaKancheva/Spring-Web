@@ -1,7 +1,15 @@
 demo:
     greeting:
          message: Hello, softuni!
-
+thymeleaf: # Thymeleaf
+        cache: false
+        mode: HTML
+        encoding: UTF-8
+        prefix: file:src/main/resources/templates/
+        resources: # Static resources
+            static-locations: file:src/main/resources/static/
+            cache:
+                period: 0
 #https://api:
 #  frankfurter:
 #    dev/v1/latest?base=EUR&symbols=BGN,USD,PLN:
