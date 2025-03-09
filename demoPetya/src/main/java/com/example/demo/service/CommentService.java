@@ -7,4 +7,6 @@ import java.util.List;
 public interface CommentService {
 List<CommentDTO> getAll();
  CommentDTO getComment(Long id);
+
+    void send(CommentDTO commentDTO);
 }

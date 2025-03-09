@@ -5,12 +5,39 @@
 <body>
 
 
-
 <div th:object="${comment}">Comments below</div>
-<div><span>User id:</span>
-<th:block  th:text="*{comment.getId}"></th:block>
+<div><span>Comment id:</span>
+    <th:block th:text="*{comment.getId}"></th:block>
+</div>
+<div><span>Title:</span>
+    <th:block th:text="*{comment.getTitle}"></th:block>
+</div>
+<div>
+    <th:block th:text="*{comment.getBody}"></th:block>
 </div>
 
+<h3>
+    Own Comment
+</h3>
+<form th:action="@{/api/comments/{id}(id=${comment.getId})}"
+      th:method="POST"
+      th:object="${commentDTO}">
+    <label>Comment Id:</label>
+    <input th:name="id" th:field="*{id}">
+    <label>User Id:</label>
+    <input th:name="userId" th:field="*{userId}">
 
+    <label>Title:</label>
+    <input th:name="title" th:field="*{title}">
+
+    <label>Enter comments below:</label>
+    <textarea th:name="body" th:field="*{body}">
+
+</textarea>
+    <input type="submit" class="button" value="submit">
+</form>
+
+<form
+></form>
 </body>
 </html>

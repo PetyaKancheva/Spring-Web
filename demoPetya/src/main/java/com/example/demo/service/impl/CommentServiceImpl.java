@@ -7,6 +7,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 @Service
@@ -42,6 +43,18 @@ public class CommentServiceImpl implements CommentService {
       CommentDTO oneComment= restTemplate.getForObject(CommentsURL, CommentDTO.class);
 
         return oneComment;
+    }
+
+    @Override
+    public void send(CommentDTO commentDTO) {
+            String check= commentDTO.getBody();
+        String postURL = String.valueOf(new StringBuilder()
+                .append(commentsConfig.getSchema())
+                .append("://")
+                .append(commentsConfig.getHost())
+                .append(commentsConfig.getPath())               );
+
+            restTemplate.postForObject(postURL,commentDTO,String.class);
     }
 
 }

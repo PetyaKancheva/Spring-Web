@@ -5,10 +5,7 @@ import com.example.demo.service.CommentService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,12 +25,16 @@ public class CommentsController {
        CommentDTO test= commentService.getComment(id);
         CommentDTO comment =new CommentDTO();
             model.addAttribute("comment", test);
+            model.addAttribute("commentDTO", new CommentDTO());
+
+
 
         return "comments";
     }
-//    @PostMapping("/create")
-//    public CommentViewModel create(@RequestBody CreateCommentBindingModel createCommentBindingModel) {
-//        return commentService.createRest(createCommentBindingModel);
-//    }
+    @PostMapping("/api/comments/{id}")
+    public String create(CommentDTO commentDTO) {
+            commentService.send(commentDTO);
+        return "reload:/api/comments/{id}";
+    }
 
 }
