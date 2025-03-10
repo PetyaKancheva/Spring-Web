@@ -9,10 +9,26 @@ import java.math.BigDecimal;
 @Table(name="currency")
 public class CurrencyEntity {
     @Id
-    @NotEmpty
+
     @Column(name="name")
     String name;
-    @NotEmpty
+
     @Column(name="rate")
     BigDecimal rate;
+
+    public  String getName() {
+        return name;
+    }
+
+    public void setName( String name) {
+        this.name = name;
+    }
+
+    public  BigDecimal getRate() {
+        return rate;
+    }
+
+    public void setRate(@NotEmpty BigDecimal rate) {
+        this.rate = rate;
+    }
 }

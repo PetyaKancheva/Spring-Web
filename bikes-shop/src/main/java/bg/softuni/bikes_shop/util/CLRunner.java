@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.util;
 
 import bg.softuni.bikes_shop.configuration.ExchangeRateConfig;
+import bg.softuni.bikes_shop.model.dto.MapRatesDTO;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,8 @@ public class CLRunner implements CommandLineRunner {
                 .append(String.join(",", exchangeRateConfig.getSymbols())));
 
 
-      ResponseEntity<Object> response= restTemplate.getForEntity( url, Object.class);
-        System.out.println(response); // custom map??
-
+     MapRatesDTO mapRatesDTO= restTemplate.getForObject( url, MapRatesDTO.class);
+        currencyService.add(mapRatesDTO);
 
 
     }
