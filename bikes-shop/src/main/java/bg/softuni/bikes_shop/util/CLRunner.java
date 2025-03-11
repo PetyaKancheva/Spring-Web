@@ -27,9 +27,9 @@ public class CLRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Command line *** running");
+        if (exchangeRateConfig.isEnabled()){
 
-
+        System.out.println("*** Updating exchange rate ***");
         String url = String.valueOf(new StringBuilder()
                 .append(exchangeRateConfig.getSchema())
                 .append("://")
@@ -38,9 +38,9 @@ public class CLRunner implements CommandLineRunner {
                 .append("?base=EUR&symbols=")
                 .append(String.join(",", exchangeRateConfig.getSymbols())));
 
-
      MapRatesDTO mapRatesDTO= restTemplate.getForObject( url, MapRatesDTO.class);
         currencyService.add(mapRatesDTO);
+        }
 
 
     }

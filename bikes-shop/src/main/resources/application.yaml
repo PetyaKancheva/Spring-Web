@@ -47,4 +47,4 @@ frankfurter:
   host: api.frankfurter.dev
   path: /v1/latest
   symbols: BGN,USD,PLN
-  enabled: true
+  enabled: false

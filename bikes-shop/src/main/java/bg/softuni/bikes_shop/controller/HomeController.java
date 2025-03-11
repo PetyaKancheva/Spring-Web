@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.model.UserRoleEnum;
+import bg.softuni.bikes_shop.model.dto.CurrencyExchangeDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.service.ProductService;
@@ -14,25 +15,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Optional;
+
 @Controller
 public class HomeController {
     private final ProductService productService;
     private final TestUser testUser;
 
-
-    public HomeController(ProductService productService, TestUser testUser, UserService userService) {
+    public HomeController(ProductService productService, TestUser testUser) {
         this.productService = productService;
         this.testUser = testUser;
-
     }
 
     @GetMapping("/")
     private String allProducts(Model model, @PageableDefault(size = 3,sort = "id") Pageable pageable  ) {
-        model.addAttribute("products",productService.getProductsPageable(pageable));
 
+        model.addAttribute("products",productService.getProductsPageable(pageable));
         model.addAttribute("categories", productService.getDistinctCategories());
         model.addAttribute("testUser",testUser);
-
+        model.addAttribute("currency",new CurrencyExchangeDTO("EUR",0.5));
         return "index";
     }
 

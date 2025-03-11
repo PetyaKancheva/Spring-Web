@@ -1,7 +1,11 @@
 package bg.softuni.bikes_shop.model.dto;
 
-public class CurrencyExchangeDTO {
-    String fromCurrency;
-    String toCurrency;
-    Double amount;
+public record CurrencyExchangeDTO(
+        String currency,
+        Double rate
+) {
+    public static CurrencyExchangeDTO empty() {
+        return new CurrencyExchangeDTO(null, null);
+    }
+
 }

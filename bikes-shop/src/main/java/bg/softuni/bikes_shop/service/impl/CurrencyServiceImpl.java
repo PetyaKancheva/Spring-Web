@@ -1,5 +1,6 @@
 package bg.softuni.bikes_shop.service.impl;
 
+import bg.softuni.bikes_shop.model.dto.CurrencyExchangeDTO;
 import bg.softuni.bikes_shop.model.dto.MapRatesDTO;
 import bg.softuni.bikes_shop.model.entity.CurrencyEntity;
 import bg.softuni.bikes_shop.repository.CurrencyRepository;
@@ -36,6 +37,26 @@ public class CurrencyServiceImpl implements CurrencyService {
         cePLN.setName("PLN");
         cePLN.setRate(mapRatesDTO.rates().get("PLN"));
         currencyRepository.save(cePLN);
+    }
+
+    @Override
+    public CurrencyExchangeDTO convert(CurrencyExchangeDTO currencyExchangeDTO) {
+
+//        switch (currencyExchangeDTO.currency()) {
+//            // TODO better mapping???????
+//            case ("BGN"):
+//                CurrencyExchangeDTO convertedCurrencyDTO = new CurrencyExchangeDTO("BGN", currencyRepository.getRateByName("BGN").doubleValue());
+//                break;
+//            case ("PLN"):
+//                CurrencyExchangeDTO convertedCurrencyDTO = new CurrencyExchangeDTO("PLN", currencyRepository.getRateByName("PLN").doubleValue());
+//                break;
+//            case ("USD"):
+//                CurrencyExchangeDTO convertedCurrencyDTO = new CurrencyExchangeDTO("BGN", currencyRepository.getRateByName("BGN").doubleValue());
+//                break;
+//            default:
+//                throw new IllegalStateException("Unexpected value: " + currencyExchangeDTO.currency());
+//        }
+        return null;
     }
 
 }
