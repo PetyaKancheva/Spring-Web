@@ -6,6 +6,7 @@ import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.service.UserService;
+import bg.softuni.bikes_shop.util.CurrentCurrency;
 import bg.softuni.bikes_shop.util.TestUser;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
@@ -15,16 +16,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class HomeController {
     private final ProductService productService;
     private final TestUser testUser;
+    private final CurrentCurrency currentCurrency;
 
-    public HomeController(ProductService productService, TestUser testUser) {
+    public HomeController(ProductService productService, TestUser testUser, CurrentCurrency currentCurrency) {
         this.productService = productService;
         this.testUser = testUser;
+        this.currentCurrency = currentCurrency;
     }
 
     @GetMapping("/")
@@ -33,7 +37,9 @@ public class HomeController {
         model.addAttribute("products",productService.getProductsPageable(pageable));
         model.addAttribute("categories", productService.getDistinctCategories());
         model.addAttribute("testUser",testUser);
-        model.addAttribute("currency",new CurrencyExchangeDTO("EUR",0.5));
+        model.addAttribute("currencyDTO",new CurrencyExchangeDTO("EUR",0.5));
+        model.addAttribute("listCurrencies", List.of("EUR","BGN","PLN")) ;
+        model.addAttribute("currentCurrency",currentCurrency);
         return "index";
     }
 

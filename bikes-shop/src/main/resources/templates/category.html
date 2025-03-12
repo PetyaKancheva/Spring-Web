@@ -16,7 +16,6 @@
                     <div class="col" th:each="p:${products}">
                         <a class="product-link" th:href="@{/product/{pid}(pid=${p.id})}">
                             <div class="container">
-
                                 <div><img th:src="@{${p.pictureURL}}" alt="image"
                                           class="img-thumbnail rounded " style="width: 200px, height: 200px;"></div>
                                 <div th:text="${p.name}"></div>
@@ -35,13 +34,14 @@
                         <li class="page-item" th:classappend="${products.isFirst() ? 'disabled' : ''}">
                             <a th:if="${products.isFirst()}" class="page-link" href="#" aria-label="First"><span
                                     aria-hidden="true">Previous</span></a>
-                            <a th:unless="${products.isFirst()}" class="page-link" th:href="@{${currentCategory}(page=${products.getNumber()-1})}"
+                            <a th:unless="${products.isFirst()}" class="page-link"
+                               th:href="@{${currentCategory}(page=${products.getNumber()-1})}"
                                aria-label="Previous"><span aria-hidden="true">Previous</span></a>
                         </li>
 
 
                         <!--loop pages -->
-                        <li class="page-item"  th:classappend="${products.getNumber()==page ? 'active' : '' }"
+                        <li class="page-item" th:classappend="${products.getNumber()==page ? 'active' : '' }"
                             th:each="page:${#numbers.sequence(0,products.getTotalPages()-1)}"><a
                                 class="page-link" th:href="@{${currentCategory}(page=${page})}" th:text="${page}+1"></a>
                         </li>
@@ -49,7 +49,8 @@
                         <li class="page-item" th:classappend="${products.isLast() ? 'disabled' : ''}">
                             <a th:if="${products.isLast()}" class="page-link" href="#" aria-label="Next"><span
                                     aria-hidden="true">Next</span></a>
-                            <a th:unless="${products.isLast()}" class="page-link" th:href="@{${currentCategory}(page=${products.getNumber()+1})}"
+                            <a th:unless="${products.isLast()}" class="page-link"
+                               th:href="@{${currentCategory}(page=${products.getNumber()+1})}"
                                aria-label="Next"><span aria-hidden="true">Next</span></a>
                         </li>
                     </ul>

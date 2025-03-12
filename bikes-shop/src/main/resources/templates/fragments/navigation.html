@@ -18,6 +18,14 @@
                 </form>
             </div>
             <div class="row-ms-auto">
+                <select th:field="${@currentCurrency.name}" >
+                    <option th:each="curr:${listCurrencies}"
+                            th:value="${curr}"
+                            th:text=${curr}"></option>
+                </select>
+             </div>
+
+            <div class="row-ms-auto">
                 <div class="col-12 justify-content-end " id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-light">
                         <li class="nav-item">
@@ -48,7 +56,7 @@
                 <div class="row-ms-auto">
                     <div class="col-12 justify-content-end text-light "><span>   Hello: </span>
                         <th:block th:if="${@testUser.getLogged()}" th:text="${@testUser.getFullName()}"></th:block>
-                        <th:block th:unless="${@testUser.getLogged()}">Anonymus</th:block>
+                        <th:block th:unless="${@testUser.getLogged()}">Guest</th:block>
 
                         <a class="btn text-light" th:href="@{/shopping-cart}"><i class="fa-solid fa-cart-shopping"></i></i></a>
                     </div>
