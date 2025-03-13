@@ -10,6 +10,7 @@ import bg.softuni.bikes_shop.repository.OrderRepository;
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.OrderService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -39,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
     public void buy(String email, List<ItemDTO> itemsDTO, Double totalPrice) {
 
         OrderEntity newOrder = new OrderEntity()
-                .setBuyer(userRepository.findUserByEmail(email))
+                .setBuyer(userRepository.findUserByEmail(email).orElseThrow(()->new UsernameNotFoundException("User with email: "+email+"not found!")))
                 .setStatus("open")
                 .setDateCreated(LocalDate.now())
                 .setTotalSum(BigDecimal.valueOf(totalPrice));

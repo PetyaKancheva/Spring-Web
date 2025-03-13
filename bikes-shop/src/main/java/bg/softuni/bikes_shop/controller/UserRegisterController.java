@@ -42,7 +42,7 @@ public class UserRegisterController {
             return "user-register";
         }
 
-        //TODO: where do you check password and compare passowrd
+
         //TODO: Registration email with activation link
         userService.register(userRegisterDTO);
         currentSessionMessage.setSuccessfullyRegistered(true);

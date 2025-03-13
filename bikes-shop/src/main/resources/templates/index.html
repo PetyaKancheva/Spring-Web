@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 <head
 
         th:replace="~{fragments/head}">
@@ -26,7 +27,7 @@
                                             <div th:text="${p.name}"></div>
                                             <div><span> Price: </span>
 <!--                                                <th:block th:text="${#numbers.formatCurrency(p.price)}">></th:block>-->
-                                                <th:block th:text="${#numbers.formatCurrency(p.price*currencyDTO.rate)}">></th:block>
+                                                <th:block th:text="${#numbers.formatCurrency(p.price )}">></th:block>
                                             </div>
                                         </div>
                                     </a>

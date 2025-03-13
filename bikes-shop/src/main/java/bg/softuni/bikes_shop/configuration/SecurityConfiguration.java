@@ -10,30 +10,32 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfiguration {
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity httpSecurity ) throws Exception {
-//
-//        httpSecurity.authorizeHttpRequests(
-//                authorizeRequests -> authorizeRequests
-//                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-//                        .requestMatchers("/", "/login", "/register").permitAll()
-//                        .anyRequest().authenticated()
-//        ).formLogin(
-//                formLogin -> formLogin
-//                        .loginPage("/login")
-//                        .usernameParameter("email")
-//                        .passwordParameter("password")
-//                        .defaultSuccessUrl("/", true)
-//                        .failureForwardUrl("/login-error")
-//        ).logout(
-//                logout -> logout// TODO map POST request
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/")
-//                        .invalidateHttpSession(true)
-//        );
-//
-//        return httpSecurity.build();
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity ) throws Exception {
+
+        httpSecurity.authorizeHttpRequests(
+                authorizeRequests -> authorizeRequests
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/", "/login", "/register"
+                                , "/services","/comments","/contacts","/about").permitAll()
+                        // TODO add more
+                        .anyRequest().authenticated()
+        ).formLogin(
+                formLogin -> formLogin
+                        .loginPage("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/", true)
+                        .failureForwardUrl("/login-error")
+        ).logout(
+                logout -> logout// TODO map POST request
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+        );
+
+        return httpSecurity.build();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

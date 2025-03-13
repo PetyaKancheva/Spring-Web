@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,25 +21,18 @@ public class UserLoginController {
     }
 
     @GetMapping("/login")
-    private String login(Model model){
-        if (!model.containsAttribute("userLoginDTO")) {
-            model.addAttribute("userLoginDTO", UserLoginDTO.empty());
-        }
+    private String login(){
+
         return "user-login";
 
     }
-    @PostMapping("/login")
-    public String login(@Valid UserLoginDTO userLoginDTO  , BindingResult bindingResult, RedirectAttributes rAtt) {
+    @PostMapping("/login-error")
+    public String loginError(@ModelAttribute("email")String email,Model model) {
+//        model.addAttribute("email",email);
+//        model.addAttribute("bad_credentials", "true");
+        //TODO decide what to happen on error
 
-        if(bindingResult.hasErrors()){
-            rAtt.addFlashAttribute("userLoginDTO",userLoginDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userLoginDTO", bindingResult);
-            return "redirect:/login";
-        }
-
-
-        userService.login(userLoginDTO);
-        return "redirect:/";
+        return "user-login";
     }
 
 

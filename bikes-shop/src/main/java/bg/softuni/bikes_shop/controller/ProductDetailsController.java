@@ -7,28 +7,24 @@ import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
 import bg.softuni.bikes_shop.util.CurrentSessionMessage;
-import bg.softuni.bikes_shop.util.TestUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProductDetailsController {
     private final ProductService productService;
     private final OrderService orderService;
     private final CurrentSessionMessage currentSessionMessage;
-    private final TestUser testUser;
+
     private final CurrentOrder currentOrder;
 
-    public ProductDetailsController(ProductService productService, OrderService orderService, CurrentSessionMessage currentSessionMessage, TestUser testUser, CurrentOrder currentOrder) {
+    public ProductDetailsController(ProductService productService, OrderService orderService, CurrentSessionMessage currentSessionMessage, CurrentOrder currentOrder) {
         this.productService = productService;
         this.orderService = orderService;
         this.currentSessionMessage = currentSessionMessage;
-        this.testUser = testUser;
         this.currentOrder = currentOrder;
     }
 
@@ -46,9 +42,6 @@ public class ProductDetailsController {
     }
     @PostMapping("/product/{id}")
     public String buy(@PathVariable("id") String id,String productName,String productPrice, Integer quantity) {
-//        if (!testUser.getLogged()) {
-//            return "redirect:/login";
-//        }
 
         ItemDTO newItemDTO=new ItemDTO();
         newItemDTO.setProductID(Long.valueOf(id));

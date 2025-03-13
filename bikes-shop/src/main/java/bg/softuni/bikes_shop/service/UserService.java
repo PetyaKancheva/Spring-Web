@@ -6,6 +6,5 @@ import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 
 public interface UserService {
     void register(UserRegisterDTO userRegisterDTO);
-    boolean login(UserLoginDTO userLoginDTO);
     void update (UserUpdateDTO userUpdateDTO, String  email);
 }
