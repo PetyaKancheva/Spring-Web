@@ -8,5 +8,5 @@ import java.math.BigDecimal;
 
 @Repository
 public interface CurrencyRepository extends JpaRepository<CurrencyEntity,Long> {
-    BigDecimal getRateByName(String name);
+    CurrencyEntity findByName(String name);
 }

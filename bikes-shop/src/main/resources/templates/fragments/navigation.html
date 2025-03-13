@@ -17,14 +17,24 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
+
+<!--            Currency part start -->
             <div class="row-ms-auto">
-                <select th:field="${@currentCurrency.name}" >
+<!--                <form th:action="@{/}"-->
+<!--                      th:method="POST"-->
+<!--                      th:object(="${currencyDTO}" id="formSubmit"-->
+<!--                >-->
+                <select  >
                     <option th:each="curr:${listCurrencies}"
-                            th:value="${curr}"
-                            th:text=${curr}"></option>
+                            th:value="*{currency}"
+                            th:text="${curr}">
+                    </option>
                 </select>
+<!--                </form>-->
              </div>
 
+            <!--            Currency part End -->
+            <div class="row-ms-auto">
             <div class="row-ms-auto">
                 <div class="col-12 justify-content-end " id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-light">
@@ -73,5 +83,11 @@
 
 </header>
 
+<script>
+
+    document.getElementById("formSubmit").addEventListener("change", ({ target }) =>
+
+     target.form.submit());
+</script>
 </body>
 </html>

@@ -15,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,12 +35,17 @@ public class HomeController {
 
     @GetMapping("/")
     private String allProducts(Model model, @PageableDefault(size = 3,sort = "id") Pageable pageable  ) {
+//        if(!model.containsAttribute("currencyDTO")){
+//            CurrencyExchangeDTO eurCEDTO= new CurrencyExchangeDTO();
+//            eurCEDTO.setRate(1.0);
+//            eurCEDTO.setCurrency("EUR");
+//            model.addAttribute("currencyDTO",eurCEDTO);
+//        }
 
         model.addAttribute("products",productService.getProductsPageable(pageable));
         model.addAttribute("categories", productService.getDistinctCategories());
         model.addAttribute("testUser",testUser);
-        model.addAttribute("currencyDTO",new CurrencyExchangeDTO("EUR",0.5));
-        model.addAttribute("listCurrencies", List.of("EUR","BGN","PLN")) ;
+        model.addAttribute("listCurrencies", List.of("EUR","BGN","PLN","USD")) ;
         model.addAttribute("currentCurrency",currentCurrency);
         return "index";
     }
@@ -61,5 +68,12 @@ public class HomeController {
     private String logout(){
        testUser.logout();
        return "redirect:/";
+    }
+
+    @PostMapping("/")
+    private String post(CurrencyExchangeDTO ceDTO,RedirectAttributes rAtt){
+        rAtt.addFlashAttribute("currencyDTO",ceDTO);
+        // TODO fix currency being passing to model
+        return "redirect:/";
     }
 }

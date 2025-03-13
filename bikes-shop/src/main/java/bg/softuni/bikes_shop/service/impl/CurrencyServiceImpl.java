@@ -40,23 +40,29 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public CurrencyExchangeDTO convert(CurrencyExchangeDTO currencyExchangeDTO) {
+    public CurrencyExchangeDTO convert(CurrencyExchangeDTO ceDTO) {
 
-//        switch (currencyExchangeDTO.currency()) {
-//            // TODO better mapping???????
-//            case ("BGN"):
-//                CurrencyExchangeDTO convertedCurrencyDTO = new CurrencyExchangeDTO("BGN", currencyRepository.getRateByName("BGN").doubleValue());
-//                break;
-//            case ("PLN"):
-//                CurrencyExchangeDTO convertedCurrencyDTO = new CurrencyExchangeDTO("PLN", currencyRepository.getRateByName("PLN").doubleValue());
-//                break;
-//            case ("USD"):
-//                CurrencyExchangeDTO convertedCurrencyDTO = new CurrencyExchangeDTO("BGN", currencyRepository.getRateByName("BGN").doubleValue());
-//                break;
-//            default:
-//                throw new IllegalStateException("Unexpected value: " + currencyExchangeDTO.currency());
-//        }
-        return null;
+        if(ceDTO.getCurrency().equals("USD")){
+          return   mapToDTO(currencyRepository.findByName("USD"));
+        }else if(ceDTO.getCurrency().equals("PLN")){
+            return  mapToDTO( currencyRepository.findByName("PLN"));
+        }else if(ceDTO.getCurrency().equals("BGN")){
+            return  mapToDTO( currencyRepository.findByName("BGN"));
+        }else if (ceDTO.getCurrency().equals("EUR")){
+            CurrencyExchangeDTO  newCEDTO =new CurrencyExchangeDTO();
+           newCEDTO.setRate( 1.0);
+            newCEDTO.setCurrency("EUR");
+            return newCEDTO;
+        }
+
+
+        return ceDTO;
+    }
+    private static CurrencyExchangeDTO mapToDTO(CurrencyEntity currencyEntity){
+        CurrencyExchangeDTO ceDTO=new CurrencyExchangeDTO();
+                ceDTO.setCurrency(currencyEntity.getName());
+                ceDTO.setRate(currencyEntity.getRate().doubleValue());
+                return ceDTO;
     }
 
 }

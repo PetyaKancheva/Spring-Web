@@ -5,12 +5,14 @@
 <body >
 <div>    <nav th:replace="~{fragments/navigation}"></nav></div>
 
-<h5 class="card-title pt-5 text-center">Contacts Bikes-Shop</h5>
 <div class="container ">
     <div class="row text-center contacts">
         <div class="col  ">
-           <h6>Comments</h6>
-
+           <h6>Comments:</h6>
+            <div class="border border-primary m-2 col-6" th:each="comment:${allCommentDTO}" >
+                <div th:text="${comment.title}"></div>
+                <div th:text="${comment.body}"></div>
+            </div>
 
         </div>
 

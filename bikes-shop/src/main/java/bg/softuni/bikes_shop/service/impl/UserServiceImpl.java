@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class    UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findUserByEmail(email);
         if (user != null
                 && passwordEncoder.matches(userLoginDTO.password(), user.getPassword())) {
-            // TODO only one USER in database!!!!
+            // TODO only one USER in  !!!!
             mapToTestUser(testUser, user);
             return true;
         }
