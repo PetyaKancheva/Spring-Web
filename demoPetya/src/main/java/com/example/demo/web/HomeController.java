@@ -50,7 +50,7 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String test(String currency) {
+    public String test(@ModelAttribute String currency) {
 
         System.out.println(currency +"   to" );
         System.out.println("from");

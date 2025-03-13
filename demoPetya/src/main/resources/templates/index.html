@@ -24,28 +24,31 @@
 <!--    ></li>-->
 <!--</ul>-->
 
-<form action="/" th:method="post" id="formSubmit"  >
+<form tH:action="@{/}" th:method="post" id="formSubmit" modelAtrribute="currency"  >
 
-<select   >
-    <option th:each="c : ${listCurrencies}"
+<select id="selectID"  >
+    <option
+            th:each="c : ${listCurrencies}"
             th:text="${c}"
             th:value="${c}"
 
-            th:name=${currency}
+
     >
     </option>
+
 </select>
-
-
 </form>
 
 <div><span>Value:</span><th:block th:text="${@currentCurrency.getName()}"> </th:block> </div>
 
     <script>
 
-    document.getElementById("formSubmit").addEventListener("change", ({ target }) =>
+    document.getElementById("formSubmit").addEventListener("change",
+     ({ target }) =>
+
 
      target.form.submit());
+
     </script>
 </body>
 </html>

@@ -2,13 +2,14 @@ package com.example.demo.web;
 
 import com.example.demo.model.MoneyDTO;
 import com.example.demo.service.CurrencyService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
-@RestController
+@Controller
 public class CurrencyController {
     private final CurrencyService currencyService;
 
