@@ -34,23 +34,7 @@ public class BikesUserDetailsService implements UserDetailsService {
 
     }
 
-    @PostConstruct
-    public void init() {
-        userRepository.put("user", new CustomUserDetails.Builder().withFirstName("Mark")
-                .withLastName("Johnson")
-                .withEmail("mark.johnson@email.com")
-                .withUsername("user")
-                .withPassword(passwordEncoder.encode("password"))
-                .withAuthorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")))
-                .build());
-        userRegistry.put("admin", new CustomUserDetails.Builder().withFirstName("James")
-                .withLastName("Davis")
-                .withEmail("james.davis@email.com")
-                .withUsername("admin")
-                .withPassword(passwordEncoder.encode("password"))
-                .withAuthorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")))
-                .build());
-    }
+//   DO NOT DELETE below for reference
 
 //    private static UserDetails mapDetails(UserEntity userEntity){
 //        return User

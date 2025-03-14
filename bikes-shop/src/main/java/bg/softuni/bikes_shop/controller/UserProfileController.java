@@ -1,9 +1,11 @@
 package bg.softuni.bikes_shop.controller;
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.service.UserService;
 import bg.softuni.bikes_shop.util.CurrentSessionMessage;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,11 +28,13 @@ public class UserProfileController {
     }
 
     @GetMapping("/user")
-    private String profile(Principal principal, Model model) {
+    private String profile(@AuthenticationPrincipal CustomUserDetails currentUser,    Model model) {
         if(!model.containsAttribute("userUpdateDTO")){
             model.addAttribute("userUpdateDTO",UserUpdateDTO.empty());
         }
-        model.addAttribute("principal",principal);
+
+        model.addAttribute("currentUser",currentUser);
+
 
         currentSessionMessage.setSuccessfullyUpdatedUser(false);
         return "user-profile";
@@ -43,7 +47,7 @@ public class UserProfileController {
             redirectAttributes.addAttribute("org.springframework.validation.BindingResult.userUpdateDTO",bindingResult);
             return "user-profile";
         }
-        String fakeEmail="p@mail.com";
+        String fakeEmail="p@mail.com";// get from Principal get name
         userService.update(userUpdateDTO,fakeEmail);
         currentSessionMessage.setSuccessfullyUpdatedUser(true);
 

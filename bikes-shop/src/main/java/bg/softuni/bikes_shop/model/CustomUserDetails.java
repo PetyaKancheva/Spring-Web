@@ -15,6 +15,10 @@ import java.util.Objects;
 
 
 public class CustomUserDetails implements  UserDetails {
+    private String firstName;
+
+
+    private String lastName;
     private String email;
     private String password;
     private String address;
@@ -26,7 +30,8 @@ public class CustomUserDetails implements  UserDetails {
         this.password = userEntity.getPassword();
         this.address=userEntity.getAddress();
         this.authorities = (userEntity.getRoles().stream().map(CustomUserDetails::mapToAuthority).toList());
-
+        this.firstName=userEntity.getFirstName();
+        this.lastName=userEntity.getLastName();
     }
 
     private static GrantedAuthority mapToAuthority(UserRoleEntity userRoleEntity){
@@ -51,6 +56,14 @@ public class CustomUserDetails implements  UserDetails {
     public String getAddress() {
         return address;
     }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
 
 
 }

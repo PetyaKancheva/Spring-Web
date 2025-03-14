@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+
+<div class="container justify-content-center ">
+    <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+         th:if="${@currentSessionMessage.isSuccessfullyUpdatedUser}">
+        Your profile is successfully updated!
+    </div>
+
+    <div class=" w-25 m-auto text-center ">
+        <h4 class="text-dark "><span>Welcome Admin! </span>
+        <!--    <th:block th:text="${@testUser.getFullName()}"></th:block>-->
+            <span>! </span>
+        </h4>
+        <div class=" container text-center ">
+            <div class="col border-bottom">Personal data:</div>
+            <div class="row" th:text="${principal.toString()}"></div>
+            <div class="row" th:text="${principal.getName()}"></div>
+
+
+<!--            <div class="col border-bottom ">Address:</div>-->
+<!--&lt;!&ndash;            <div class="row" th:text="${@testUser.getEmail()}"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="row" th:text="${@testUser.getAddress()}"></div>&ndash;&gt;-->
+<!--        </div>-->
+<!--        <a class="btn btn-block btn-dark m-2" th:href="@{/orders}">View all orders</a>-->
+<!--        <a class="btn btn-block btn-dark"> JS class list toggle Update profile</a>-->
+
+<!--        <form-->
+<!--                th:action="@{/user}"-->
+<!--                th:method="POST"-->
+<!--                th:object="${userUpdateDTO}"-->
+<!--                class="mx-auto col-md-12  d-flex flex-column justify-content-center" id="updateProfile">-->
+
+<!--            <div class="form-group pt-3 py-2 border-top ">-->
+<!--                <input id="firstName"-->
+<!--                       th:name="firstName"-->
+<!--                       th:errorclass="is-invalid "-->
+<!--                       type="text"-->
+<!--                       th:field="*{firstName}"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="First name..."/>-->
+<!--                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"-->
+<!--                   class="invalid-feedback errors alert alert-danger"></p>-->
+<!--            </div>-->
+
+
+<!--            <div class="form-group py-2">-->
+<!--                <input id="lastName"-->
+<!--                       th:name="lastName"-->
+<!--                       th:errorclass="is-invalid "-->
+<!--                       type="text"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Last name..."/>-->
+<!--                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"-->
+<!--                   class="invalid-feedback errors alert alert-danger"></p>-->
+<!--            </div>-->
+
+<!--            <div class="form-group py-2 ">-->
+<!--                <input id="address"-->
+<!--                       th:name="address"-->
+<!--                       th:errorclass="is-invalid"-->
+<!--                       type="text"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Enter your address..."/>-->
+<!--                <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"-->
+<!--                   class="invalid-feedback errors alert alert-danger"></p>-->
+<!--            </div>-->
+
+<!--            <div class="form-group py-2">-->
+<!--                <input id="email"-->
+<!--                       th:name="email"-->
+<!--                       th:errorclass="is-invalid"-->
+<!--                       type="text"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Enter your e-mail address..."/>-->
+<!--                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"-->
+<!--                   class="invalid-feedback errors alert alert-danger"></p>-->
+<!--            </div>-->
+
+<!--            <div class="form-group py-2">-->
+
+<!--                <input id="oldPassword"-->
+<!--                       th:name="oldPassword"-->
+<!--                       th:errorclass="is-invalid"-->
+<!--                       type="password"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Enter your old password..."/>-->
+<!--                <p th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"-->
+<!--                   class="invalid-feedback errors alert alert-danger"></p>-->
+
+<!--            </div>-->
+
+<!--           <div class="form-group py-2">-->
+<!--                <input id="newPassword"-->
+<!--                       th:name="newPassword"-->
+<!--                       th:errorclass="is-invalid"-->
+<!--                       type="password"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Enter your new password..."/>-->
+<!--                <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"-->
+<!--                   class="invalid-feedback errors alert alert-danger"></p>-->
+<!--            </div>-->
+
+
+
+<!--            <div class="button-holder m-auto d-flex">-->
+
+<!--                <input type="submit" class="btn btn-danger btn-lg  btn-block" value="Update profile"/>-->
+
+<!--            </div>-->
+
+
+<!--        </form>-->
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+<div>
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
+</body>
+
+</html>

@@ -1,7 +1,5 @@
 package bg.softuni.bikes_shop.service.impl;
 
-import bg.softuni.bikes_shop.model.UserRoleEnum;
-import bg.softuni.bikes_shop.model.dto.UserLoginDTO;
 import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;

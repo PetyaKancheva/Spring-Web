@@ -1,6 +1,16 @@
 package bg.softuni.bikes_shop.controller;
 
-public class AdminController {
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-    //TODO admin controller
+import java.security.Principal;
+
+@Controller
+public class AdminController {
+    @GetMapping("/admin")
+    private String viewProfile(Principal principal, Model model){
+        model.addAttribute("principal",principal);
+        return "admin-profile";
+    }
 }
