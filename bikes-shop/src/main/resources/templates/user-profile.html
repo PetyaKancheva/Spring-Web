@@ -20,13 +20,13 @@
         </h4>
         <div class=" container text-center ">
             <div class="col border-bottom">Personal data:</div>
-            <!--<div class="row" th:text="${@testUser.getFirstName()}"></div>
-            <div class="row" th:text="${@testUser.getLastName()}"></div>
+            <div class="row" th:text="${principal.toString()}"></div>
+            <div class="row" th:text="${principal.getName()}"></div>
 
 
             <div class="col border-bottom ">Address:</div>
-            <div class="row" th:text="${@testUser.getEmail()}"></div>
-            <div class="row" th:text="${@testUser.getAddress()}"></div>-->
+<!--            <div class="row" th:text="${@testUser.getEmail()}"></div>-->
+<!--            <div class="row" th:text="${@testUser.getAddress()}"></div>-->
         </div>
         <a class="btn btn-block btn-dark m-2" th:href="@{/orders}">View all orders</a>
         <a class="btn btn-block btn-dark"> JS class list toggle Update profile</a>

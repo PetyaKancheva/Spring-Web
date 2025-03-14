@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 @Controller
 public class UserProfileController {
     private final UserService userService;
@@ -24,10 +26,12 @@ public class UserProfileController {
     }
 
     @GetMapping("/user")
-    private String profile(Model model) {
+    private String profile(Principal principal, Model model) {
         if(!model.containsAttribute("userUpdateDTO")){
             model.addAttribute("userUpdateDTO",UserUpdateDTO.empty());
         }
+        model.addAttribute("principal",principal);
+
         currentSessionMessage.setSuccessfullyUpdatedUser(false);
         return "user-profile";
     }

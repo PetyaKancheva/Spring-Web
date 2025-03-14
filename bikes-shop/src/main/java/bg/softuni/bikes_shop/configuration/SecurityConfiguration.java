@@ -1,5 +1,6 @@
 package bg.softuni.bikes_shop.configuration;
 
+import bg.softuni.bikes_shop.model.UserRoleEnum;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,10 @@ public class SecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/login", "/register"
                                 , "/services","/comments","/contacts","/about").permitAll()
-                        // TODO add more
+                        .requestMatchers("/bike","/wheels","/groupset").permitAll()// TODO to make custom matcher
+                        .requestMatchers("/product/**").permitAll()
+                        .requestMatchers("/admin").hasAuthority(UserRoleEnum.ADMIN.toString())
+                        .requestMatchers("/product/add").hasAuthority(UserRoleEnum.EMPLOYEE.toString())
                         .anyRequest().authenticated()
         ).formLogin(
                 formLogin -> formLogin
@@ -32,6 +36,12 @@ public class SecurityConfiguration {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
+        ).rememberMe(
+                rememberMe->rememberMe
+                        .rememberMeParameter("rememberme")
+                        .key("keyRemember")// TODO add as parameter in application.yaml
+                        .rememberMeCookieName("remembermecookie")
+
         );
 
         return httpSecurity.build();

@@ -39,7 +39,13 @@
 <!--            <p th:if="${#fields.hasErrors('password')}"  class="invalid-feedback errors alert alert-danger" >            </p>-->
 
         </div>
+
             <p class="card-text"><small class="text-muted text-">* this is a mandatory field</small></p>
+
+        <div class="form-group py-2 justify-content-end">
+            <label for="rememberme"> Remember me</label>
+            <input id="rememberme" type="checkbox"  th:name="rememberme">
+        </div>
             <div class="button-holder mx-auto d-flex">
                 <input type="submit" class="btn btn-success btn-lg  btn-block" value="Login"/>
             </div>
