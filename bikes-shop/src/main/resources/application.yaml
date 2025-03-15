@@ -1,4 +1,3 @@
-
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -18,7 +17,8 @@ spring:
   sql:
     init:
       mode: always
-
+  bikes:
+    rememberMeKey: ${REMEMBER_ME_KEY:key}
 
   thymeleaf: # Thymeleaf
     cache: false
@@ -31,13 +31,13 @@ spring:
         period: 0
 
 logging:
-    org:
-      hibernate:
-        type:
-          descriptor: TRACE
-        SQL: DEBUG
-      nodeValue: WARN
-    blog: WARN
+  org:
+    hibernate:
+      type:
+        descriptor: TRACE
+      SQL: DEBUG
+    nodeValue: WARN
+  blog: WARN
 
 server:
   port: 8080
