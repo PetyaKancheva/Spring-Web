@@ -48,6 +48,7 @@ public class UserProfileController {
             return "user-profile";
         }
         String fakeEmail="p@mail.com";// get from Principal get name
+
         userService.update(userUpdateDTO,fakeEmail);
         currentSessionMessage.setSuccessfullyUpdatedUser(true);
 

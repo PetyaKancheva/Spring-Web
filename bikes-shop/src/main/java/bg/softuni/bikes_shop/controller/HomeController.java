@@ -15,6 +15,7 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    private final static List<String> CURRENCY_LIST=List.of("EUR","BGN","PLN","USD");
     private final ProductService productService;
 
     private final CurrentCurrency currentCurrency;
@@ -36,7 +37,7 @@ public class HomeController {
 
         model.addAttribute("products",productService.getProductsPageable(pageable));
         model.addAttribute("categories", productService.getDistinctCategories());
-        model.addAttribute("listCurrencies", List.of("EUR","BGN","PLN","USD")) ;
+        model.addAttribute("listCurrencies",CURRENCY_LIST) ;
         model.addAttribute("currentCurrency",currentCurrency);
         return "index";
     }

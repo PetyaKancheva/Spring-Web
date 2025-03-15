@@ -9,10 +9,10 @@ public record UserRegisterDTO(
         @Email
         String email,
         @NotEmpty(message ="Cannot be null.")
-        @Size(min = 3, message= "Must be at least 3 characters.")
+        @Size(min = 2, message= "Must be at least 3 characters.")
         String firstName,
         @NotEmpty(message ="Cannot be null.")
-        @Size(min = 3, message= "Must be at least 3 characters.")
+        @Size(min = 2, message= "Must be at least 3 characters.")
         String lastName,
         @Size(min = 4, message= "Must be at least 4 characters.")
         String address,

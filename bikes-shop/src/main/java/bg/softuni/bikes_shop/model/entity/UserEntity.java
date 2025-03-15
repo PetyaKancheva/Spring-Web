@@ -1,6 +1,9 @@
 package bg.softuni.bikes_shop.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 
 import java.util.HashSet;
@@ -9,20 +12,25 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 public class UserEntity extends BaseEntity{
-    @Column(name="first_name", nullable = false)
+
+    @Size(min = 3, message= "Must be at least 3 characters.")
+    @Column(name="first_name")
     private String firstName;
-    @Column(name="last_name", nullable = false)
+    @Size( min=3,message="Must be longer that 2 characters.")
+    @Column(name="last_name")
     private String lastName;
-    @Column(name="address", nullable = true)
+    @Column(name="address")
     private String Address;
     @Column(name="password", nullable = false)
-    private String password;
-    @Column(name="eMail", nullable = false)
+    private String password;// todo Add some regex validation
+    @NotEmpty(message ="Cannot be empty.")
+    @Email
+    @Column(name="eMail")
     private String email;
     @OneToMany(mappedBy = "buyer")
     private Set<OrderEntity> orders;
     @Column(name="is_logged")
-   private Boolean isLogged; //TODO check if it is needed
+    private Boolean isLogged; //TODO check if it is needed
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
