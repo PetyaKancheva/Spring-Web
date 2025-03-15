@@ -1,6 +1,6 @@
 package bg.softuni.bikes_shop.controller;
 
-import bg.softuni.bikes_shop.exceptions.ProductNotFoundException;
+import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.service.OrderService;
@@ -32,7 +32,7 @@ public class ProductDetailsController {
 
         ProductDTO singleProductDTO = productService.
                 getSingleProduct(Long.parseLong(id))
-                .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found!"));
+                .orElseThrow(() -> new CustomObjectNotFoundException("Product with id " + id + " not found!"));
 
         model.addAttribute("singleProduct", singleProductDTO);
 

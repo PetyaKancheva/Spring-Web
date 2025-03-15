@@ -1,23 +1,22 @@
 package bg.softuni.bikes_shop.service.impl;
 
-import bg.softuni.bikes_shop.exceptions.ProductNotFoundException;
+import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.OrderDTO;
 import bg.softuni.bikes_shop.model.entity.ItemsEntity;
 import bg.softuni.bikes_shop.model.entity.OrderEntity;
-import bg.softuni.bikes_shop.model.entity.UserEntity;
+import bg.softuni.bikes_shop.model.entity.ProductEntity;
 import bg.softuni.bikes_shop.repository.ItemRepository;
 import bg.softuni.bikes_shop.repository.OrderRepository;
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.OrderService;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,10 +49,14 @@ public class OrderServiceImpl implements OrderService {
 
         for (ItemDTO itemDTO : itemsDTO) {
             itemRepository.save(new ItemsEntity()
-                    .setProduct(productRepository.findById(itemDTO.getProductID()).orElseThrow(()-> new ProductNotFoundException("Product with id: "+itemDTO.getProductID()+"not found!")))
+                    .setProduct(productRepository.findById(itemDTO.getProductID())
+                            .orElseThrow(()-> new CustomObjectNotFoundException("Product with id: "+ itemDTO.getProductID()+"not found!")))
                     .setQuantity(itemDTO.getQuantity())
                     .setOrder(newOrder));
         }
+
+
+
 
     }
 

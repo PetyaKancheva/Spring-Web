@@ -16,8 +16,6 @@ import java.util.Objects;
 
 public class CustomUserDetails implements  UserDetails {
     private String firstName;
-
-
     private String lastName;
     private String email;
     private String password;

@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
 </head>
 <body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<div class="row justify-content-center pt-5 m-5">
 
 
+    <div class="  bg-secondary-subtle">The page you were searching cannot be found</div>
+    <div><a class="btn-link justify-content-center" type="button" th:href="@{/}">Go to homepage </a>
+    </div>
+    <p class=" row justify-content-center"><img src="/images/404.jpg" alt="error" wigth="1500" height="1000"></p>
+
+
+</div>
+
+<div>
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
 </body>
+
 </html>

@@ -32,27 +32,29 @@ public class    UserServiceImpl implements UserService {
     @Override
     public void update(UserUpdateDTO userUpdateDTO, String email) {
 
-        UserEntity user = userRepository.findUserByEmail(email).orElseThrow(()->new UsernameNotFoundException("User with email: "+ email +"not found!"));
+        UserEntity existingUser = userRepository.findUserByEmail(email).orElseThrow(()->new UsernameNotFoundException("User with email: "+ email +"not found!"));
 
-        user.setFirstName(userUpdateDTO.firstName());
-        user.setLastName(userUpdateDTO.lastName());
+        existingUser.setFirstName(userUpdateDTO.firstName());
+        existingUser.setLastName(userUpdateDTO.lastName());
 
-        String newEmail = userUpdateDTO.email();
-        if (userRepository.findUserByEmail(newEmail) == null) {
-            user.setEmail(newEmail);
+        if (userRepository.findUserByEmail(userUpdateDTO.email()) == null) {
+            existingUser.setEmail(userUpdateDTO.email());
         } else {
-            throw  new IllegalArgumentException("User already exist with email:"+ newEmail+"!");
+            throw  new IllegalArgumentException("User already exist with email:"+ userUpdateDTO.email() +"!");
+            // maybe it is themselves
         }
-        user.setAddress(userUpdateDTO.address());
+        existingUser.setAddress(userUpdateDTO.address());
 
-        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
+        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), existingUser.getPassword())) {
+            existingUser.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
         } else {
-            throw  new IllegalArgumentException("Incorrect password!");
+            throw  new IllegalArgumentException("Old password not matching!");
         }
+// if old password is correct old password
+//        is new pass is different than old -custom validator
+        // what is old alrady wrong?
 
-
-            userRepository.save(user);
+            userRepository.save(existingUser);
 
     }
 

@@ -2,6 +2,7 @@ package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +27,16 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/shopping-cart")
-    public String delete(String  productID){
-
+    public String delete( String  productID){
+        //  TODO validate if product ID exists
             currentOrder.deleteItem(Long.valueOf(productID));
 
         return "redirect:/shopping-cart";
     }
     @GetMapping("/shopping-cart-finalize")
-    public String clear(){
+    public String finalizePurchase(){
             String fakeEmail="";
-//            TODO FIX
+//            TODO FIX logic? why it is GET not POST??
         if (currentOrder.getItems()!=null ){
 
             orderService.buy(fakeEmail,currentOrder.getItems(),currentOrder.getTotalPrice());

@@ -12,19 +12,19 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-    private final static List<String> CURRENCY_LIST=List.of("EUR","BGN","PLN","USD");
-    private final ProductService productService;
 
+    private final ProductService productService;
+    private final static List<String> CURRENCY_LIST = List.of("EUR", "BGN", "PLN", "USD");
     private final CurrentCurrency currentCurrency;
 
-    public HomeController(ProductService productService,  CurrentCurrency currentCurrency) {
+    public HomeController(ProductService productService, CurrentCurrency currentCurrency) {
         this.productService = productService;
 
         this.currentCurrency = currentCurrency;
     }
 
     @GetMapping("/")
-    private String allProducts(Model model, @PageableDefault(size = 3,sort = "id") Pageable pageable  ) {
+    private String allProducts(Model model, @PageableDefault(size = 3, sort = "id") Pageable pageable) {
 //        if(!model.containsAttribute("currencyDTO")){
 //            CurrencyExchangeDTO eurCEDTO= new CurrencyExchangeDTO();
 //            eurCEDTO.setRate(1.0);
@@ -32,10 +32,10 @@ public class HomeController {
 //            model.addAttribute("currencyDTO",eurCEDTO);
 //        }
 
-        model.addAttribute("products",productService.getProductsPageable(pageable));
+        model.addAttribute("products", productService.getProductsPageable(pageable));
         model.addAttribute("categories", productService.getDistinctCategories());
-        model.addAttribute("listCurrencies",CURRENCY_LIST) ;
-        model.addAttribute("currentCurrency",currentCurrency);
+        model.addAttribute("listCurrencies", CURRENCY_LIST);
+        model.addAttribute("currentCurrency", currentCurrency);
         return "index";
     }
 
