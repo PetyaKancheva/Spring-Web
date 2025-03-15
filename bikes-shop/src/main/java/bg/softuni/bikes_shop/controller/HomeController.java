@@ -1,6 +1,5 @@
 package bg.softuni.bikes_shop.controller;
 
-import bg.softuni.bikes_shop.model.dto.CurrencyExchangeDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentCurrency;
 import org.springframework.data.domain.Pageable;
@@ -8,8 +7,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -44,17 +41,17 @@ public class HomeController {
 
     @GetMapping("/about")
     private String about() {
-        return "about";
+        return "/static/about";
     }
 
     @GetMapping("/services")
     private String services() {
-        return "services";
+        return "/static/services";
     }
 
     @GetMapping("/contacts")
     private String contacts() {
-        return "contacts";
+        return "/static/contacts";
     }
 
 

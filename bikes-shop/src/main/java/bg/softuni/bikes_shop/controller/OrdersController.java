@@ -26,8 +26,6 @@ public class OrdersController {
         List<OrderDTO> allOrders= new ArrayList<>();
 
 
-//        allOrders= orderService.getAllByUser();
-
 
             model.addAttribute("allOrders", allOrders);
             // TODO fix refresh adds new product

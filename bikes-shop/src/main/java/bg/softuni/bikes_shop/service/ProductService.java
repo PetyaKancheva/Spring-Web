@@ -12,7 +12,7 @@ import java.util.Set;
 public interface ProductService {
     Page<ProductDTO> getProductsPageable(Pageable pageable);
 
-    Set<ProductDTO> getAllProducts();
+    List<ProductDTO> getAllProducts();
 
    Optional<ProductDTO> getSingleProduct(Long id);
 

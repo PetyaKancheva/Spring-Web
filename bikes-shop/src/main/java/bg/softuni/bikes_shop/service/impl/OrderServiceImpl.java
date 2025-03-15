@@ -1,5 +1,6 @@
 package bg.softuni.bikes_shop.service.impl;
 
+import bg.softuni.bikes_shop.exceptions.ProductNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.OrderDTO;
 import bg.softuni.bikes_shop.model.entity.ItemsEntity;
@@ -49,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
         for (ItemDTO itemDTO : itemsDTO) {
             itemRepository.save(new ItemsEntity()
-                    .setProduct(productRepository.findById(itemDTO.getProductID()).orElseThrow())
+                    .setProduct(productRepository.findById(itemDTO.getProductID()).orElseThrow(()-> new ProductNotFoundException("Product with id: "+itemDTO.getProductID()+"not found!")))
                     .setQuantity(itemDTO.getQuantity())
                     .setOrder(newOrder));
         }

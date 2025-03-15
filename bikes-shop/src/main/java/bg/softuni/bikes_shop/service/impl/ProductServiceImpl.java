@@ -3,9 +3,7 @@ package bg.softuni.bikes_shop.service.impl;
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.model.entity.ProductEntity;
-
 import bg.softuni.bikes_shop.repository.ProductRepository;
-import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,9 +34,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Set<ProductDTO> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(ProductServiceImpl::mapToDTO).collect(Collectors.toSet());
+                .map(ProductServiceImpl::mapToDTO).collect(Collectors.toList());
 
     }
 

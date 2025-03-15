@@ -16,11 +16,13 @@ spring:
 
   sql:
     init:
-      mode: always
-  bikes:
-    rememberMeKey: ${REMEMBER_ME_KEY:key}
+      mode: never
 
-  thymeleaf: # Thymeleaf
+bikes:
+  rememberMeKey: ${REMEMBER_ME_KEY:key}
+
+
+thymeleaf: # Thymeleaf
     cache: false
     mode: HTML
     encoding: UTF-8

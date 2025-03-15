@@ -17,7 +17,7 @@ import java.util.List;
 public class SecurityConfiguration {    private final ProductService productService;
     private final String keyRemember;
 
-    public SecurityConfiguration(@Value ("${bikes.rememberMeKey}") String keyRemember , List<String> categories, ProductService productService) {
+    public SecurityConfiguration(@Value ("${bikes.rememberMeKey}") String keyRemember , ProductService productService) {
         this.productService = productService;
         this.keyRemember = keyRemember;
     }
@@ -28,13 +28,15 @@ public class SecurityConfiguration {    private final ProductService productServ
         httpSecurity.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/login", "/register"
-                                , "/services","/comments","/contacts","/about").permitAll()
+                        .requestMatchers("/", "/login", "/register").permitAll()
+                        .requestMatchers( "/services","/comments","/contacts","/about").permitAll()
                         .requestMatchers("/product/**").permitAll()
                         .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()
                         .requestMatchers("/admin").hasAuthority(UserRoleEnum.ADMIN.toString())
                         .requestMatchers("/product/add").hasAuthority(UserRoleEnum.EMPLOYEE.toString())
-                        .anyRequest().authenticated()
+                        .requestMatchers("/shopping-cart","/user","/orders").authenticated()
+                        .requestMatchers("/shopping-cart-finalize","/user","/orders").authenticated()
+                         // changed for testing error pages
         ).formLogin(
                 formLogin -> formLogin
                         .loginPage("/login")

@@ -25,8 +25,6 @@ public class ProductAddController {
 
     @GetMapping("/add")
     private String addProduct(Model model) {
-        // add check if employee
-        // sucessfuööy created to show different message
         model.addAttribute("productAddDTO", ProductAddDTO.empty());
         currentSessionMessage.setProductCreated(true);
         return "product-add";

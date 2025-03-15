@@ -4,61 +4,61 @@
 <head th:replace="~{fragments/head}">
 </head>
 <body>
-<div  class="page-wrap" >
-<div>
-    <nav th:replace="~{fragments/navigation}"></nav>
-</div>
-<div class="container justify-content-center ">
-    <h4 class="text-center text-dark pt-5">Login</h4>
-    <form
-            th:action="@{/login}"
-            th:method="POST"
+<div class="page-wrap">
+    <div>
+        <nav th:replace="~{fragments/navigation}"></nav>
+    </div>
+    <div class="container justify-content-center ">
 
-            class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" id="login-form">
 
-        <div class="form-group py-2 ">
-            <input id="email"
-                   th:name="email"
+        <h4 class="text-center text-dark pt-5">Login</h4>
 
-                   type="text"
-                   class="form-control"
-                   placeholder="Enter your e-Mail *"/>
-<!--            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"-->
-<!--               class="invalid-feedback errors alert alert-danger"></p>-->
-        </div>
+        <div th:if= "${error}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+            th:text="${error}"></div>
 
-        <div class="form-group py-2">
+        <form
+                th:action="@{/login}"
+                th:method="POST"
 
-            <input id="password"
-                   th:name="password"
+                class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" id="login-form">
 
-                   type="password"
-                   class="form-control"
-                   placeholder="Your password *"/>
-<!--            th:errors="*{password}"-->
-<!--            <p th:if="${#fields.hasErrors('password')}"  class="invalid-feedback errors alert alert-danger" >            </p>-->
+            <div class="form-group py-2 ">
+                <input id="email"
+                       th:name="email"
 
-        </div>
+                       type="text"
+                       class="form-control"
+                       placeholder="Enter your e-Mail *"/>
+            </div>
+
+            <div class="form-group py-2">
+
+                <input id="password"
+                       th:name="password"
+                       type="password"
+                       class="form-control"
+                       placeholder="Your password *"/>
+            </div>
 
             <p class="card-text"><small class="text-muted text-">* this is a mandatory field</small></p>
 
-        <div class="form-group py-2 justify-content-end">
-            <label for="rememberme"> Remember me</label>
-            <input id="rememberme" type="checkbox"  th:name="rememberme">
-        </div>
+            <div class="form-group py-2 justify-content-end">
+                <label for="rememberme"> Remember me</label>
+                <input id="rememberme" type="checkbox" th:name="rememberme">
+            </div>
             <div class="button-holder mx-auto d-flex">
                 <input type="submit" class="btn btn-success btn-lg  btn-block" value="Login"/>
             </div>
 
 
-    </form>
+        </form>
 
-</div>
-
-<div>
-    <footer th:replace="~{fragments/footer}"></footer>
-</div>
     </div>
+
+    <div>
+        <footer th:replace="~{fragments/footer}"></footer>
+    </div>
+</div>
 </body>
 
 </html>

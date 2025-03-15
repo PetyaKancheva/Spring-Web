@@ -45,8 +45,8 @@ public class UserRegisterController {
 
         //TODO: Registration email with activation link
         userService.register(userRegisterDTO);
-        currentSessionMessage.setSuccessfullyRegistered(true);
-        return "user-register";
+        rAtt.addFlashAttribute("successfullyCreated", " Congratulations! You are now registered at Bikes-Shop.");
+        return "redirect:/register";
     }
 
 

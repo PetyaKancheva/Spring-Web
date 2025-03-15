@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/head}">
 </head>
 <body>
@@ -8,10 +9,9 @@
 </div>
 
 <div class="container justify-content-center ">
-    <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
-         th:if="${@currentSessionMessage.isSuccessfullyRegistered}">
-        Congratulations! You are now registered in Bikes-Shop.
-    </div>
+    <div th:if= "${successfullyCreated}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+         th:text="${successfullyCreated}"></div>
+
     <div class=" w-25 mx-auto text-center ">
         <h4 class="text-dark pb-3">I'm already a Customer</h4>
         <a class="btn btn-block  btn-dark" th:href="@{/login}">Log in</a>

@@ -34,7 +34,7 @@ public class BikesUserDetailsService implements UserDetailsService {
 
     }
 
-//   DO NOT DELETE below for reference
+//  ****** DO NOT DELETE below for reference ****
 
 //    private static UserDetails mapDetails(UserEntity userEntity){
 //        return User
