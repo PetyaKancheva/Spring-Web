@@ -10,8 +10,9 @@
 
 
     <div class="container ">
-        <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
-             th:if="${@currentSessionMessage.isProductCreated()}">New Product created!</div>
+        <div th:if= "${successfullyAdded}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+             th:text="${successfullyAdded}"></div>
+
         <form
                 th:action="@{/product/add}"
                 th:method="POST"

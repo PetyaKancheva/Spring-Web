@@ -6,6 +6,7 @@ import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,27 +31,28 @@ public class    UserServiceImpl implements UserService {
     }
     @Override
     public void update(UserUpdateDTO userUpdateDTO, String email) {
-//        UserEntity user = userRepository.findUserByEmail(email);
-//        // compare??
-//        user.setFirstName(userUpdateDTO.firstName());
-//        user.setLastName(userUpdateDTO.lastName());
-//
-//        String newEmail = userUpdateDTO.email();
-//        if (userRepository.findUserByEmail(newEmail) == null) {
-//            user.setEmail(newEmail);
-//        } else {
-////            give error email already in use
-//        }
-//        user.setAddress(userUpdateDTO.address());
-//
-////        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), user.getPassword())) {
-////            user.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
-////        } else {
-////           // gove error same pass
-////        }
-//
-//            mapToTestUser(testUser,user);
-//            userRepository.save(user);
+
+        UserEntity user = userRepository.findUserByEmail(email).orElseThrow(()->new UsernameNotFoundException("User with email: "+ email +"not found!"));
+
+        user.setFirstName(userUpdateDTO.firstName());
+        user.setLastName(userUpdateDTO.lastName());
+
+        String newEmail = userUpdateDTO.email();
+        if (userRepository.findUserByEmail(newEmail) == null) {
+            user.setEmail(newEmail);
+        } else {
+            throw  new IllegalArgumentException("User already exist with email:"+ newEmail+"!");
+        }
+        user.setAddress(userUpdateDTO.address());
+
+        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
+        } else {
+            throw  new IllegalArgumentException("Incorrect password!");
+        }
+
+
+            userRepository.save(user);
 
     }
 

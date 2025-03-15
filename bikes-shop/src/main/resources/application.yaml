@@ -18,11 +18,7 @@ spring:
     init:
       mode: never
 
-bikes:
-  rememberMeKey: ${REMEMBER_ME_KEY:key}
-
-
-thymeleaf: # Thymeleaf
+  thymeleaf: # Thymeleaf
     cache: false
     mode: HTML
     encoding: UTF-8
@@ -50,3 +46,7 @@ frankfurter:
   path: /v1/latest
   symbols: BGN,USD,PLN
   enabled: false
+
+
+bikes:
+   rememberMeKey: ${REMEMBER_ME_KEY:key}
