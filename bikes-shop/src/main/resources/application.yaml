@@ -35,7 +35,7 @@ logging:
         descriptor: TRACE
       SQL: DEBUG
     nodeValue: WARN
-  blog: WARN
+    blog: WARN
 
 server:
   port: 8080
@@ -49,4 +49,6 @@ frankfurter:
 
 
 bikes:
-   rememberMeKey: ${REMEMBER_ME_KEY:key}
+  rememberMeKey: ${REMEMBER_ME_KEY:key}
+
+
