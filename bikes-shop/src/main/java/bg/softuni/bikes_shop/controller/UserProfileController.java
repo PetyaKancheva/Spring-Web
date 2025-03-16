@@ -42,6 +42,7 @@ public class UserProfileController {
         userService.update(userUpdateDTO, currentUser.getUsername());
 
         rAtt.addFlashAttribute("successfullyUpdated","Your profile is successfully updated!");
+
         return "redirect:/user";
     }
 

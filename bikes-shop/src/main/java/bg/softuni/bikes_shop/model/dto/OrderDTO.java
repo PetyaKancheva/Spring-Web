@@ -3,11 +3,13 @@ package bg.softuni.bikes_shop.model.dto;
 
 
 
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.List;
 
 
 public record OrderDTO(
-        String buyer,
+       @NotEmpty String buyer,
         List<ItemDTO> items,
         Double totalSum) {
 
