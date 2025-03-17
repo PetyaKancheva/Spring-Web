@@ -29,8 +29,10 @@ public class SecurityConfiguration {    private final ProductService productServ
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/login", "/register").permitAll()
-                        .requestMatchers( "/services","/comment/**","/contacts","/about","/comments").permitAll()
+                        .requestMatchers( "/services","/contacts","/about").permitAll()
+                        .requestMatchers( "/comment/**","/comments").permitAll()
                         .requestMatchers("/product/**").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()
                         .requestMatchers("/admin").hasAuthority(UserRoleEnum.ADMIN.toString())
                         .requestMatchers("/product/add").hasAuthority(UserRoleEnum.EMPLOYEE.toString())

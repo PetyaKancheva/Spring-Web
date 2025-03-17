@@ -17,6 +17,12 @@
                         <div th:replace="~{fragments/sidebar}"></div>
 
                         <div class="col-10 text-center ">
+<!--                            <select th:object="${sortingObj}" class="form-select" aria-label="Default select example">-->
+<!--                                <option selected>Sort by</option>-->
+<!--                                <option th:value="1">Name</option>-->
+<!--                                <option th:value="2">Price</option>-->
+<!--                            </select>-->
+                            <div><input type= number th:field="${size}"></div>
                             <div class="row row-cols-sm-3  ">
                                 <div class="col" th:each="p:${products}">
                                     <a class="product-link" th:href="@{/product/{pid}(pid=${p.id})}">

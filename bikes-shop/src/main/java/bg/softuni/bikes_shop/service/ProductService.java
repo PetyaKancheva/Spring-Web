@@ -4,6 +4,7 @@ import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ public interface ProductService {
     List<String> getDistinctCategories();
 
     Page<ProductDTO>  getProductsFromCategoryPageable(Pageable pageable,String category);
+
 
 
 }

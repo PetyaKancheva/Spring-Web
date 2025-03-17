@@ -33,7 +33,7 @@ public class CommentsController{
         return restTemplate.getForEntity(REST_URL,Object[].class);
     }
 //
-//    @PostMapping("REST_URL")
+//    @PostMapping("/comment/add")
 //    public CommentDTO post(CommentDTO commentDTO){
 //        CommentDTO newComment= new CommentDTO();
 //        newComment.setBody("This bike is the best!");
@@ -41,6 +41,15 @@ public class CommentsController{
 //        newComment.setTitle("New Comment");
 //        newComment.setUserId(1l);
 //        return restTemplate.postForObject(REST_URL,newComment,CommentDTO.class);
+//    }
+    //    @DeleteMapping("/comment/delete")
+//    public CommentDTO post(Long id ){
+//        CommentDTO newComment= new CommentDTO();
+//        newComment.setBody("This bike is the best!");
+//        newComment.setId(111l);
+//        newComment.setTitle("New Comment");
+//        newComment.setUserId(1l);
+//        return restTemplate.delete(REST_URL,newComment,CommentDTO.class);
 //    }
 
 
