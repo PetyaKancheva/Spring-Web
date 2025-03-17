@@ -1,7 +1,27 @@
 demo:
     greeting:
          message: Hello, softuni!
-thymeleaf: # Thymeleaf
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/demo?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+        password: ${MYSQL_PASSWORD:1234}
+        username: ${MYSQL_USERNAME:root}
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: update
+            open-in-view: false
+            properties:
+            hibernate:
+                format_sql: true
+
+    sql:
+        init:
+            mode: never
+
+    thymeleaf: # Thymeleaf
         cache: false
         mode: HTML
         encoding: UTF-8

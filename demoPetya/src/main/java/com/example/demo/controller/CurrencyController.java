@@ -1,13 +1,9 @@
-package com.example.demo.web;
+package com.example.demo.controller;
 
-import com.example.demo.model.MoneyDTO;
 import com.example.demo.service.CurrencyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.math.BigDecimal;
 
 @Controller
 public class CurrencyController {

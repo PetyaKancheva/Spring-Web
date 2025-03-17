@@ -2,42 +2,53 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
+
 <body>
+<ul>
+    <li> <a th:href="@{/comments(size=3,page=0)}">Size 3</a></li>
+    <li> <a th:href="@{/comments(size=6,page=0)}">Size 6</a></li>
 
-
+</ul>
+<h3>List of comments</h3>
 <div th:each="comment:${comments}">Comments below
-<div><span>Comment id:</span>
-    <th:block th:text="${comment.getId}"></th:block>
-</div>
-<div><span>Title:</span>
-    <th:block th:text="${comment.getTitle}"></th:block>
-</div>
-<div>
-    <th:block th:text="${comment.getBody}"></th:block>
-</div>
-</div>
-<h3>
-    Post Own Comment:
-</h3>
-<form th:action="@{/api/comments/}"
-      th:method="POST"
-      th:object="${commentDTO}">
-    <label>Comment Id:</label>
-    <input th:name="id" th:field="*{id}">
-    <label>User Id:</label>
-    <input th:name="userId" th:field="*{userId}">
+    <div><span>Comment id:</span>
+        <th:block th:text="${comment.getId}"></th:block>
+    </div>
+    <div><span>Title:</span>
+        <th:block th:text="${comment.getTitle}"></th:block>
+    </div>
 
-    <label>Title:</label>
-    <input th:name="title" th:field="*{title}">
+</div>
 
-    <label>Enter comments below:</label>
-    <textarea th:name="body" th:field="*{body}">
+<nav aria-label="Page navigation">
+    <ul class="pagination ">
 
-</textarea>
-    <input type="submit" class="button" value="submit">
-</form>
+        <!-- previous page -->
 
-<form
-></form>
+        <li class="page-item" th:classappend="${comments.isFirst() ? 'disabled' : ''}">
+            <a th:if="${comments.isFirst()}" class="page-link" href="#" aria-label="First"><span
+                    aria-hidden="true">Previous</span></a>
+            <a th:unless="${comments.isFirst()}" class="page-link"
+               th:href="@{/comments(size=${comments.size},page=${comments.getNumber()-1})}"
+               aria-label="Previous"><span aria-hidden="true">Previous</span></a>
+        </li>
+
+
+        <!--loop pages -->
+        <li class="page-item" th:classappend="${comments.getNumber()==page ? 'active' : '' }"
+            th:each="page:${#numbers.sequence(0,comments.getTotalPages()-1)}"><a
+                class="page-link" th:href="@{/comments(size=${comments.size},page=${page})}" th:text="${page}+1"></a>
+        </li>
+        <!-- next page -->
+        <li class="page-item" th:classappend="${comments.isLast() ? 'disabled' : ''}">
+            <a th:if="${comments.isLast()}" class="page-link" href="#" aria-label="Next"><span
+                    aria-hidden="true">Next</span></a>
+            <a th:unless="${comments.isLast()}" class="page-link"
+               th:href="@{/comments(size=${comments.size},page=${comments.getNumber()+1})}"
+               aria-label="Next"><span aria-hidden="true">Next</span></a>
+        </li>
+    </ul>
+</nav>
 </body>
+
 </html>
