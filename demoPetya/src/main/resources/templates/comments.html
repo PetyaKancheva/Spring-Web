@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
 
 
 <body>
-<ul>
-    <li> <a th:href="@{/comments(size=3,page=0)}">Size 3</a></li>
-    <li> <a th:href="@{/comments(size=6,page=0)}">Size 6</a></li>
 
-</ul>
+  <div><a class=" " th:href="@{/comments(size=3,page=${comments.getNumber()})}">
+        <i class="fa-solid fa-table-cells-large"></i>
+    </a>
+     <a class=" " th:href="@{/comments(size=6,page=${comments.getNumber()})}"><i class="fa-solid fa-table-cells"></i></a></div>
+<input type="hidden" id="valueOfSort" th:value=1>
+
+<h3>Dropdown sorting</h3>
+
+
+<!--<ul    class="dropdown-menu">-->
+<!--    <li ><a id="sortOne" th:href="@{/comments(size=6,page=${comments.getNumber()},n=${n})}">Sort by Id</a></li>-->
+<!--    <li ><a id="sortTwo" th:href="@{/comments(size=6,page=${comments.getNumber()},n=${n})}">Sort by Name</a></li>-->
+<!--</ul>-->
+
+  <ul    class="dropdown-menu">
+      <li ><a id="sortOne" >Button one</a></li>
+      <li ><a id="sortTwo" >Button two</a></li>
+  </ul>
+
+
 <h3>List of comments</h3>
 <div th:each="comment:${comments}">Comments below
     <div><span>Comment id:</span>
@@ -37,7 +57,7 @@
         <!--loop pages -->
         <li class="page-item" th:classappend="${comments.getNumber()==page ? 'active' : '' }"
             th:each="page:${#numbers.sequence(0,comments.getTotalPages()-1)}"><a
-                class="page-link" th:href="@{/comments(size=${comments.size},page=${page})}" th:text="${page}+1"></a>
+                class="page-link" th:href="@{/comments(size=${comments.size},page=${page},n=${})}" th:text="${page}+1"></a>
         </li>
         <!-- next page -->
         <li class="page-item" th:classappend="${comments.isLast() ? 'disabled' : ''}">
@@ -49,6 +69,23 @@
         </li>
     </ul>
 </nav>
+
+  <script>
+
+
+      document.getElementById("sortOne").addEventListener("click",
+          () => {
+              document.getElementById("valueOfSort").setAttribute("value", "1");
+
+          alert("Set value")});
+      document.getElementById("sortTwo").addEventListener("click",
+          () => {
+              document.getElementById("valueOfSort").setAttribute("value", "2");
+
+              alert("clicked two")});
+
+
+  </script>
 </body>
 
 </html>

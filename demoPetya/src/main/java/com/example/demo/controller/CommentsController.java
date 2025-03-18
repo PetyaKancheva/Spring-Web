@@ -7,9 +7,11 @@ import com.example.demo.service.CommentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -24,20 +26,33 @@ public class CommentsController {
         this.commentsRepository = commentsRepository;
     }
     @GetMapping("/comments")
-    public String comments( Model model ,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size){
+    public String comments( Model model ,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,@RequestParam("n") Optional<Integer>n){
 
             int currentPage = page.orElse(0);
             int pageSize = size.orElse(3);
+            int sort=n.orElse(1);
+            String pageSort="";
+        if(sort == 1){
+            pageSort="id";
+        }else if(sort==2) {
+            pageSort="title";
+        }
 
 
 
-
-       Page<CommentEntity> commentPage=  commentsRepository.findAll(PageRequest.of(currentPage,pageSize));
+       Page<CommentEntity> commentPage=  commentsRepository.findAll(PageRequest.of(currentPage,pageSize, Sort.by(pageSort)));
 
         model.addAttribute("comments",commentPage);
+        model.addAttribute("n",n);
+
         return "comments";
     }
+    @PostMapping("/comments")
+    public String postMethod(Optional<Integer>n, RedirectAttributes rAtt){
 
+        System.out.println(n);
+     return "/comments";
+    }
 
 
 }
