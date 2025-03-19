@@ -52,3 +52,9 @@ bikes:
   rememberMeKey: ${REMEMBER_ME_KEY:key}
 
 
+mail:
+  email: "bikes@mail.com"
+  host: localhost
+  port: 1025
+  username: ${MAIL_USER:admin}
+  password: ${MAIL_PASSWORD:password}

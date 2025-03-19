@@ -11,13 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.List;
-
 @Configuration
-public class SecurityConfiguration {    private final ProductService productService;
+public class SecurityConfig {    private final ProductService productService;
     private final String keyRemember;
 
-    public SecurityConfiguration(@Value ("${bikes.rememberMeKey}") String keyRemember , ProductService productService) {
+    public SecurityConfig(@Value ("${bikes.rememberMeKey}") String keyRemember , ProductService productService) {
         this.productService = productService;
         this.keyRemember = keyRemember;
     }
