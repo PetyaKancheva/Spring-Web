@@ -1,11 +1,10 @@
---
--- INSERT INTO user_role (`id`,`name`) VALUES (1,'USER');
--- INSERT INTO user_role (`id`,`name`) VALUES (2,'ADMIN');
--- INSERT INTO user_role (`id`,`name`) VALUES (3,'EMPLOYEE');
---
--- INSERT INTO users (`id`,`address`,`e_mail`,`first_name`,`is_logged`,`last_name`,`password`) VALUES (11,'New York','p@mail.com','Peter','0','Parker','842b130448a51526dca0b82460b5942aa73075bf1bbd9284789bc2ecbc055b9a9de8eaa40b90e39824a59a08d17fa687');
--- INSERT INTO users (`id`,`address`,`e_mail`,`first_name`,`is_logged`,`last_name`,`password`) VALUES (12,'Gotham','b@mail.com','Bruce','0','Wayne','4bbabbb959b2bc644246199ad3b7c7a8798e6c233ed2f0bcb4193bd93a6eab605654f82ac99849cc962597fe37dcd6a9');
---
+INSERT INTO user_role (`id`,`name`) VALUES (1,'USER');
+INSERT INTO user_role (`id`,`name`) VALUES (2,'ADMIN');
+INSERT INTO user_role (`id`,`name`) VALUES (3,'EMPLOYEE');
+
+INSERT INTO users (`id`,`address`,`e_mail`,`first_name`,`last_name`,`password`) VALUES (11,'New York','p@mail.com','Peter','Parker','842b130448a51526dca0b82460b5942aa73075bf1bbd9284789bc2ecbc055b9a9de8eaa40b90e39824a59a08d17fa687');
+INSERT INTO users (`id`,`address`,`e_mail`,`first_name`,`last_name`,`password`) VALUES (12,'Gotham','b@mail.com','Bruce','Wayne','4bbabbb959b2bc644246199ad3b7c7a8798e6c233ed2f0bcb4193bd93a6eab605654f82ac99849cc962597fe37dcd6a9');
+
 
 
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)

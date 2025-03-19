@@ -5,27 +5,27 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public record UserRegisterDTO(
-        @NotEmpty(message ="Cannot be empty.")
+        @NotEmpty(message = "Cannot be empty.")
         @Email
         String email,
-        @NotEmpty(message ="Cannot be null.")
-        @Size(min = 2, message= "Must be at least 3 characters.")
+        @NotEmpty(message = "Cannot be null.")
+        @Size(min = 2, message = "Must be at least 3 characters.")
         String firstName,
-        @NotEmpty(message ="Cannot be null.")
-        @Size(min = 2, message= "Must be at least 3 characters.")
+        @NotEmpty(message = "Cannot be null.")
+        @Size(min = 2, message = "Must be at least 3 characters.")
         String lastName,
-        @Size(min = 4, message= "Must be at least 4 characters.")
+        @Size(min = 4, message = "Must be at least 4 characters.")
         String address,
-       // @UniqueUserEmail TODO:
-        @NotEmpty(message ="Cannot be null.")
-        @Size(min = 3, message= "Must be at least 3 characters.")
+        String country,
+        @NotEmpty(message = "Cannot be null.")
+        @Size(min = 3, message = "Must be at least 3 characters.")
         String password,
-        @NotEmpty(message ="Cannot be empty.")
-        String confirmPassword)
-            {
+        @NotEmpty(message = "Cannot be empty.")
+        String confirmPassword) // TODO compare passwords
+{
     public static UserRegisterDTO empty() {
-        return new UserRegisterDTO(null, null, null, null, null,null);
+        return new UserRegisterDTO(null, null, null, null, null, null, null);
     }
 
 
-    }
+}

@@ -6,19 +6,19 @@ import java.time.Clock;
 
 public class UserRegistrationEvent extends ApplicationEvent {
     private final String userEmail;
-    private final String userFullName;
+    private final String userFirstName;
 
-    public UserRegistrationEvent(Object source, String userEmail, String userFullName) {
+    public UserRegistrationEvent(Object source, String userEmail, String userFirstName) {
         super(source);
         this.userEmail = userEmail;
-        this.userFullName = userFullName;
+        this.userFirstName = userFirstName;
     }
 
     public String getUserEmail() {
         return userEmail;
     }
 
-    public String getUserFullName() {
-        return userFullName;
+    public String getUserFirstName() {
+        return userFirstName;
     }
 }

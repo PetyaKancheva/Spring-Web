@@ -19,6 +19,7 @@ public record UserUpdateDTO(
         @Size(min = 4, message= "Must be at least 4 characters.")
         String address,
        // TODO: @UniqueUserEmail
+        String country,
         @NotEmpty(message ="Cannot be null.")
         @Size(min = 3, message= "Must be at least 3 characters.")
         String oldPassword, // TODO: @UniqueUserEmail check old email is corredczt
@@ -27,6 +28,6 @@ public record UserUpdateDTO(
         String newPassword
 )            {
     public static UserUpdateDTO empty() {
-        return new UserUpdateDTO(null, null, null, null,null,null);
+        return new UserUpdateDTO(null, null, null,null, null,null,null);
     }
     }

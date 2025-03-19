@@ -16,11 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserProfileController {
     private final UserService userService;
-    private final MyPublisher myPublisher;
 
-    public UserProfileController(UserService userService, MyPublisher myPublisher) {
+
+    public UserProfileController(UserService userService      ) {
         this.userService = userService;
-        this.myPublisher = myPublisher;
     }
 
     @GetMapping("/user")
@@ -29,7 +28,7 @@ public class UserProfileController {
             model.addAttribute("userUpdateDTO", UserUpdateDTO.empty());
         }
         model.addAttribute("currentUser", currentUser);
-        myPublisher.publishEvent(currentUser.getFirstName());
+
 
         return "user-profile";
     }

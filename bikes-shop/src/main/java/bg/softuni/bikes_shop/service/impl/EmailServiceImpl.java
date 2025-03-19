@@ -13,7 +13,8 @@ import org.thymeleaf.context.Context;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-    private final static String REGISTRATION_EMAIL_SUBJECT_LINE ="Thank you for registering at Bikes-Shop! Please confirm your e-Mail.";
+    private final static String REGISTRATION_EMAIL_SUBJECT_LINE
+            ="Thank you for registering at Bikes-Shop! Please confirm your e-Mail.";
     private final JavaMailSender javaMailSender;
     private final MailConfigProperties mailConfigProperties;
     private final TemplateEngine templateEngine;
