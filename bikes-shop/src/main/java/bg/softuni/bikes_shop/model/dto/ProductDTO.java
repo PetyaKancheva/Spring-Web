@@ -1,7 +1,7 @@
 package bg.softuni.bikes_shop.model.dto;
 
 public record ProductDTO(
-        Long id,
+       Long id,
         String name,
         String description,
         String category,

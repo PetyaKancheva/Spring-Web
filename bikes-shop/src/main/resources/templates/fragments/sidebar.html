@@ -6,12 +6,28 @@
     <title>Title</title>
 </head>
 <body>
-<div class="col-2" th:fragments="sidebar">
-    <div class="container sidebar-main"  th:each="c:${categories}">
-        <a class="category-link  link-underline-opacity-0  " th:href="@{/{cat}(cat=${c})}">
-            <div class="category-name "  th:text="${#strings.capitalize(c)}"></div>
-        </a>
+
+<div class="flex-shrink-0 p-3 col-2">
+    <div class="d-flex align-items-center pb-3 link-body-emphasis text-decoration-none border-bottom">
+        <span class="fs-5 fw-semibold">All Products</span>
+        <button class="btn btn-toggle d-block justify-content-end rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"> +
+        </button>
     </div>
+    <ul class="list-unstyled ps-0" id="home-collapse">
+        <li class="mb-1">
+            <div class="collapse show">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 " th:each="c:${categories}">
+                    <li><a th:href="@{/{cat}(cat=${c})}"
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                        <th:block th:text="${#strings.capitalize(c)}"></th:block>
+                    </a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    </ul>
 </div>
+
 </body>
 </html>

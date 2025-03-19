@@ -13,7 +13,6 @@ import java.util.Set;
 public interface ProductService {
     Page<ProductDTO> getProductsPageable(Pageable pageable);
 
-    List<ProductDTO> getAllProducts();
 
    Optional<ProductDTO> getSingleProduct(Long id);
 

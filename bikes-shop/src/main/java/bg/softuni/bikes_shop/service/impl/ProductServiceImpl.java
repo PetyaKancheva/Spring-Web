@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,12 +34,6 @@ public class ProductServiceImpl implements ProductService {
                 .map(ProductServiceImpl::mapToDTO);
     }
 
-    @Override
-    public List<ProductDTO> getAllProducts() {
-        return productRepository.findAll().stream()
-                .map(ProductServiceImpl::mapToDTO).collect(Collectors.toList());
-
-    }
 
     @Override
     public Optional<ProductDTO> getSingleProduct(Long id) {
@@ -66,7 +61,9 @@ public class ProductServiceImpl implements ProductService {
 
 
     private static ProductDTO mapToDTO(ProductEntity p){
-             return new ProductDTO(p.getId(), p.getName(), p.getDescription(),p.getCategory(), doubleValue(p.getPrice()), p.getPictureURL());
+
+             return new ProductDTO(p.getId(),p.getName(), p.getDescription(),p.getCategory(),
+                     doubleValue(p.getPrice()), p.getPictureURL());
     }
     private static ProductEntity mapToEntity(ProductAddDTO productAddDTO) {
         return new ProductEntity()

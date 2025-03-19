@@ -1,18 +1,20 @@
 package bg.softuni.bikes_shop.controller;
 
+
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentCurrency;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
-import org.springframework.data.web.PageableDefault;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -28,29 +30,12 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    private String allProducts(Model model,   @PageableDefault(size = 3, sort = "id") Pageable pageable) {
-//        if(!model.containsAttribute("currencyDTO")){
-//            CurrencyExchangeDTO eurCEDTO= new CurrencyExchangeDTO();
-//            eurCEDTO.setRate(1.0);
-//            eurCEDTO.setCurrency("EUR");
-//            model.addAttribute("currencyDTO",eurCEDTO);
+    private String allProducts(Model model, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue ="3") Integer size) {
 
-//        }
-
-//        @PageableDefault(size = 3, sort = "id")
-
-//        public Page<User> findAllUsers() {
-//            Pageable pageable = PageRequest.of(0, 5);
-//            return userRepository.findAll(pageable);
-//        }
-//        @RequestParam("page") int page,
-//        @RequestParam("size") int size, Pageable pageable
-//        @RequestParam("sort") String sort
-
-        model.addAttribute("products", productService.getProductsPageable(pageable));
+        model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by("id"))));
         model.addAttribute("categories", productService.getDistinctCategories());
         model.addAttribute("listCurrencies", CURRENCY_LIST);
-        model.addAttribute("size", 3);
+
         return "index";
     }
 

@@ -2,20 +2,27 @@ package bg.softuni.bikes_shop.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 
 @Entity
 @Table(name = "products")
 public class ProductEntity extends BaseEntity {
     @Column(name = "name", nullable = false)
+
     private String name;
+
     @Column(name = "description")
     private String description;
-    @Column(name = "category")
+    @Column(name = "category",nullable = false)
     private String category;
-    @Column(name = "price")
+    @Positive
+    @Column(name = "price",nullable = false)
     private BigDecimal price;
     @Column(name = "picture_URL")
     private String pictureURL;
@@ -28,6 +35,7 @@ public class ProductEntity extends BaseEntity {
         this.name = name;
         return this;
     }
+
 
     public String getDescription() {
         return description;

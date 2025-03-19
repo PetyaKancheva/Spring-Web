@@ -19,7 +19,7 @@ VALUES (2, 'bike',
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)
 VALUES (3, 'bike',
         'The Reveal AL is made for the distance. For nice and long tours. Aesthetic, comfortable and always fast when you want it.',
-        'Reveal', 'https://cdn.rosebikes.de/cms/cms.64d397bc9b6e18.63042479.png', 2401.00);
+        'Reveal 3.0', 'https://cdn.rosebikes.de/cms/cms.64d397bc9b6e18.63042479.png', 2401.00);
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)
 VALUES (4, 'bike', 'Made to cross countries.', 'PDQ', 'https://cdn.rosebikes.de/cms/cms.64ca512bf2b490.40848535.png',
         2211.00);
@@ -45,7 +45,7 @@ VALUES (8, 'wheels', 'Assists to start adventures where the road ends.', 'HG 180
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)
 VALUES (9, 'groupset',
         'Wide-range 1x12 gearing for gravel, bikepacking, adventure, casual cruises, and everything in between.',
-        'Apex', 'https://images.bike24.com/media/720/i/mb/7e/8f/8b/sram-apex-xplr-axs-groupset-12s-1537874.jpg',
+        'Apex 12s', 'https://images.bike24.com/media/720/i/mb/7e/8f/8b/sram-apex-xplr-axs-groupset-12s-1537874.jpg',
         899.00);
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)
 VALUES (10, 'groupset', 'Every component has been refined to create an effortless ride.', 'RED',
@@ -54,7 +54,7 @@ VALUES (10, 'groupset', 'Every component has been refined to create an effortles
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)
 VALUES (11, 'groupset',
         'SRAM Rival eTap AXS features the technology modern riders wantâ€”intuitive wireless shifting, innovative gearing, integrated power measurement, AXS connectivity, and refined hydraulic disc brakes.',
-        'Rival', 'https://images.bike24.com/media/1440/i/mb/f9/7d/57/134246-00-d-229540.jpg', 720.00);
+        'Rival 7.0', 'https://images.bike24.com/media/1440/i/mb/f9/7d/57/134246-00-d-229540.jpg', 720.00);
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)
 VALUES (12, 'groupset',
         'Choose from integrated power solutions for road and gravel. Accelerate with intelligent gear ranges.', 'Force',
