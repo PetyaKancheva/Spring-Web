@@ -5,7 +5,14 @@
 <body>
 
 
-<h1 th:text="${greeting}">rest of message</h1>
+<h1>rest of message</h1>
+<form
+        th:method="post"
+        th:action="@{/}">
+    <input type="text" th:name="name" >
+    <input type="submit" value="submit">
+</form>
+
 <!--<div>old price</div>-->
 <!--<th:block th:text="${#numbers.formatCurrency(oldPrice)}"> </th:block>-->
 <!--<div>new price</div>-->
@@ -24,30 +31,18 @@
 <!--    ></li>-->
 <!--</ul>-->
 
-<form tH:action="@{/}" th:method="post" id="formSubmit" modelAtrribute="currency"  >
+<!--<form tH:action="@{/}" th:method="post" id="formSubmit" modelAtrribute="currency"  >-->
 
-<select id="selectID"  >
-    <option
-            th:each="c : ${listCurrencies}"
-            th:text="${c}"
-            th:value="${c}"
-
-
-    >
-    </option>
-
-</select>
-</form>
 
 <div><span>Value:</span><th:block th:text="${@currentCurrency.getName()}"> </th:block> </div>
 
     <script>
 
-    document.getElementById("formSubmit").addEventListener("change",
-     ({ target }) =>
-
-
-     target.form.submit());
+//    document.getElementById("formSubmit").addEventListener("change",
+//     ({ target }) =>
+//
+//
+//     target.form.submit());
 
     </script>
 </body>

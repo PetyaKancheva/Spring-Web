@@ -9,13 +9,18 @@
 
 <body>
 
-  <div><a class=" " th:href="@{/comments(size=3,page=${comments.getNumber()})}">
-        <i class="fa-solid fa-table-cells-large"></i>
-    </a>
-     <a class=" " th:href="@{/comments(size=6,page=${comments.getNumber()})}"><i class="fa-solid fa-table-cells"></i></a></div>
+  <div><a class="" th:href="@{/comments(size=3,page=${comments.getNumber()})}">
+        <i class="fa-solid fa-table-cells-large"></i></a>
+      &nbsp;
+     <a class="" th:href="@{/comments(size=6,page=${comments.getNumber()})}">
+         <i class="fa-solid fa-table-cells"></i></a>
+  </div>
+
 <input type="hidden" id="valueOfSort" th:value=1>
 
-<h3>Dropdown sorting</h3>
+<!--  <th:block th:data="String${sort}"></th:block><span>test</span>-->
+
+  <h3>Dropdown sorting</h3>
 
 
 <!--<ul    class="dropdown-menu">-->
@@ -57,7 +62,7 @@
         <!--loop pages -->
         <li class="page-item" th:classappend="${comments.getNumber()==page ? 'active' : '' }"
             th:each="page:${#numbers.sequence(0,comments.getTotalPages()-1)}"><a
-                class="page-link" th:href="@{/comments(size=${comments.size},page=${page},n=${})}" th:text="${page}+1"></a>
+                class="page-link" th:href="@{/comments(size=${comments.size},page=${page})}" th:text="${page}+1"></a>
         </li>
         <!-- next page -->
         <li class="page-item" th:classappend="${comments.isLast() ? 'disabled' : ''}">

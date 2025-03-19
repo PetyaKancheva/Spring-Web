@@ -26,7 +26,7 @@ public class CommentsController {
         this.commentsRepository = commentsRepository;
     }
     @GetMapping("/comments")
-    public String comments( Model model ,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,@RequestParam("n") Optional<Integer>n){
+    public String comments( Model model ,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,@RequestParam("sort") Optional<Integer>n){
 
             int currentPage = page.orElse(0);
             int pageSize = size.orElse(3);
@@ -43,7 +43,7 @@ public class CommentsController {
        Page<CommentEntity> commentPage=  commentsRepository.findAll(PageRequest.of(currentPage,pageSize, Sort.by(pageSort)));
 
         model.addAttribute("comments",commentPage);
-        model.addAttribute("n",n);
+
 
         return "comments";
     }
