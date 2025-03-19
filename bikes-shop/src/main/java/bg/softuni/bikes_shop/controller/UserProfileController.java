@@ -3,6 +3,7 @@ package bg.softuni.bikes_shop.controller;
 import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.service.UserService;
+import bg.softuni.bikes_shop.util.MyPublisher;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserProfileController {
     private final UserService userService;
+    private final MyPublisher myPublisher;
 
-    public UserProfileController(UserService userService) {
+    public UserProfileController(UserService userService, MyPublisher myPublisher) {
         this.userService = userService;
+        this.myPublisher = myPublisher;
     }
 
     @GetMapping("/user")
@@ -26,6 +29,7 @@ public class UserProfileController {
             model.addAttribute("userUpdateDTO", UserUpdateDTO.empty());
         }
         model.addAttribute("currentUser", currentUser);
+        myPublisher.publishEvent(currentUser.getFirstName());
 
         return "user-profile";
     }
