@@ -2,8 +2,20 @@ INSERT INTO user_role (`id`,`name`) VALUES (1,'USER');
 INSERT INTO user_role (`id`,`name`) VALUES (2,'ADMIN');
 INSERT INTO user_role (`id`,`name`) VALUES (3,'EMPLOYEE');
 
-INSERT INTO users (`id`,`address`,`e_mail`,`first_name`,`last_name`,`password`) VALUES (11,'New York','p@mail.com','Peter','Parker','842b130448a51526dca0b82460b5942aa73075bf1bbd9284789bc2ecbc055b9a9de8eaa40b90e39824a59a08d17fa687');
-INSERT INTO users (`id`,`address`,`e_mail`,`first_name`,`last_name`,`password`) VALUES (12,'Gotham','b@mail.com','Bruce','Wayne','4bbabbb959b2bc644246199ad3b7c7a8798e6c233ed2f0bcb4193bd93a6eab605654f82ac99849cc962597fe37dcd6a9');
+
+
+
+INSERT INTO users (`id`,`address`,`country`,`e_mail`,`first_name`,`is_authenticated`,`is_logged`,`last_name`,`password`) VALUES (11,'New York',NULL,'p@mail.com','Peter',NULL,NULL,'Parker','842b130448a51526dca0b82460b5942aa73075bf1bbd9284789bc2ecbc055b9a9de8eaa40b90e39824a59a08d17fa687');
+INSERT INTO users (`id`,`address`,`country`,`e_mail`,`first_name`,`is_authenticated`,`is_logged`,`last_name`,`password`) VALUES (12,'Gotham',NULL,'b@mail.com','Bruce',NULL,NULL,'Wayne','4bbabbb959b2bc644246199ad3b7c7a8798e6c233ed2f0bcb4193bd93a6eab605654f82ac99849cc962597fe37dcd6a9');
+INSERT INTO users (`id`,`address`,`country`,`e_mail`,`first_name`,`is_authenticated`,`is_logged`,`last_name`,`password`) VALUES (13,'Sofia','Germany','vili@mail.com','Vilan',0,0,'Vilanov','11dd3e5c08b245ebfc3cd6049f656a9f05e495897a99c9b7710678606d20f72a8aae73233a700bc82cd8cb060f088971');
+INSERT INTO users(`id`,`address`,`country`,`e_mail`,`first_name`,`is_authenticated`,`is_logged`,`last_name`,`password`) VALUES (14,'Sofia','','stef@mail.com','Stephan',0,0,'Stefanov','0a5e922f6428cbe2e3e10418bb30889ac11ea3a668c9813b13de28abc6b2e49b814194a3bf0b9a3d43adc46820a57762');
+INSERT INTO users (`id`,`address`,`country`,`e_mail`,`first_name`,`is_authenticated`,`is_logged`,`last_name`,`password`) VALUES (15,'Sofia','Germany','g@mail.com','Goblin',0,0,'Goblinov','a32d8cf19b8b7eeec8508bd3ea822a5c0132753d4d8856544e71ccd0c8011d53273322a1cd36764e768f6a86001614da');
+
+INSERT INTO users_roles (`user_id`,`role_id`) VALUES (11,2);
+INSERT INTO users_roles (`user_id`,`role_id`) VALUES (12,1);
+INSERT INTO users_roles (`user_id`,`role_id`) VALUES (13,3);
+INSERT INTO users_roles (`user_id`,`role_id`) VALUES (14,1);
+INSERT INTO users_roles (`user_id`,`role_id`) VALUES (15,1);
 
 
 
@@ -65,3 +77,7 @@ VALUES (13, 'bike', 'The bike that makes every road ride better', 'Trek Domane',
 INSERT INTO products (`id`, `category`, `description`, `name`, `picture_url`, `price`)
 VALUES (14, 'chain', 'Gold is the new silver.', 'KMC X10 SL',
         'https://cdn.rosebikes.de/images/06311A08D1FC99E54C0195D6A4A11FE5.png', 37.00);
+
+INSERT INTO user_activation_codes (`id`,`activation_code`,`created`,`user_id`) VALUES (1,'jmCY4WoeBarWrdb','2025-03-19 18:01:48.859525',13);
+INSERT INTO user_activation_codes (`id`,`activation_code`,`created`,`user_id`) VALUES (2,'iXWVZF3TF19ql61','2025-03-19 18:42:45.757911',14);
+INSERT INTO user_activation_codes (`id`,`activation_code`,`created`,`user_id`) VALUES (3,'ABjGkqlppdDgslw','2025-03-20 11:45:00.815939',15);

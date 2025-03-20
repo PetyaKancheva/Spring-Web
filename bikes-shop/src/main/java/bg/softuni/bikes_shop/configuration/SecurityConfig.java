@@ -29,7 +29,7 @@ public class SecurityConfig {    private final ProductService productService;
                         .requestMatchers("/", "/login", "/register").permitAll()
                         .requestMatchers( "/services","/contacts","/about").permitAll()
                         .requestMatchers( "/comment/**","/comments").permitAll()
-                        .requestMatchers( "/user/**").permitAll()//avtivate?
+                        .requestMatchers("/user/activate(activation_code={activationCode})").permitAll()//avtivate?
                         .requestMatchers("/product/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()

@@ -66,6 +66,8 @@ public class UserServiceImpl implements UserService {
 //        is new pass is different than old -custom validator
         // what is old alrady wrong?
 
+        // send email for update
+
         userRepository.save(existingUser);
 
     }
@@ -73,10 +75,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @EventListener(UserViewProfileEvent.class )
     public void listener(UserViewProfileEvent event) {
-
+        // TODO to remove later - for example only
         System.out.println("User with name: " + event.getUserName() + " viewed their profile");
         emailService.sendRegistrationEmail("p@mail.com", event.getUserName(), "fakeActivation code");
-        // to remove later - for example only
+
     }
 
 

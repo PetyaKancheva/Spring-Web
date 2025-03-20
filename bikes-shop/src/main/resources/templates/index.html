@@ -15,20 +15,27 @@
             <div th:replace="~{fragments/sidebar}"></div>
 
             <div class="col-10 text-center p-3 ">
-                <div class="col text-end  border-bottom pe-5 ">
+                <div class="figure-img pt-2" style="width:900px;height:370px"><img
+                       th:src="@{/images/front_page.jpg}" alt="front page image"
+                        class="h-100"></div>
+                <div class="row ">
+
+                <label for="selectForm" >Please select sorting option</label>
+
+                <select id="selectForm"  class="form-select col" aria-label="Default select example">
+                    <option selected>Sort by</option>
+                    <option th:value="1">Name</option>
+                    <option th:value="2">Price</option>
+                </select>
+
+                <div class=" text-end  border-bottom pe-5 ">
                     <a class="text-decoration-none" th:href="@{/(size=3,page=${products.getNumber()})}">
                         <i class="fa-solid fa-table-cells-large"></i></a>
                     &nbsp;
                     <a class="text-decoration-none" th:href="@{/(size=6,page=${products.getNumber()})}">
                         <i class="fa-solid fa-table-cells"></i></a>
                 </div>
-
-                <!--                            <select th:object="${sortingObj}" class="form-select" aria-label="Default select example">-->
-                <!--                                <option selected>Sort by</option>-->
-                <!--                                <option th:value="1">Name</option>-->
-                <!--                                <option th:value="2">Price</option>-->
-                <!--                            </select>-->
-
+            </div>
                 <div class="row row-cols-sm-3  ">
                     <div class="col" th:each="p:${products}">
                         <a class="product-link" th:href="@{/product/{pid}(pid=${p.id()})}">

@@ -45,7 +45,7 @@ frankfurter:
   host: api.frankfurter.dev
   path: /v1/latest
   symbols: BGN,USD,PLN
-  enabled: false
+  enabled: true
 
 
 bikes:
@@ -53,7 +53,7 @@ bikes:
 
 
 mail:
-  email: "bikes@mail.com"
+  email: "bikes-shop@mail.com"
   host: localhost
   port: 1025
   username: ${MAIL_USER:admin}

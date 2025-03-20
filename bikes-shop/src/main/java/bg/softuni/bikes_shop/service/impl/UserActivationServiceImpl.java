@@ -8,6 +8,7 @@ import bg.softuni.bikes_shop.repository.ActivationCodeRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.EmailService;
 import bg.softuni.bikes_shop.service.UserActivationService;
+import jakarta.transaction.Transactional;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Random;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -47,9 +49,11 @@ public class UserActivationServiceImpl implements UserActivationService {
     }
 
     @Override
+    @Transactional
     public void cleanUpObsoleteActivationLinks() {
-        //TODO
-
+        //Last 7 days/
+//        List<UserActivationCodeEntity> found= activationCodeRepository.findByCreatedIsBefore(Instant.now() .minus(7, DAYS));
+        activationCodeRepository.deleteUserActivationCodeEntitiesByCreatedIsBefore(Instant.now() .minus(7, DAYS));
     }
 
     @Override
