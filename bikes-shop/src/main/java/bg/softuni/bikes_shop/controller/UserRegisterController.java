@@ -13,11 +13,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserRegisterController {
     private final UserService userService;
-
+    private final static String SUCCESSFUL_REGISTRATION_MSG =
+            "Congratulations! You are now registered at Bikes-Shop. Please proceed to authenticate your email address.";
+    private final static String ATTRIBUTE_MSG_NAME="onSuccess";
 
     public UserRegisterController(UserService userService) {
         this.userService = userService;
-
     }
 
     @GetMapping("/register")
@@ -42,7 +43,7 @@ public class UserRegisterController {
 
         //TODO: Registration email with activation link
         userService.register(userRegisterDTO);
-        rAtt.addFlashAttribute("successfullyCreated", " Congratulations! You are now registered at Bikes-Shop. Proceed to log in.");
+        rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, SUCCESSFUL_REGISTRATION_MSG);
         return "redirect:/register";
     }
 

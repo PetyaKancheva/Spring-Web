@@ -7,7 +7,7 @@ import java.util.List;
 
 @Configuration
 @ConfigurationProperties(prefix = "frankfurter")
-public class ExchangeRateConfig {
+public class ExchangeRateConfigProperties {
     private String schema;
     private String host;
     private String path;
@@ -18,7 +18,7 @@ public class ExchangeRateConfig {
         return schema;
     }
 
-    public ExchangeRateConfig setSchema(String schema) {
+    public ExchangeRateConfigProperties setSchema(String schema) {
         this.schema = schema;
         return this;
     }
@@ -27,7 +27,7 @@ public class ExchangeRateConfig {
         return host;
     }
 
-    public ExchangeRateConfig setHost(String host) {
+    public ExchangeRateConfigProperties setHost(String host) {
         this.host = host;
         return this;
     }
@@ -36,7 +36,7 @@ public class ExchangeRateConfig {
         return path;
     }
 
-    public ExchangeRateConfig setPath(String path) {
+    public ExchangeRateConfigProperties setPath(String path) {
         this.path = path;
         return this;
     }
@@ -45,7 +45,7 @@ public class ExchangeRateConfig {
         return symbols;
     }
 
-    public ExchangeRateConfig setSymbols(List<String> symbols) {
+    public ExchangeRateConfigProperties setSymbols(List<String> symbols) {
         this.symbols = symbols;
         return this;
     }
@@ -54,7 +54,7 @@ public class ExchangeRateConfig {
         return enabled;
     }
 
-    public ExchangeRateConfig setEnabled(boolean enabled) {
+    public ExchangeRateConfigProperties setEnabled(boolean enabled) {
         this.enabled = enabled;
         return this;
     }

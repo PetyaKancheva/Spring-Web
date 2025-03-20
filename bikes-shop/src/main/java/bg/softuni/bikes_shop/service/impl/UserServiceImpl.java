@@ -4,10 +4,12 @@ import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.model.events.UserRegistrationEvent;
+import bg.softuni.bikes_shop.model.events.UserViewProfileEvent;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,14 @@ public class UserServiceImpl implements UserService {
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher appEventPublisher;
+    private final EmailServiceImpl emailService;
 
-    public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService, PasswordEncoder passwordEncoder, ApplicationEventPublisher appEventPublisher) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService, PasswordEncoder passwordEncoder, ApplicationEventPublisher appEventPublisher, EmailServiceImpl emailService) {
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
         this.appEventPublisher = appEventPublisher;
+        this.emailService = emailService;
     }
 
     @Override
@@ -64,6 +68,15 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(existingUser);
 
+    }
+
+    @Override
+    @EventListener(UserViewProfileEvent.class )
+    public void listener(UserViewProfileEvent event) {
+
+        System.out.println("User with name: " + event.getUserName() + " viewed their profile");
+        emailService.sendRegistrationEmail("p@mail.com", event.getUserName(), "fakeActivation code");
+        // to remove later - for example only
     }
 
 

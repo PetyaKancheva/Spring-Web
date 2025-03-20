@@ -10,8 +10,8 @@
 
 
     <div class="container ">
-        <div th:if= "${successfullyAdded}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
-             th:text="${successfullyAdded}"></div>
+        <div th:if= "${onSuccess}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+             th:text="${onSuccess}"></div>
 
         <form
                 th:action="@{/product/add}"

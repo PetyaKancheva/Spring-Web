@@ -16,14 +16,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class ProductDetailsController {
     private final ProductService productService;
-    private final OrderService orderService;
+    private final static String SUCCESSFUL_PURCHASE_MSG =
+            "Successfully purchased: %s. Please go to order list to see your current order.";
+    private final static String ATTRIBUTE_MSG_NAME = "onSuccess";
 
 
     private final CurrentOrder currentOrder;
 
-    public ProductDetailsController(ProductService productService, OrderService orderService, CurrentOrder currentOrder) {
+    public ProductDetailsController(ProductService productService, CurrentOrder currentOrder) {
         this.productService = productService;
-        this.orderService = orderService;
+
         this.currentOrder = currentOrder;
     }
 
@@ -38,10 +40,11 @@ public class ProductDetailsController {
 
         return "product-details";
     }
+
     @PostMapping("/product/{id}")
     public String buy(@PathVariable("id") String id, String productName, String productPrice, Integer quantity, RedirectAttributes rAtt) {
 
-        ItemDTO newItemDTO=new ItemDTO();
+        ItemDTO newItemDTO = new ItemDTO();
         newItemDTO.setProductID(Long.valueOf(id));
         newItemDTO.setProductName(productName);
         newItemDTO.setPrice(Double.parseDouble(productPrice));
@@ -50,13 +53,10 @@ public class ProductDetailsController {
         newItemDTO.setQuantity(quantity);
         currentOrder.add(newItemDTO);
 
-       rAtt.addFlashAttribute("successfullyPurchased",
-               "Successfully purchased: " + productName+"Please go to order list to see your current order.");
+        rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, String.format(SUCCESSFUL_PURCHASE_MSG, productName));
 
         return "shopping-cart";
     }
-
-
 
 
 }

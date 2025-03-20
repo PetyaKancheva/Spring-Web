@@ -9,13 +9,8 @@
 </div>
 <div>
     <div class=" container  justify-content-center">
-        <!--        <div class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"-->
-        <!--             th:if="${@currentSessionMessage.isProductBought}">-->
-        <!--            <span>Successfully bought product </span>-->
-        <!--&lt;!&ndash;            <th:block th:text="${@singleProduct.name}"></th:block>&ndash;&gt;-->
-        <!--            <span> ! Please go to order list to see your current order.</span>-->
-        <!--        </div>-->
-
+        <div th:if= "${onSuccess}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+             th:text="${onSuccess}"></div>
 
         <div class="row text-center ">
             <h3>Current items:</h3>
