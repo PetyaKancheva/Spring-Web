@@ -1,6 +1,6 @@
 package bg.softuni.bikes_shop.service.scheduelers;
 
-import bg.softuni.bikes_shop.configuration.ExchangeRateConfigProperties;
+import bg.softuni.bikes_shop.configuration.properties.ExchangeRateConfigProperties;
 import bg.softuni.bikes_shop.model.dto.MapRatesDTO;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,19 +28,20 @@ public class CurrencyExchangeScheduler {
     public void refreshRates() {
         if (exchangeRateConfigProperties.isEnabled()) {
 
-            System.out.println("*** Updating exchange rate ***" + Instant.now() + " ****");
-            String url = String.valueOf(new StringBuilder()
-                    .append(exchangeRateConfigProperties.getSchema())
-                    .append("://")
-                    .append(exchangeRateConfigProperties.getHost())
-                    .append(exchangeRateConfigProperties.getPath())
-                    .append("?base=EUR&symbols=")
-                    .append(String.join(",", exchangeRateConfigProperties.getSymbols())));
-
-            MapRatesDTO mapRatesDTO = restTemplate.getForObject(url, MapRatesDTO.class);
+            MapRatesDTO mapRatesDTO = restTemplate.getForObject(compileURL(), MapRatesDTO.class);
             currencyService.add(mapRatesDTO);
 
-
+            System.out.println("*** Updating exchange rate ***" + Instant.now() + " ****");
         }
+    }
+
+    private String compileURL() {
+        return String.valueOf(new StringBuilder()
+                .append(exchangeRateConfigProperties.getSchema())
+                .append("://")
+                .append(exchangeRateConfigProperties.getHost())
+                .append(exchangeRateConfigProperties.getPath())
+                .append("?base=EUR&symbols=")
+                .append(String.join(",", exchangeRateConfigProperties.getSymbols())));
     }
 }

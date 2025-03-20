@@ -10,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ActivationCodeRepository extends JpaRepository<UserActivationCodeEntity,Long> {
-   Optional< UserActivationCodeEntity >  findByActivationCode(String activationCode);
-       List<UserActivationCodeEntity> findByCreatedIsBefore(Instant date);
-
-        void deleteUserActivationCodeEntitiesByCreatedIsBefore(Instant date);
-
+public interface ActivationCodeRepository extends JpaRepository<UserActivationCodeEntity, Long> {
+    Optional<UserActivationCodeEntity> findByActivationCode(String activationCode);
+       void deleteUserActivationCodeEntitiesByCreatedIsBefore(Instant date);
 
 
 }

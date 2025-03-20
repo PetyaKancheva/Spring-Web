@@ -8,7 +8,7 @@ public record UserUpdateDTO(
 
         @NotEmpty(message ="Cannot be empty.")
         @Email
-        // TODO: @UniqueUserEmail check old email is corredczt must be different
+        // TODO custom validation that updated email is not already taken
         String email,
         @NotEmpty(message ="Cannot be null.")
         @Size(min = 3, message= "Must be at least 3 characters.")
@@ -18,7 +18,6 @@ public record UserUpdateDTO(
         String lastName,
         @Size(min = 4, message= "Must be at least 4 characters.")
         String address,
-       // TODO: @UniqueUserEmail
         String country,
         @NotEmpty(message ="Cannot be null.")
         @Size(min = 3, message= "Must be at least 3 characters.")

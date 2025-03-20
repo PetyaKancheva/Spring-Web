@@ -40,19 +40,15 @@ public class UserActivationServiceImpl implements UserActivationService {
     @EventListener(UserRegistrationEvent.class)
     public void userRegistered(UserRegistrationEvent event) {
 
-        System.out.println("User with name: " + event.getUserFirstName() + " registered");
-
         emailService.sendRegistrationEmail(event.getUserEmail(), event.getUserFirstName(),
                 createActivationCode(event.getUserEmail()));
 
-
+        System.out.println("User with name: " + event.getUserFirstName() + " registered");
     }
 
     @Override
     @Transactional
     public void cleanUpObsoleteActivationLinks() {
-        //Last 7 days/
-//        List<UserActivationCodeEntity> found= activationCodeRepository.findByCreatedIsBefore(Instant.now() .minus(7, DAYS));
         activationCodeRepository.deleteUserActivationCodeEntitiesByCreatedIsBefore(Instant.now() .minus(7, DAYS));
     }
 

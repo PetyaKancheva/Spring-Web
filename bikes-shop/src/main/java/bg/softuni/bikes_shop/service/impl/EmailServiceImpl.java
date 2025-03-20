@@ -1,6 +1,6 @@
 package bg.softuni.bikes_shop.service.impl;
 
-import bg.softuni.bikes_shop.configuration.MailConfigProperties;
+import bg.softuni.bikes_shop.configuration.properties.MailConfigProperties;
 import bg.softuni.bikes_shop.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -13,8 +13,10 @@ import org.thymeleaf.context.Context;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-    private final static String REGISTRATION_EMAIL_SUBJECT_LINE
-            ="Thank you for registering at Bikes-Shop! Please confirm your e-Mail.";
+    private final static String REGISTRATION_EMAIL_SUBJECT_LINE =
+            "Thank you for registering at Bikes-Shop! Please confirm your e-Mail.";
+    private final static String UPDATE_EMAIL_SUBJECT_LINE =
+            "Your profile has been updated!";
     private final JavaMailSender javaMailSender;
     private final MailConfigProperties mailConfigProperties;
     private final TemplateEngine templateEngine;
@@ -27,39 +29,54 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendRegistrationEmail(String userEmail, String userFirstName, String activationCode) {
-        MimeMessage mimeMessage= javaMailSender.createMimeMessage();
-
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-
-        try{
-            mimeMessageHelper.setTo(userEmail);
-            mimeMessageHelper.setFrom(mailConfigProperties.getEmail());
-            mimeMessageHelper.setReplyTo(mailConfigProperties.getEmail());
-            mimeMessageHelper.setSubject(REGISTRATION_EMAIL_SUBJECT_LINE);
-            mimeMessageHelper.setText(generateEmailBody(userFirstName,activationCode),true);
-
-            javaMailSender.send(mimeMessageHelper.getMimeMessage());
-
-        }catch (MessagingException e){
-            throw new RuntimeException(e);
-
-        }
+        String emailBody = generateRegistrationEmailBody(userFirstName, activationCode);
+        compileAndSendEmail(userEmail, REGISTRATION_EMAIL_SUBJECT_LINE, emailBody);
 
     }
 
     @Override
-    public void sendNotificationProfileUpdateEmail(String userEmail, String userFirstName) {
+    public void sendProfileUpdateEmail(String userEmail, String userFirstName, String timeOfUpdate) {
+        String emailBody = generateUpdateEmailBody(userFirstName, timeOfUpdate);
+        compileAndSendEmail(userEmail, UPDATE_EMAIL_SUBJECT_LINE, emailBody);
 
-    //TODO
     }
 
-    private String generateEmailBody(String userFirstName,String activationCode){
+    private String generateUpdateEmailBody(String userFirstName, String timeOfUpdate) {
         Context context = new Context();
-        context.setVariable("user_first_mane",userFirstName);
-        context.setVariable("activation_code",activationCode);
+        context.setVariable("user_first_name", userFirstName);
+        context.setVariable("timeOfUpdate", timeOfUpdate);
 
-        return templateEngine.process("/email/authentication-email.html",context);
-        }
+        return templateEngine.process("/email/profile-update-email.html", context);
 
     }
+
+    private String generateRegistrationEmailBody(String userFirstName, String activationCode) {
+        Context context = new Context();
+        context.setVariable("user_first_name", userFirstName);
+        context.setVariable("activation_code", activationCode);
+
+        return templateEngine.process("/email/authentication-email.html", context);
+
+    }
+
+    private void compileAndSendEmail(String userEmail, String emailSubject, String emailBody) {
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+
+        try {
+            mimeMessageHelper.setTo(userEmail);
+            mimeMessageHelper.setFrom(mailConfigProperties.getEmail());
+            mimeMessageHelper.setReplyTo(mailConfigProperties.getEmail());
+            mimeMessageHelper.setSubject(emailSubject);
+            mimeMessageHelper.setText(emailBody, true);
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+}
 

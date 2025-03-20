@@ -14,11 +14,10 @@ public class ActivationCodeCleanupScheduler {
         this.userActivationService = userActivationService;
     }
 
-    //    @Scheduled(cron="* 5 9 * * 7") //every Sunday at 9_05
-    @Scheduled(cron ="0 */1 */1 * * *")// every 1 min
+        @Scheduled(cron="* 5 9 * * 7") //every Sunday at 9_05
+//    @Scheduled(cron ="0 */1 */1 * * *")// every 1 min
     public void cleanUp(){
-        System.out.println("Cleanup service *** " + Instant.now() +" ***");
         userActivationService.cleanUpObsoleteActivationLinks();
-        System.out.println("Cleanup service *** " + Instant.now() +" ***");
+        System.out.println("Activation cleanup service *** " + Instant.now() +" ***");
     }
 }

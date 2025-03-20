@@ -4,7 +4,7 @@ import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.model.events.UserRegistrationEvent;
-import bg.softuni.bikes_shop.model.events.UserViewProfileEvent;
+import bg.softuni.bikes_shop.model.events.UserUpdateProfileEvent;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
@@ -14,8 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Arrays;
-import java.util.HashSet;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,18 +44,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserUpdateDTO userUpdateDTO, String email) {
-
+            // TODO finess
         UserEntity existingUser = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!"));
 
-        existingUser.setFirstName(userUpdateDTO.firstName());
-        existingUser.setLastName(userUpdateDTO.lastName());
-
-        if (userRepository.findUserByEmail(userUpdateDTO.email()) == null) {
+        if (userRepository.findUserByEmail(userUpdateDTO.email()).isEmpty() ) {
             existingUser.setEmail(userUpdateDTO.email());
         } else {
             throw new IllegalArgumentException("User already exist with email:" + userUpdateDTO.email() + "!");
-            // maybe it is themselves
+
         }
+
+        existingUser.setFirstName(userUpdateDTO.firstName());
+        existingUser.setLastName(userUpdateDTO.lastName());
         existingUser.setAddress(userUpdateDTO.address());
 
         if (!passwordEncoder.matches(userUpdateDTO.newPassword(), existingUser.getPassword())) {
@@ -62,23 +63,20 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new IllegalArgumentException("Old password not matching!");
         }
-// if old password is correct old password
-//        is new pass is different than old -custom validator
-        // what is old alrady wrong?
 
-        // send email for update
+        appEventPublisher.publishEvent(
+                new UserUpdateProfileEvent("UserService-Update", email,userUpdateDTO.firstName(),String.valueOf(Instant.now())));
+
 
         userRepository.save(existingUser);
 
     }
 
     @Override
-    @EventListener(UserViewProfileEvent.class )
-    public void listener(UserViewProfileEvent event) {
-        // TODO to remove later - for example only
-        System.out.println("User with name: " + event.getUserName() + " viewed their profile");
-        emailService.sendRegistrationEmail("p@mail.com", event.getUserName(), "fakeActivation code");
-
+    @EventListener(UserUpdateProfileEvent.class)
+    public void notify(UserUpdateProfileEvent event) {
+        emailService.sendProfileUpdateEmail( event.getUserEmail(),event.getUserFirstName(), event.getTimeOfUpdate());
+        System.out.println("Notification for profile update is sent to:  " + event.getUserEmail() + " !");
     }
 
 
@@ -91,7 +89,7 @@ public class UserServiceImpl implements UserService {
                 .setEmail(userRegisterDTO.email())
                 .setAddress(userRegisterDTO.address())
                 .setCountry(userRegisterDTO.country())
-                .setRoles(new HashSet<>(Arrays.asList(userRoleService.getUserRoleByName("USER"))))
+                .setRoles(Arrays.asList(userRoleService.getUserRoleByName("USER")))
                 .setPassword(passwordEncoder.encode(userRegisterDTO.password()));
 
 

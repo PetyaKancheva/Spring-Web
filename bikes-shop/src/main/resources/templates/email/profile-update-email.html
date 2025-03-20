@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello</title>
+</head>
+<body>
+<h3>Hello, <th:block th:text="${user_first_name}">Petya</th:block>!</h3>
+
+We have identified an update to your Bikes-Shop account at: <th:block th:text="${timeOfUpdate}"></th:block>.
+
+Was that you?
+
+If you updated your profile yourself, you can ignore this notification.
+
+Wasn't it you?
+
+If you didn't log in yourself, we recommend changing your password as soon as possible to secure your account.
+
+Why are you receiving this email?
+
+We noticed that an unknown device was used to log in to your Bikes-Shop account. Because your security is important to us, we will notify you as soon as we become aware of any unknown use of your MyDECATHLON account.
+
+</body>
+</html>

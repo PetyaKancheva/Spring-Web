@@ -1,5 +1,6 @@
 package bg.softuni.bikes_shop.configuration;
 
+import bg.softuni.bikes_shop.configuration.properties.MailConfigProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;

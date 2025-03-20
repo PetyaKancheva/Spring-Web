@@ -7,7 +7,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,7 +37,7 @@ public class UserEntity extends BaseEntity{
     @Column(name="eMail")
     private String email;
     @OneToMany(mappedBy = "buyer")
-    private Set<OrderEntity> orders;
+    private List<OrderEntity> orders;
     @Column(name="is_logged")
     private Boolean isLogged; //for when updating profiles
     @Column(name="is_authenticated")
@@ -45,10 +47,10 @@ public class UserEntity extends BaseEntity{
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<UserRoleEntity>roles;
+    private List<UserRoleEntity>roles;
 
     public UserEntity() {
-        this.roles= new HashSet<>();
+        this.roles= new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -105,11 +107,11 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public Set<OrderEntity> getOrders() {
+    public List<OrderEntity> getOrders() {
         return orders;
     }
 
-    public UserEntity setOrders(Set<OrderEntity> orders) {
+    public UserEntity setOrders(List<OrderEntity> orders) {
         this.orders = orders;
         return this;
     }
@@ -132,11 +134,11 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public Set<UserRoleEntity> getRoles() {
+    public List<UserRoleEntity> getRoles() {
         return roles;
     }
 
-    public UserEntity setRoles(Set<UserRoleEntity> roles) {
+    public UserEntity setRoles(List<UserRoleEntity> roles) {
         this.roles = roles;
         return this;
     }

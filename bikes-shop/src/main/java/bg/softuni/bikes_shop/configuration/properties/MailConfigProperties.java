@@ -1,4 +1,4 @@
-package bg.softuni.bikes_shop.configuration;
+package bg.softuni.bikes_shop.configuration.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
