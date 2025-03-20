@@ -2,6 +2,7 @@ package bg.softuni.bikes_shop.service.impl;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.entity.UserActivationCodeEntity;
+import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.model.events.UserRegistrationEvent;
 import bg.softuni.bikes_shop.repository.ActivationCodeRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
@@ -11,8 +12,12 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class UserActivationServiceImpl implements UserActivationService {
@@ -26,6 +31,7 @@ public class UserActivationServiceImpl implements UserActivationService {
         this.emailService = emailService;
         this.userRepository = userRepository;
         this.activationCodeRepository = activationCodeRepository;
+
     }
 
     @Override
@@ -43,6 +49,23 @@ public class UserActivationServiceImpl implements UserActivationService {
     @Override
     public void cleanUpObsoleteActivationLinks() {
         //TODO
+
+    }
+
+    @Override
+    public void userActivate(String userActivationCode) {
+        UserActivationCodeEntity uaEntity = activationCodeRepository.findByActivationCode(userActivationCode).orElseThrow(
+                () -> new CustomObjectNotFoundException("Activation code not found:" + userActivationCode));
+
+        if (DAYS.between(uaEntity.getCreated(), Instant.now()) <= 1) {
+
+            UserEntity user =userRepository.findById(uaEntity.getUser().getId()).orElseThrow(()
+                    -> new CustomObjectNotFoundException("User not found"));
+                        user.setAuthenticated(true);
+        }else{
+            throw new CustomObjectNotFoundException("Authentication failed");
+        }
+
 
     }
 
