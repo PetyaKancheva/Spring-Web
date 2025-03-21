@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new IllegalArgumentException("Old password not matching!");
         }
-
+        // TODO distinguish between email update!! cause now it is going to old email
         appEventPublisher.publishEvent(
                 new UserUpdateProfileEvent("UserService-Update", email,userUpdateDTO.firstName(),String.valueOf(Instant.now())));
 

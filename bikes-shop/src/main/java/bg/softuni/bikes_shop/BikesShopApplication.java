@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
-
 @SpringBootApplication
 public class BikesShopApplication {
 	public static void main(String[] args) {
