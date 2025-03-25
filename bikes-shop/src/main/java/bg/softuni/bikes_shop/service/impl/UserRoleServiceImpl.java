@@ -8,6 +8,7 @@ import bg.softuni.bikes_shop.repository.UserRoleRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -19,9 +20,9 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public UserRoleEntity getUserRoleByName(String name) {
+    public Optional<UserRoleEntity > getUserRoleByName(UserRoleEnum userRoleEnum) {
         return userRoleRepository.findByName(
-                UserRoleEnum.valueOf(name)).orElseThrow(()-> new CustomObjectNotFoundException("UserRole with name: "+name+ "not found"));
+                userRoleEnum);
     }
 
 }

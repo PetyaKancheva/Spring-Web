@@ -37,14 +37,13 @@ public class UserRegisterController {
         if(bindingResult.hasErrors()){
             rAtt.addFlashAttribute("userRegisterDTO",userRegisterDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
-            return "user-register";
+            return "redirect:/register";
         }
 
-
-        //TODO: Registration email with activation link
         userService.register(userRegisterDTO);
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, SUCCESSFUL_REGISTRATION_MSG);
         return "redirect:/register";
+
     }
 
 

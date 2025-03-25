@@ -1,13 +1,18 @@
 package bg.softuni.bikes_shop.service.impl;
 
+import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
+import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
+import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.model.events.UserRegistrationEvent;
 import bg.softuni.bikes_shop.model.events.UserUpdateProfileEvent;
 import bg.softuni.bikes_shop.repository.UserRepository;
+import bg.softuni.bikes_shop.repository.UserRoleRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 
 @Service
@@ -25,19 +33,23 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher appEventPublisher;
     private final EmailServiceImpl emailService;
+    private final UserRoleRepository userRoleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService, PasswordEncoder passwordEncoder, ApplicationEventPublisher appEventPublisher, EmailServiceImpl emailService) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService, PasswordEncoder passwordEncoder, ApplicationEventPublisher appEventPublisher, EmailServiceImpl emailService, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
         this.appEventPublisher = appEventPublisher;
         this.emailService = emailService;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
     public void register(UserRegisterDTO userRegisterDTO) {
+        UserEntity newUserEntity=map(userRegisterDTO);
+        newUserEntity.setRoles(List.of(getNewUserRole()));
 
-        userRepository.save(map(userRegisterDTO));
+        userRepository.save(newUserEntity);
         appEventPublisher.publishEvent(new UserRegistrationEvent(
                 "UserService",userRegisterDTO.email() ,userRegisterDTO.firstName()) );
     }
@@ -81,6 +93,7 @@ public class UserServiceImpl implements UserService {
 
 
     private UserEntity map(UserRegisterDTO userRegisterDTO) {
+
         return new UserEntity()
                 .setLogged(false)
                 .setAuthenticated(false)
@@ -89,10 +102,14 @@ public class UserServiceImpl implements UserService {
                 .setEmail(userRegisterDTO.email())
                 .setAddress(userRegisterDTO.address())
                 .setCountry(userRegisterDTO.country())
-                .setRoles(Arrays.asList(userRoleService.getUserRoleByName("USER")))
                 .setPassword(passwordEncoder.encode(userRegisterDTO.password()));
 
 
+    }
+    private UserRoleEntity getNewUserRole(){
+            UserRoleEntity newRL=new UserRoleEntity();
+            newRL.setName(UserRoleEnum.USER);
+             return  newRL;
     }
 
 
