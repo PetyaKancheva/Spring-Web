@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher appEventPublisher;
     private final EmailServiceImpl emailService;
-    private final UserRoleRepository userRoleRepository;
 
     public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService, PasswordEncoder passwordEncoder, ApplicationEventPublisher appEventPublisher, EmailServiceImpl emailService, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
@@ -41,13 +40,14 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.appEventPublisher = appEventPublisher;
         this.emailService = emailService;
-        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
     public void register(UserRegisterDTO userRegisterDTO) {
         UserEntity newUserEntity=map(userRegisterDTO);
-        newUserEntity.setRoles(List.of(getNewUserRole()));
+        newUserEntity.setRoles(List.of(
+                userRoleService.getUserRoleByName(UserRoleEnum.USER)
+                        .orElseThrow(()-> new CustomObjectNotFoundException("User role USER not found"))));
 
         userRepository.save(newUserEntity);
         appEventPublisher.publishEvent(new UserRegistrationEvent(
@@ -106,11 +106,7 @@ public class UserServiceImpl implements UserService {
 
 
     }
-    private UserRoleEntity getNewUserRole(){
-            UserRoleEntity newRL=new UserRoleEntity();
-            newRL.setName(UserRoleEnum.USER);
-             return  newRL;
-    }
+
 
 
 }
