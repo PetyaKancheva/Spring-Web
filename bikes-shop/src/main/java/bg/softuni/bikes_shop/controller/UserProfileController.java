@@ -19,7 +19,6 @@ import java.time.Instant;
 @Controller
 public class UserProfileController {
     private final UserService userService;
-    private final ApplicationEventPublisher applicationEventPublisher;
     private final static String SUCCESSFUL_UPDATE_MSG =
             "Your profile is successfully updated!";
     private final static String ATTRIBUTE_MSG_NAME="onSuccess";
@@ -27,7 +26,6 @@ public class UserProfileController {
 
     public UserProfileController(UserService userService, ApplicationEventPublisher applicationEventPublisher) {
         this.userService = userService;
-        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @GetMapping("/user")

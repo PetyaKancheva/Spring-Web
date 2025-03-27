@@ -1,10 +1,14 @@
 package bg.softuni.bikes_shop.service.impl;
 
+import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.model.entity.ProductEntity;
+import bg.softuni.bikes_shop.model.events.ProductAdditionEvent;
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.service.ProductService;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,11 +22,13 @@ import static org.aspectj.runtime.internal.Conversions.doubleValue;
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+    private final ApplicationEventPublisher appEventPublisher;
 
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ApplicationEventPublisher appEventPublisher) {
         this.productRepository = productRepository;
 
+        this.appEventPublisher = appEventPublisher;
     }
 
     @Override
@@ -41,8 +47,17 @@ public class ProductServiceImpl implements ProductService {
     public void addProduct(ProductAddDTO productAddDTO) {
         ProductEntity newProduct = mapToEntity(productAddDTO);
         productRepository.save(newProduct);
-//            trigger event
+        appEventPublisher.publishEvent(new ProductAdditionEvent("ProductService",productAddDTO.name()));
 
+    }
+
+    @EventListener(ProductAdditionEvent.class)
+    @Override
+    public void addCompositeName(ProductAdditionEvent event) {
+            this.setCompositeName(productRepository.findByName( event.getProductName())
+                    .orElseThrow(()->new CustomObjectNotFoundException("product not found")));
+
+        System.out.println("New Product" +event.getProductName()+ "created and composite name set");
     }
 
     @Override
@@ -63,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
         String buildCompositeName = productName.toLowerCase().replace(" ", "_");
         while (iCount >= 0) {
 
-            if (productRepository.findFirstByCompositeName(buildCompositeName).isPresent()) {
+            if (productRepository.findByCompositeName(buildCompositeName).isPresent()) {
                 iCount += 1;
                 buildCompositeName = productName.toLowerCase().replace(" ", "_") + "_" + iCount;
             } else {
