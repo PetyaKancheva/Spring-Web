@@ -13,10 +13,12 @@ import java.security.SecureRandom;
 @Entity
 @Table(name = "products")
 public class ProductEntity extends BaseEntity {
+
     @Column(name = "name", nullable = false)
-
     private String name;
-
+    // todo add custom validation as email
+    @Column(name = "composite_name")
+    private String compositeName;
     @Column(name = "description")
     private String description;
     @Column(name = "category",nullable = false)
@@ -70,6 +72,15 @@ public class ProductEntity extends BaseEntity {
 
     public ProductEntity setPictureURL(String pictureURL) {
         this.pictureURL = pictureURL;
+        return this;
+    }
+
+    public String getCompositeName() {
+        return compositeName;
+    }
+
+    public ProductEntity setCompositeName(String compositeName) {
+        this.compositeName = compositeName;
         return this;
     }
 }

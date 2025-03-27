@@ -1,11 +1,14 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,33 +32,38 @@ public class ProductDetailsController {
         this.currentOrder = currentOrder;
     }
 
-    @GetMapping("/product/{id}")
-    public String details(@PathVariable("id") String id, Model model) {
+    @GetMapping("/product/{composite_name}")
+    public String details(@PathVariable("composite_name") String compositeName, Model model) {
 
         ProductDTO singleProductDTO = productService.
-                getSingleProduct(Long.parseLong(id))
-                .orElseThrow(() -> new CustomObjectNotFoundException("Product with id " + id + " not found!"));
+                getSingleProduct(compositeName)
+                .orElseThrow(() -> new CustomObjectNotFoundException("Product with name " + compositeName + " not found!"));
 
         model.addAttribute("singleProduct", singleProductDTO);
 
         return "product-details";
     }
 
-    @PostMapping("/product/{id}")
-    public String buy(@PathVariable("id") String id, String productName, String productPrice, Integer quantity, RedirectAttributes rAtt) {
+    @PostMapping("/product/{composite_name}")
+    public String buy(@PathVariable("composite_name") String compositeName, @AuthenticationPrincipal CustomUserDetails currentUser, String productName, String productPrice, Integer quantity, RedirectAttributes rAtt) {
+        if(currentUser == null){
+            return "redirect:/login";
+        }
 
-        ItemDTO newItemDTO = new ItemDTO();
-        newItemDTO.setProductID(Long.valueOf(id));
-        newItemDTO.setProductName(productName);
-        newItemDTO.setPrice(Double.parseDouble(productPrice));
 
-        //TODO check if quantity >0
-        newItemDTO.setQuantity(quantity);
-        currentOrder.add(newItemDTO);
 
+//        ItemDTO newItemDTO = new ItemDTO();
+//        newItemDTO.setProductID(Long.valueOf(id));
+//        newItemDTO.setProductName(productName);
+//        newItemDTO.setPrice(Double.parseDouble(productPrice));
+//
+//        //TODO check if quantity >0
+//        newItemDTO.setQuantity(quantity);
+//        currentOrder.add(newItemDTO);
+//
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, String.format(SUCCESSFUL_PURCHASE_MSG, productName));
 
-        return "shopping-cart";
+        return "redirect:/shopping-cart";
     }
 
 

@@ -25,17 +25,16 @@ public class HomeController {
 
     public HomeController(ProductService productService, CurrentCurrency currentCurrency) {
         this.productService = productService;
-
         this.currentCurrency = currentCurrency;
     }
 
     @GetMapping("/")
-    private String allProducts(Model model, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue ="3") Integer size) {
-
-        model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by("id"))));
+    private String allProducts( @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue ="3") Integer size,Model model) {
+        // TODO implement dropdown for sorting
+        model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by("name"))));
         model.addAttribute("categories", productService.getDistinctCategories());
         model.addAttribute("listCurrencies", CURRENCY_LIST);
-
+        //TODO get currency list from currency service
         return "index";
     }
 

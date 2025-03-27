@@ -5,6 +5,8 @@ import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 
+import bg.softuni.bikes_shop.repository.UserRoleRepository;
+import bg.softuni.bikes_shop.service.UserRoleService;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
 
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +26,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -34,6 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserRegisterControllerTestIT {
     @Autowired
     private MockMvc mockMvc;
+    @Mock
+    private UserRoleService mockUserRoleService;
 
     @Value("${mail.port}")
     private int port;
@@ -66,6 +73,8 @@ class UserRegisterControllerTestIT {
 
     @Test
     void testRegistration() throws Exception {
+
+
         mockMvc.perform(MockMvcRequestBuilders.post("/register")
                 .param("email","ivan@mail.com")
                 .param("firstName","Ivan")
@@ -77,6 +86,7 @@ class UserRegisterControllerTestIT {
                 .with(csrf())
         ).andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/register"));
+
 
 
 

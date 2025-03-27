@@ -38,7 +38,7 @@
             </div>
                 <div class="row row-cols-sm-3  ">
                     <div class="col" th:each="p:${products}">
-                        <a class="product-link" th:href="@{/product/{pid}(pid=${p.id()})}">
+                        <a class="product-link" th:href="@{/product/{pid}(pid=${p.compositeName()})}">
                             <div class="container">
 
                                 <div class="img-thumbnail rounded " style="width: 300px; height: 200px;"><img

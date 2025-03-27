@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 // TODO check if it can be made with record
 public class ItemDTO{
     @NotEmpty
-    Long productID;
+    String productCompositeName;
     @NotEmpty
     String productName;
     @NotEmpty
@@ -15,12 +15,13 @@ public class ItemDTO{
     public ItemDTO() {
     }
 
-    public @NotEmpty Long getProductID() {
-        return productID;
+    public String getProductCompositeName() {
+        return productCompositeName;
     }
 
-    public void setProductID(@NotEmpty Long productID) {
-        this.productID = productID;
+    public ItemDTO setProductCompositeName(String productCompositeName) {
+        this.productCompositeName = productCompositeName;
+        return this;
     }
 
     public @NotEmpty String getProductName() {

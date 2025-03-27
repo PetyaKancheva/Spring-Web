@@ -10,11 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.aspectj.runtime.internal.Conversions.doubleValue;
 
@@ -29,15 +26,14 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public Page<ProductDTO> getProductsPageable(Pageable pageable) {
-        return productRepository
-                .findAll(pageable)
+        return productRepository.findAllProductsWithCompositeNameNotNull(pageable)
                 .map(ProductServiceImpl::mapToDTO);
     }
 
 
     @Override
-    public Optional<ProductDTO> getSingleProduct(Long id) {
-        return productRepository.findById(id).map(ProductServiceImpl::mapToDTO);
+    public Optional<ProductDTO> getSingleProduct(String compositeName) {
+        return productRepository.findByCompositeName(compositeName).map(ProductServiceImpl::mapToDTO);
     }
 
     @Override
@@ -62,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 
     private static ProductDTO mapToDTO(ProductEntity p){
 
-             return new ProductDTO(p.getId(),p.getName(), p.getDescription(),p.getCategory(),
+             return new ProductDTO(p.getCompositeName(),p.getName(), p.getDescription(),p.getCategory(),
                      doubleValue(p.getPrice()), p.getPictureURL());
     }
     private static ProductEntity mapToEntity(ProductAddDTO productAddDTO) {
@@ -72,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
                 .setPrice(BigDecimal.valueOf(productAddDTO.price()))
                 .setCategory(productAddDTO.category())
                 .setPictureURL(productAddDTO.pictureURL());
+        // composit name will be cacluated after
     }
 
 

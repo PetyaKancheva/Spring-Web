@@ -30,7 +30,7 @@
                         <th:block th:text="*{price}"></th:block>
                     </div>
                     <!--   Form Start -->
-                    <form th:action="@{/product/{pid}(pid=${singleProduct.id})}"
+                    <form th:action="@{/product/{pid}(pid=${singleProduct.compositeName()})}"
                           th:method="POST"
                           id="buy-form"
                     >

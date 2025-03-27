@@ -10,11 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Repository
-public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
+public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     @Override
     Optional<ProductEntity> findById(Long aLong);
@@ -23,5 +22,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
             , nativeQuery = true)
     List<String> getDistinctCategories();
 
-    Page<ProductEntity> findByCategory(Pageable pageable,String name);
+    @Query(value = "SELECT * FROM shop.products WHERE  composite_name IS NOT NULL"
+            , nativeQuery = true)
+    Page<ProductEntity> findAllProductsWithCompositeNameNotNull(Pageable pageable);
+
+    Page<ProductEntity> findByCategory(Pageable pageable, String name);
+
+    Optional<ProductEntity> findByCompositeName(String compositeName);
 }

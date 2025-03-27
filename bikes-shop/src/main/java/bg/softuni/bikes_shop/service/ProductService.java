@@ -14,14 +14,12 @@ public interface ProductService {
     Page<ProductDTO> getProductsPageable(Pageable pageable);
 
 
-   Optional<ProductDTO> getSingleProduct(Long id);
+   Optional<ProductDTO> getSingleProduct(String compositeName);
 
     void addProduct(ProductAddDTO productAddDTO);
 
     List<String> getDistinctCategories();
 
     Page<ProductDTO>  getProductsFromCategoryPageable(Pageable pageable,String category);
-
-
 
 }
