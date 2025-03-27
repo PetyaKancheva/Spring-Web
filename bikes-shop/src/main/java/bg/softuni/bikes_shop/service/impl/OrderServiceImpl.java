@@ -11,6 +11,7 @@ import bg.softuni.bikes_shop.repository.OrderRepository;
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.OrderService;
+import bg.softuni.bikes_shop.service.ProductService;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,14 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final ItemRepository itemRepository;
     private final OrderRepository orderRepository;
+    private final ProductService productService;
 
-    public OrderServiceImpl(UserRepository userRepository, ProductRepository productRepository, ItemRepository itemRepository, OrderRepository orderRepository) {
+    public OrderServiceImpl(UserRepository userRepository, ProductRepository productRepository, ItemRepository itemRepository, OrderRepository orderRepository, ProductService productService) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.itemRepository = itemRepository;
         this.orderRepository = orderRepository;
+        this.productService = productService;
     }
 
     @Override
@@ -49,8 +52,8 @@ public class OrderServiceImpl implements OrderService {
 
         for (ItemDTO itemDTO : itemsDTO) {
             itemRepository.save(new ItemsEntity()
-                    .setProduct(productRepository.findById(itemDTO.getProductID())
-                            .orElseThrow(()-> new CustomObjectNotFoundException("Product with id: "+ itemDTO.getProductID()+"not found!")))
+                    .setProduct(productRepository.findByCompositeName(itemDTO.getProductCompositeName())
+                            .orElseThrow(()-> new CustomObjectNotFoundException("Product with id: "+ itemDTO.getProductName()+"not found!")))
                     .setQuantity(itemDTO.getQuantity())
                     .setOrder(newOrder));
         }
@@ -75,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
                 orderEntity.getItems().stream().map(
                         itemsEntity -> {
                             ItemDTO itemDTO = new ItemDTO();
-                            itemDTO.setProductID(itemsEntity.getProduct().getId());
+                            itemDTO.setProductCompositeName(itemsEntity.getProduct().getCompositeName());
                             itemDTO.setProductName(itemsEntity.getProduct().getName());
                             itemDTO.setQuantity(itemsEntity.getQuantity());
                             itemDTO.setPrice(doubleValue(itemsEntity.getProduct().getPrice()));

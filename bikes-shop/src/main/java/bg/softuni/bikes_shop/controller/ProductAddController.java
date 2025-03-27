@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/product/")
 public class ProductAddController {
     private final ProductService productService;
-
+    private final static String SUCCESSFUL_PRODUCT_ADDITION_MSG =
+            "New Product created!";
+    private final static String ATTRIBUTE_MSG_NAME = "onSuccess";
 
     public ProductAddController(ProductService productService) {
         this.productService = productService;
@@ -38,7 +40,7 @@ public class ProductAddController {
         }
 
         productService.addProduct(productAddDTO);
-        rAtt.addFlashAttribute("successfullyAdded","New Product created!");
+        rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_PRODUCT_ADDITION_MSG);
 
         return "redirect:/add";
     }

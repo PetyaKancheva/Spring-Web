@@ -2,6 +2,7 @@ package bg.softuni.bikes_shop.service;
 
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
+import bg.softuni.bikes_shop.model.entity.ProductEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,4 +23,5 @@ public interface ProductService {
 
     Page<ProductDTO>  getProductsFromCategoryPageable(Pageable pageable,String category);
 
+    void setCompositeName(ProductEntity productEntity);
 }

@@ -1,6 +1,8 @@
 package bg.softuni.bikes_shop.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
+
 // TODO check if it can be made with record
 public class ItemDTO{
     @NotEmpty
@@ -8,8 +10,10 @@ public class ItemDTO{
     @NotEmpty
     String productName;
     @NotEmpty
+    @Positive
     Double price;
     @NotEmpty
+    @Positive
     Integer quantity;
 
     public ItemDTO() {
@@ -24,27 +28,30 @@ public class ItemDTO{
         return this;
     }
 
-    public @NotEmpty String getProductName() {
+    public String getProductName() {
         return productName;
     }
 
-    public void setProductName(@NotEmpty String productName) {
+    public ItemDTO setProductName(String productName) {
         this.productName = productName;
+        return this;
     }
 
-    public @NotEmpty Double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(@NotEmpty Double price) {
+    public ItemDTO setPrice(Double price) {
         this.price = price;
+        return this;
     }
 
-    public @NotEmpty Integer getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(@NotEmpty Integer quantity) {
+    public ItemDTO setQuantity(Integer quantity) {
         this.quantity = quantity;
+        return this;
     }
 }

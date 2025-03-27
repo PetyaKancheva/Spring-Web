@@ -30,7 +30,7 @@ public class ShoppingCartController {
     @DeleteMapping("/shopping-cart")
     public String delete( String  productID){
         //  TODO validate if product ID exists
-            currentOrder.deleteItem(Long.valueOf(productID));
+//            currentOrder.deleteItem(Long.valueOf(productID));
 
         return "redirect:/shopping-cart";
     }

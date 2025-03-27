@@ -17,13 +17,14 @@ import static org.aspectj.runtime.internal.Conversions.doubleValue;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-      private final ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
 
     }
+
     @Override
     public Page<ProductDTO> getProductsPageable(Pageable pageable) {
         return productRepository.findAllProductsWithCompositeNameNotNull(pageable)
@@ -38,8 +39,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProduct(ProductAddDTO productAddDTO) {
-            ProductEntity newProduct=mapToEntity(productAddDTO);
-            productRepository.save(newProduct);
+        ProductEntity newProduct = mapToEntity(productAddDTO);
+        productRepository.save(newProduct);
+//            trigger event
 
     }
 
@@ -48,19 +50,36 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.getDistinctCategories();
     }
 
-   @Override
-    public Page<ProductDTO> getProductsFromCategoryPageable(Pageable pageable,String category) {
-        return productRepository.findByCategory(pageable,category)
+    @Override
+    public Page<ProductDTO> getProductsFromCategoryPageable(Pageable pageable, String category) {
+        return productRepository.findByCategory(pageable, category)
                 .map(ProductServiceImpl::mapToDTO);
     }
 
+    @Override
+    public void setCompositeName(ProductEntity productEntity) {
+        String productName = productEntity.getName();
+        int iCount = 0;
+        String buildCompositeName = productName.toLowerCase().replace(" ", "_");
+        while (iCount >= 0) {
 
+            if (productRepository.findFirstByCompositeName(buildCompositeName).isPresent()) {
+                iCount += 1;
+                buildCompositeName = productName.toLowerCase().replace(" ", "_") + "_" + iCount;
+            } else {
+                productEntity.setCompositeName(buildCompositeName);
+                productRepository.save(productEntity);
+                return;
+            }
 
-    private static ProductDTO mapToDTO(ProductEntity p){
-
-             return new ProductDTO(p.getCompositeName(),p.getName(), p.getDescription(),p.getCategory(),
-                     doubleValue(p.getPrice()), p.getPictureURL());
+        }
     }
+
+    private static ProductDTO mapToDTO(ProductEntity p) {
+        return new ProductDTO(p.getCompositeName(), p.getName(), p.getDescription(), p.getCategory(),
+                doubleValue(p.getPrice()), p.getPictureURL());
+    }
+
     private static ProductEntity mapToEntity(ProductAddDTO productAddDTO) {
         return new ProductEntity()
                 .setName(productAddDTO.name())
@@ -68,7 +87,6 @@ public class ProductServiceImpl implements ProductService {
                 .setPrice(BigDecimal.valueOf(productAddDTO.price()))
                 .setCategory(productAddDTO.category())
                 .setPictureURL(productAddDTO.pictureURL());
-        // composit name will be cacluated after
     }
 
 

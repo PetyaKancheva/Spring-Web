@@ -29,4 +29,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     Page<ProductEntity> findByCategory(Pageable pageable, String name);
 
     Optional<ProductEntity> findByCompositeName(String compositeName);
+
+    Optional<ProductEntity>findFirstByCompositeName(String compositeName);
 }

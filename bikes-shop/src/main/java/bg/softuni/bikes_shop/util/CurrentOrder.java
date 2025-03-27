@@ -46,7 +46,7 @@ public class CurrentOrder {
         }else{
 
          for(ItemDTO item:this.items){
-                 if(item.getProductID()==newItemDTO.getProductID()){
+                 if(item.getProductCompositeName()==newItemDTO.getProductCompositeName()){
                      int qty=item.getQuantity();
                      item.setQuantity(qty+newItemDTO.getQuantity());
                      this.totalPrice+=newItemDTO.getPrice()*newItemDTO.getQuantity();
@@ -61,8 +61,8 @@ public class CurrentOrder {
 
 
     }
-    public void deleteItem(Long  itemProductID   ){
-        ItemDTO itemDTO=items.stream().filter(i->i.getProductID()==itemProductID).findFirst().orElseThrow();
+    public void deleteItem(String  itemProductCompositName ){
+        ItemDTO itemDTO=items.stream().filter(i->i.getProductCompositeName()==itemProductCompositName).findFirst().orElseThrow();
         this.totalPrice-=itemDTO.getPrice()*itemDTO.getQuantity();
         items.remove(itemDTO);
     }
