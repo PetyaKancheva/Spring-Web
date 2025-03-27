@@ -1,18 +1,18 @@
 package bg.softuni.bikes_shop.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 // TODO check if it can be made with record
 public class ItemDTO{
-    @NotEmpty
+     @NotNull
     String productCompositeName;
-    @NotEmpty
+    @NotNull
     String productName;
-    @NotEmpty
     @Positive
     Double price;
-    @NotEmpty
+    @NotNull
     @Positive
     Integer quantity;
 

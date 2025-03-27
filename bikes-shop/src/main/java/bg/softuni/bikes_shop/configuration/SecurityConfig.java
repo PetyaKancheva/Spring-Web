@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
@@ -30,14 +31,14 @@ public class SecurityConfig {    private final ProductService productService;
                         .requestMatchers( "/services","/contacts","/about").permitAll()
                         .requestMatchers( "/comment/**","/comments").permitAll()
                         .requestMatchers("/user/activate(activation_code={activationCode})").permitAll()//avtivate?
-                        .requestMatchers("/product/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/product/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()
                         .requestMatchers("/admin").hasAuthority(UserRoleEnum.ADMIN.toString())
                         .requestMatchers("/product/add").hasAuthority(UserRoleEnum.EMPLOYEE.toString())
                         .requestMatchers("/shopping-cart","/user","/orders").authenticated()
-                        .requestMatchers("/shopping-cart-finalize","/user","/orders").authenticated()
-                         // changed for testing error pages
+//                        .requestMatchers("/shopping-cart-finalize","/user","/orders").authenticated()
+                        .anyRequest().authenticated()// changed for testing error pages
         ).formLogin(
                 formLogin -> formLogin
                         .loginPage("/login")

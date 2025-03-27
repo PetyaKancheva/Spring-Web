@@ -1,8 +1,10 @@
 package bg.softuni.bikes_shop.controller;
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +26,8 @@ public class ShoppingCartController {
     @GetMapping("/shopping-cart")
     public String cart(Model model){
 
-        return "redirect:shopping-cart";
+         model.addAttribute(currentOrder);
+        return "shopping-cart";
     }
 
     @DeleteMapping("/shopping-cart")
@@ -35,17 +38,15 @@ public class ShoppingCartController {
         return "redirect:/shopping-cart";
     }
     @GetMapping("/shopping-cart-finalize")
-    public String finalizePurchase(){
-            String fakeEmail="";
-//            TODO FIX logic? why it is GET not POST??
-        if (currentOrder.getItems()!=null ){
+    public String finalizePurchase(@AuthenticationPrincipal CustomUserDetails currentUser){
 
-            orderService.buy(fakeEmail,currentOrder.getItems(),currentOrder.getTotalPrice());
+        if (currentOrder.getItems()!=null ){
+            orderService.buy(currentUser.getUsername(),currentOrder);
             currentOrder.clear();
         }
 
 
-        return  "shopping-cart";
+        return  "orders";
     }
 
 

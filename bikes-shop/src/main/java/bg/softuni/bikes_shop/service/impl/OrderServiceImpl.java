@@ -12,6 +12,7 @@ import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.service.ProductService;
+import bg.softuni.bikes_shop.util.CurrentOrder;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -40,27 +41,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void buy(String email, List<ItemDTO> itemsDTO, Double totalPrice) {
+    public void buy(String email, CurrentOrder currentOrder) {
 
         OrderEntity newOrder = new OrderEntity()
-                .setBuyer(userRepository.findUserByEmail(email).orElseThrow(()->new UsernameNotFoundException("User with email: "+email+"not found!")))
+                .setBuyer(userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!")))
                 .setStatus("open")
                 .setDateCreated(LocalDate.now())
-                .setTotalSum(BigDecimal.valueOf(totalPrice));
+                .setTotalSum(BigDecimal.valueOf(currentOrder.getTotalPrice()));
 
         orderRepository.save(newOrder);
 
-        for (ItemDTO itemDTO : itemsDTO) {
+        for (ItemDTO itemDTO : currentOrder.getItems()) {
             itemRepository.save(new ItemsEntity()
                     .setProduct(productRepository.findByCompositeName(itemDTO.getProductCompositeName())
-                            .orElseThrow(()-> new CustomObjectNotFoundException("Product with id: "+ itemDTO.getProductName()+"not found!")))
+                            .orElseThrow(() -> new CustomObjectNotFoundException("Product with id: " + itemDTO.getProductName() + "not found!")))
                     .setQuantity(itemDTO.getQuantity())
                     .setOrder(newOrder));
         }
-
-
-
-
     }
 
     @Override

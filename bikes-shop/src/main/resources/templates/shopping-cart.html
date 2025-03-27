@@ -36,7 +36,7 @@
                             <form th:action="@{/shopping-cart}"
                                   th:method="POST"
                                   >
-                                <input type="hidden" th:name="productID" th:value="${item.getProductID}">
+                                <input type="hidden" th:name="productID" th:value="${item.getProductCompositeName()}">
                                 <button type="submit" class="border border-0 bg-body" ><i
                                     class=" fa-solid fa-trash"></i> </button>
                             </form>

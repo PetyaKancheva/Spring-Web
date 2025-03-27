@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProductDetailsController {
     private final ProductService productService;
     private final static String SUCCESSFUL_PURCHASE_MSG =
-            "Successfully purchased: %s. Please go to order list to see your current order.";
+            "Successfully purchased: %s. Please go to shopping cart to see your current items.";
     private final static String ATTRIBUTE_MSG_NAME = "onSuccess";
 
 
@@ -30,7 +30,6 @@ public class ProductDetailsController {
 
     public ProductDetailsController(ProductService productService, CurrentOrder currentOrder) {
         this.productService = productService;
-
         this.currentOrder = currentOrder;
     }
 
@@ -46,10 +45,10 @@ public class ProductDetailsController {
 
         return "product-details";
     }
-
+    // preauthorise`?
     @PostMapping("/product/{composite_name}")
     public String buy(@Valid ItemDTO itemDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
-        // binding resullt for error?? required
+
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("itemDTO", new ItemDTO());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.itemDTO", bindingResult);

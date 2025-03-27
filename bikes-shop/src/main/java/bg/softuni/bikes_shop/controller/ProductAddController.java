@@ -26,6 +26,7 @@ public class ProductAddController {
 
     @GetMapping("/add")
     private String addProduct(Model model) {
+
         model.addAttribute("productAddDTO", ProductAddDTO.empty());
         return "product-add";
     }
@@ -41,7 +42,6 @@ public class ProductAddController {
 
         productService.addProduct(productAddDTO);
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_PRODUCT_ADDITION_MSG);
-
-        return "redirect:/add";
+        return "redirect:/product/add";
     }
 }

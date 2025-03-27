@@ -47,17 +47,16 @@ public class ProductServiceImpl implements ProductService {
     public void addProduct(ProductAddDTO productAddDTO) {
         ProductEntity newProduct = mapToEntity(productAddDTO);
         productRepository.save(newProduct);
-        appEventPublisher.publishEvent(new ProductAdditionEvent("ProductService",productAddDTO.name()));
+        appEventPublisher.publishEvent(new ProductAdditionEvent("ProductServiceImpl",newProduct));
 
     }
 
     @EventListener(ProductAdditionEvent.class)
     @Override
     public void addCompositeName(ProductAdditionEvent event) {
-            this.setCompositeName(productRepository.findByName( event.getProductName())
-                    .orElseThrow(()->new CustomObjectNotFoundException("product not found")));
+            this.setCompositeName(event.getProduct());
 
-        System.out.println("New Product" +event.getProductName()+ "created and composite name set");
+        System.out.println("New Product " +event.getProduct().getName()+ " created and composite name set");
     }
 
     @Override
@@ -76,8 +75,7 @@ public class ProductServiceImpl implements ProductService {
         String productName = productEntity.getName();
         int iCount = 0;
         String buildCompositeName = productName.toLowerCase().replace(" ", "_");
-        while (iCount >= 0) {
-
+        while (iCount >= 0 && iCount<=10) {
             if (productRepository.findByCompositeName(buildCompositeName).isPresent()) {
                 iCount += 1;
                 buildCompositeName = productName.toLowerCase().replace(" ", "_") + "_" + iCount;
@@ -86,7 +84,6 @@ public class ProductServiceImpl implements ProductService {
                 productRepository.save(productEntity);
                 return;
             }
-
         }
     }
 

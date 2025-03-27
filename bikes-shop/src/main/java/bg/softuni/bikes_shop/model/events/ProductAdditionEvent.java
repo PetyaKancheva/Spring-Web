@@ -1,18 +1,19 @@
 package bg.softuni.bikes_shop.model.events;
 
+import bg.softuni.bikes_shop.model.entity.ProductEntity;
 import org.springframework.context.ApplicationEvent;
 
 public class ProductAdditionEvent extends ApplicationEvent {
-    private final String productName;
+    private final ProductEntity product;
 
-
-    public ProductAdditionEvent(Object source, String productName) {
+    public ProductAdditionEvent(Object source, ProductEntity product) {
         super(source);
-        this.productName = productName;
-
+        this.product = product;
     }
 
-    public String getProductName() {
-        return productName;
+    public ProductEntity getProduct() {
+        return product;
     }
 }
+
+
