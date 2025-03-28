@@ -9,6 +9,7 @@ import bg.softuni.bikes_shop.repository.ItemRepository;
 import bg.softuni.bikes_shop.repository.OrderRepository;
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
+import bg.softuni.bikes_shop.service.ItemService;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
@@ -25,15 +26,13 @@ import static org.aspectj.runtime.internal.Conversions.doubleValue;
 @Service
 public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
-    private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    private final ProductService productService;
+    private final ItemService itemService;
 
-    public OrderServiceImpl(UserRepository userRepository, ProductRepository productRepository, ItemRepository itemRepository, OrderRepository orderRepository, ProductService productService) {
+    public OrderServiceImpl(UserRepository userRepository, OrderRepository orderRepository, ItemService itemService) {
         this.userRepository = userRepository;
-        this.productRepository = productRepository;
         this.orderRepository = orderRepository;
-        this.productService = productService;
+        this.itemService = itemService;
     }
 
     @Override
@@ -46,6 +45,10 @@ public class OrderServiceImpl implements OrderService {
                 .setTotalSum(BigDecimal.valueOf(currentOrder.getTotalPrice()));
 
         orderRepository.save(newOrder);
+
+         for(ItemDTO item:currentOrder.getItems()){
+                    itemService.createItem(item,newOrder);
+         }
 
     }
 

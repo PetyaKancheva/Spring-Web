@@ -10,11 +10,12 @@
 <div>
     <div class=" container  justify-content-center">
 
-        <div class="row text-center ">
+        <div class="text-center">
             <h3>Purchased orders:</h3>
-            <div th:each="order,iO:${allOrders}" >
-               Order number: <th:block  th:text="${iO.index+1}"></th:block>
-                <table class=" mb-5  border border-dark mx-auto">
+            <div class=" cols-4 mx-auto mb-5 " th:each="order,iO:${allOrders}">
+                Order number:
+                <th:block th:text="${iO.index+1}"></th:block>
+                <table class="  border border-dark mx-auto">
                     <tr class="border border-dark fw-bold">
                         <th>Item ID</th>
                         <th>Product Name</th>
@@ -31,12 +32,13 @@
                     </tr>
 
                 </table>
-                <div>
+                    <span class="fst-italic">Total: </span> <th:block class="fst-italic" th:text="${order.totalSum()}"></th:block>
+
 
             </div>
         </div>
         <div class="  py-2  text-center">
-            <button class=" btn btn-dark " type="button" onclick="javascript:history.back()">Back</button>
+            <button class=" btn btn-dark " type="button" onclick="window.location = '/'">Go Home</button>
         </div>
 
 

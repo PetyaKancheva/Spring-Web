@@ -4,6 +4,7 @@ import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,34 +25,37 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shopping-cart")
-    public String cart(Model model){
+    public String cart(Model model) {
 
-         model.addAttribute(currentOrder);
+        model.addAttribute(currentOrder);
         return "shopping-cart";
     }
 
-    @DeleteMapping("/shopping-cart")
-    public String delete( String  productID){
+
+    @PreAuthorize("#principal")
+    @PostMapping("/shopping-cart/delete")
+    public String delete(String productID) {
         //  TODO validate if product ID exists
-//            currentOrder.deleteItem(Long.valueOf(productID));
+        currentOrder.deleteItem(productID);
 
         return "redirect:/shopping-cart";
     }
-    @GetMapping("/shopping-cart-finalize")
-    public String finalizePurchase(@AuthenticationPrincipal CustomUserDetails currentUser){
-        // why get on buying??
-        if (currentOrder.getItems()!=null ){
-            orderService.buy(currentUser.getUsername(),currentOrder);
-            currentOrder.clear();
-            return  "redirect:/orders";
+
+    @PostMapping("/shopping-cart")
+    public String finalizePurchase(@AuthenticationPrincipal CustomUserDetails currentUser) {
+
+        if (currentOrder.getItems() == null) {
+            return "redirect:/";
         }
 
-            // that is happening??
-        return  "orders";
+        orderService.buy(currentUser.getUsername(), currentOrder);
+        currentOrder.clear();
+        return "redirect:/orders";
+
     }
 
 
-    }
+}
 
 
 
