@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 
 @Service
@@ -90,13 +91,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ShortUserDTO> getByEmailFirstNameOrLastName(String searchWord) {
+    public List<ShortUserDTO> getAllByEmailFirsOrLastName(String searchWord) {
 
-        return userRepository.
-                findAllByFirstNameOrLastNameOrEmailIsWithinIgnoreCase(searchWord).stream().map(UserServiceImpl::mapToShortDTO).toList();
+        return userRepository.findAllByEmailFirsOrLastName
+                (searchWord).stream().map(UserServiceImpl::mapToShortDTO).toList();
 
     }
 
+    @Override
+    public Optional<AdminUpdateDTO> getAdminDTO(String email) {
+        return userRepository.findUserByEmail(email).map(UserServiceImpl::mapToAdminDTO);
+    }
 
     private UserEntity mapToEntity(UserRegisterDTO userRegisterDTO) {
 
@@ -117,8 +122,20 @@ public class UserServiceImpl implements UserService {
                 u.getEmail(),
                 u.getFirstName(),
                 u.getLastName());
+    }
+
+    private static AdminUpdateDTO mapToAdminDTO(UserEntity u) {
+        return new AdminUpdateDTO(
+                "ROLE:FAKE",
+                u.getEmail(),
+                u.getFirstName(),
+                u.getLastName(),
+                u.getAddress(),
+                u.getCountry(),
+                null);
 
     }
+
 
 }
 

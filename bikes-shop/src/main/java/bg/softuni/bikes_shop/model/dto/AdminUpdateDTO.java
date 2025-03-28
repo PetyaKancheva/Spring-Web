@@ -16,6 +16,7 @@ public record AdminUpdateDTO(
         String newPassword
 ) {
     public static AdminUpdateDTO empty() {
-        return new AdminUpdateDTO(null, null, null, null, null, null, null);
+        return
+                new AdminUpdateDTO(null, null, null, null, null, null, null);
     }
 }

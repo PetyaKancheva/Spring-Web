@@ -28,19 +28,21 @@ public class SecurityConfig {    private final ProductService productService;
 
         httpSecurity.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/login", "/register").permitAll()
-                        .requestMatchers( "/services","/contacts","/about").permitAll()
-                        .requestMatchers( "/comment/**","/comments").permitAll()
-                        .requestMatchers("/user/activate(activation_code={activationCode})").permitAll()//avtivate?
-                        .requestMatchers(HttpMethod.GET,"/product/**").permitAll()
-                        .requestMatchers("/error").permitAll()
-                        .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()
-                        .requestMatchers("/admin/**").hasAuthority(UserRoleEnum.ADMIN.toString())
-                        .requestMatchers("/product/add").hasAuthority(UserRoleEnum.EMPLOYEE.toString())
-                        .requestMatchers("/shopping-cart","/user","/orders").authenticated()
+                        .anyRequest().permitAll()
+//                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+//                        .requestMatchers("/", "/login", "/register").permitAll()
+//                        .requestMatchers( "/services","/contacts","/about").permitAll()
+//                        .requestMatchers( "/comment/**","/comments").permitAll()
+//                        .requestMatchers("/user/activate(activation_code={activationCode})").permitAll()//avtivate?
+//                        .requestMatchers(HttpMethod.GET,"/product/**").permitAll()
+//                        .requestMatchers("/error").permitAll()
+//                        .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()
+//                        .requestMatchers("/admin/**").hasAuthority(UserRoleEnum.ADMIN.toString())
+//                        .requestMatchers("/admin/update/**").hasAuthority(UserRoleEnum.ADMIN.toString())
+//                        .requestMatchers("/product/add").hasAuthority(UserRoleEnum.EMPLOYEE.toString())
+//                        .requestMatchers("/shopping-cart","/user","/orders").authenticated()
 //                        .requestMatchers("/shopping-cart-finalize","/user","/orders").authenticated()
-                        .anyRequest().authenticated()// changed for testing error pages
+//                        .anyRequest().authenticated()// changed for testing error pages
         ).formLogin(
                 formLogin -> formLogin
                         .loginPage("/login")

@@ -9,6 +9,6 @@ public record ShortUserDTO(
         return new ShortUserDTO(null,null,null);
     }
     public static String stringMessage(){
-            return "%s %s with email: $%s";
+            return "%s %s with email: %s";
     }
 }

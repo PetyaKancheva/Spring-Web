@@ -13,5 +13,5 @@ public interface   UserRepository extends JpaRepository<UserEntity,Long> {
        Optional< UserEntity> findUserByEmail(String email);
 @Query(value="SELECT *  FROM shop.users AS u WHERE ? IN (u.e_mail, u.first_name , u.last_name )",
         nativeQuery = true)
-    List<UserEntity> findAllByFirstNameOrLastNameOrEmailIsWithinIgnoreCase(String name);
+    List<UserEntity> findAllByEmailFirsOrLastName(String name);
 }
