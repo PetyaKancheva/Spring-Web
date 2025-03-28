@@ -12,8 +12,8 @@
         <div th:if= "${onSuccess}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
              th:text="${onSuccess}"></div>
 
-        <div class="row text-center ">
-            <h3>Current items:</h3>
+        <div class="col-4 mx-auto text-center ">
+            <h3>Shopping cart:</h3>
             <div th:unless="${@currentOrder.getItems}"> No Items</div>
 
             <div th:if="${@currentOrder.getItems}">
@@ -44,7 +44,7 @@
                     </tr>
 
                 </table>
-                <div class="text-center fw-bold"><span> Total: </span>
+                <div class="text-end fw-bold"><span> Total: </span>
                     <th:block th:text="${@currentOrder.getTotalPrice}"></th:block>
                 </div>
                 <!--                 to hide button when cart is empty-->
@@ -54,8 +54,9 @@
             </div>
         </div>
         <div class="  py-2  text-center">
-            <button class=" btn btn-dark " type="button" onclick="javascript:history.back()">Back</button>
+        <a class="btn btn-block btn-dark m-2" th:href="@{/orders}">View all orders</a>
         </div>
+
 
 
     </div>

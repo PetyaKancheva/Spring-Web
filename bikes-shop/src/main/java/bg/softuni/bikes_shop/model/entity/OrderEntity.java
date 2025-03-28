@@ -1,13 +1,10 @@
 package bg.softuni.bikes_shop.model.entity;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import org.apache.catalina.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -18,7 +15,7 @@ public class OrderEntity extends BaseEntity{
     @JoinColumn(name="buyer_id",nullable = false)
     private UserEntity buyer;
     @OneToMany(mappedBy = "order")
-    private List<ItemsEntity> items;
+    private List<ItemEntity> items;
     @Column(name="total")
     private BigDecimal totalSum;
     @Column(name="date_created", nullable = false)
@@ -35,11 +32,11 @@ public class OrderEntity extends BaseEntity{
         return this;
     }
 
-    public List<ItemsEntity> getItems() {
+    public List<ItemEntity> getItems() {
         return items;
     }
 
-    public OrderEntity setItems(List<ItemsEntity> items) {
+    public OrderEntity setItems(List<ItemEntity> items) {
         this.items = items;
         return this;
     }

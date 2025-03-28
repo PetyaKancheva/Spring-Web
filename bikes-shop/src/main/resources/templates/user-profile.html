@@ -20,19 +20,16 @@
         </h4>
         <div class=" container text-center ">
             <div class="col border-bottom">Personal data:</div>
+
             <div class="row" th:text="${currentUser.getFirstName()}"></div>
             <div class="row" th:text="${currentUser.getLastName()}"></div>
 
-
-
             <div class="col border-bottom ">Address:</div>
-
             <div class="row" th:text="${currentUser.getUsername()}"></div>
             <div class="row" th:text="${currentUser.getAddress()}"></div>
-
-
         </div>
-        <a class="btn btn-block btn-dark m-2" th:href="@{/orders}">View all orders</a>
+
+
         <p></p>
         <a id="buttonShow" class="btn btn-block btn-danger"> Click to update your profile </a>
         <p></p>

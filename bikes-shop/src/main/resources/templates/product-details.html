@@ -16,6 +16,11 @@
 
 
         <div class="container mx-auto">
+            <div class=" d-flex">
+                <button class="btn btn-dark " type="button"
+                        onclick="javascript:history.back()">Back
+                </button>
+            </div>
             <div class="col-4 mx-auto  text-center"
                  th:object="${singleProduct}">
                 <h5 class="text-center"
@@ -40,7 +45,8 @@
 
                     <label> Select quantity: </label>
                     <select th:field="*{quantity}">
-                        <option class="dropdown-item" th:each="i : ${#numbers.sequence(1,10)}" th:value="${i}" th:text="${i}">
+                        <option class="dropdown-item" th:each="i : ${#numbers.sequence(1,10)}" th:value="${i}"
+                                th:text="${i}">
                         </option>
                     </select>
 
@@ -48,22 +54,15 @@
 
                 </form>
 
-
             </div>
 
-            <div class=" justify-content-end">
-                <button class="btn btn-dark justify-end  float-right " type="button"
-                        onclick="javascript:history.back()">Back
-                </button>
-                <div>
-                </div>
 
-            </div>
         </div>
     </div>
-    <div>
-        <footer th:replace="~{fragments/footer}"></footer>
-    </div>
+</div>
+<div>
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
 
 </body>
 </html>

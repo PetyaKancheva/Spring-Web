@@ -39,13 +39,14 @@ public class ShoppingCartController {
     }
     @GetMapping("/shopping-cart-finalize")
     public String finalizePurchase(@AuthenticationPrincipal CustomUserDetails currentUser){
-
+        // why get on buying??
         if (currentOrder.getItems()!=null ){
             orderService.buy(currentUser.getUsername(),currentOrder);
             currentOrder.clear();
+            return  "redirect:/orders";
         }
 
-
+            // that is happening??
         return  "orders";
     }
 

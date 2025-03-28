@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,9 @@ public class OrdersController {
     }
 
     @GetMapping("/orders")
-    public String orders(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+    public String orders(Principal principal, Model model) {
 
-      model.addAttribute("allOrders", orderService.getAllByUser(currentUser.getUsername()));
+      model.addAttribute("allOrders", orderService.getAllByUser(principal.getName()));
 
         return "orders";
     }

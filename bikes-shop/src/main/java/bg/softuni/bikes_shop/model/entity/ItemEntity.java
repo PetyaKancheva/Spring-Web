@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="items")
-public class ItemsEntity extends BaseEntity{
-    @OneToOne
+public class ItemEntity extends BaseEntity{
+    @ManyToOne
     private ProductEntity product;
     @Column(name="quantity")
     private Integer quantity;
@@ -17,7 +17,7 @@ public class ItemsEntity extends BaseEntity{
         return product;
     }
 
-    public ItemsEntity setProduct(ProductEntity product) {
+    public ItemEntity setProduct(ProductEntity product) {
         this.product = product;
         return this;
     }
@@ -26,7 +26,7 @@ public class ItemsEntity extends BaseEntity{
         return quantity;
     }
 
-    public ItemsEntity setQuantity(Integer quantity) {
+    public ItemEntity setQuantity(Integer quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -35,7 +35,7 @@ public class ItemsEntity extends BaseEntity{
         return order;
     }
 
-    public ItemsEntity setOrder(OrderEntity order) {
+    public ItemEntity setOrder(OrderEntity order) {
         this.order = order;
         return this;
     }

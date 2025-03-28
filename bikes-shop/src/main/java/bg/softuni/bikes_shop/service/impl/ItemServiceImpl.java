@@ -1,8 +1,31 @@
 package bg.softuni.bikes_shop.service.impl;
 
+import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
+import bg.softuni.bikes_shop.model.dto.ItemDTO;
+import bg.softuni.bikes_shop.model.entity.ItemEntity;
+import bg.softuni.bikes_shop.model.entity.OrderEntity;
+import bg.softuni.bikes_shop.repository.ItemRepository;
+import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.service.ItemService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ItemServiceImpl implements ItemService {
+    private final ItemRepository itemRepository;
+    private final ProductRepository productRepository;
+
+    public ItemServiceImpl(ItemRepository itemRepository, ProductRepository productRepository) {
+        this.itemRepository = itemRepository;
+        this.productRepository = productRepository;
+    }
+
+    @Override
+    public void createItem(ItemDTO itemDTO, OrderEntity orderEntity) {
+        itemRepository.save(new ItemEntity()
+                .setProduct(productRepository.findByCompositeName(itemDTO.getProductCompositeName())
+                        .orElseThrow(() -> new CustomObjectNotFoundException("Product with id: " + itemDTO.getProductName() + "not found!")))
+                .setQuantity(itemDTO.getQuantity())
+                .setOrder(orderEntity));
+
+    }
 }

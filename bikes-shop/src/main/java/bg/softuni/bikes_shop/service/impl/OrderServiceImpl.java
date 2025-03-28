@@ -3,9 +3,8 @@ package bg.softuni.bikes_shop.service.impl;
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.OrderDTO;
-import bg.softuni.bikes_shop.model.entity.ItemsEntity;
+import bg.softuni.bikes_shop.model.entity.ItemEntity;
 import bg.softuni.bikes_shop.model.entity.OrderEntity;
-import bg.softuni.bikes_shop.model.entity.ProductEntity;
 import bg.softuni.bikes_shop.repository.ItemRepository;
 import bg.softuni.bikes_shop.repository.OrderRepository;
 import bg.softuni.bikes_shop.repository.ProductRepository;
@@ -13,7 +12,6 @@ import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +26,12 @@ import static org.aspectj.runtime.internal.Conversions.doubleValue;
 public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-    private final ItemRepository itemRepository;
     private final OrderRepository orderRepository;
     private final ProductService productService;
 
     public OrderServiceImpl(UserRepository userRepository, ProductRepository productRepository, ItemRepository itemRepository, OrderRepository orderRepository, ProductService productService) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
-        this.itemRepository = itemRepository;
         this.orderRepository = orderRepository;
         this.productService = productService;
     }
@@ -51,13 +47,6 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(newOrder);
 
-        for (ItemDTO itemDTO : currentOrder.getItems()) {
-            itemRepository.save(new ItemsEntity()
-                    .setProduct(productRepository.findByCompositeName(itemDTO.getProductCompositeName())
-                            .orElseThrow(() -> new CustomObjectNotFoundException("Product with id: " + itemDTO.getProductName() + "not found!")))
-                    .setQuantity(itemDTO.getQuantity())
-                    .setOrder(newOrder));
-        }
     }
 
     @Override

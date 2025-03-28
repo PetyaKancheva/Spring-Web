@@ -64,12 +64,20 @@
                         </form>
                     </ul>
                 </div>
-                <div class="row-ms-auto">
+                <div class="row my-auto">
                     <div class="nav-link  text-light "><span> Hello: </span>
                         <th:block sec:authorize="isAuthenticated()" > <th:block sec:authentication='name'></th:block></th:block>
                         <th:block sec:authorize="!isAuthenticated()" >Guest</th:block>
 
-                        <a class="btn text-light" sec:authorize="isAuthenticated()"  th:href="@{/shopping-cart}"><i class="fa-solid fa-cart-shopping"></i></i></a>
+                        <a class="btn text-light" sec:authorize="isAuthenticated()"
+                           th:href="@{/shopping-cart}"><i class="fa-solid fa-cart-shopping"></i>
+                            <th:block th:unless="${@currentOrder.items==null}"
+                          th:text="${@currentOrder.items.size()}">
+                            </th:block>
+                        </a>
+                        <a class="btn text-light" sec:authorize="isAuthenticated()"
+                           th:href="@{/orders}">Orders
+                        </a>
                     </div>
 
 
