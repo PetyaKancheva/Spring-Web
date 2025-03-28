@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.controller;
 
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentCurrency;
 
@@ -8,9 +9,11 @@ import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Sort;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -27,13 +30,24 @@ public class HomeController {
         this.productService = productService;
         this.currentCurrency = currentCurrency;
     }
+    @ModelAttribute("categories")
+    public List<String>categoriesList(){
+        return productService.getDistinctCategories();
+    }
+    @ModelAttribute("listCurrencies")
+    public List<String> currencyList() {
+        return CURRENCY_LIST;
+    }
 
     @GetMapping("/")
-    private String allProducts( @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue ="3") Integer size,Model model) {
+    private String allProducts(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue ="3") Integer size,
+                               Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
         // TODO implement dropdown for sorting
         model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by("name"))));
-        model.addAttribute("categories", productService.getDistinctCategories());
-        model.addAttribute("listCurrencies", CURRENCY_LIST);
+        if(currentUser!=null){
+            model.addAttribute("currentUserName",currentUser.getFirstName());
+        }
+
         //TODO get currency list from currency service
         return "index";
     }

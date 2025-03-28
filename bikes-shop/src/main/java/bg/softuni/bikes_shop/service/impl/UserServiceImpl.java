@@ -2,17 +2,17 @@ package bg.softuni.bikes_shop.service.impl;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.UserRoleEnum;
+import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
+import bg.softuni.bikes_shop.model.dto.ShortUserDTO;
 import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
-import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.model.events.UserRegistrationEvent;
 import bg.softuni.bikes_shop.model.events.UserUpdateProfileEvent;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.repository.UserRoleRepository;
 import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,10 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 
 @Service
@@ -44,22 +42,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserRegisterDTO userRegisterDTO) {
-        UserEntity newUserEntity=map(userRegisterDTO);
+        UserEntity newUserEntity = mapToEntity(userRegisterDTO);
         newUserEntity.setRoles(List.of(
                 userRoleService.getUserRoleByName(UserRoleEnum.USER)
-                        .orElseThrow(()-> new CustomObjectNotFoundException("User role USER not found"))));
+                        .orElseThrow(() -> new CustomObjectNotFoundException("User role USER not found"))));
 
         userRepository.save(newUserEntity);
         appEventPublisher.publishEvent(new UserRegistrationEvent(
-                "UserService",userRegisterDTO.email() ,userRegisterDTO.firstName()) );
+                "UserService", userRegisterDTO.email(), userRegisterDTO.firstName()));
     }
 
     @Override
     public void update(UserUpdateDTO userUpdateDTO, String email) {
-            // TODO finess
+        // TODO finess
         UserEntity existingUser = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!"));
 
-        if (userRepository.findUserByEmail(userUpdateDTO.email()).isEmpty() ) {
+        if (userRepository.findUserByEmail(userUpdateDTO.email()).isEmpty()) {
             existingUser.setEmail(userUpdateDTO.email());
         } else {
             throw new IllegalArgumentException("User already exist with email:" + userUpdateDTO.email() + "!");
@@ -77,7 +75,7 @@ public class UserServiceImpl implements UserService {
         }
         // TODO distinguish between email update!! cause now it is going to old email
         appEventPublisher.publishEvent(
-                new UserUpdateProfileEvent("UserService-Update", email,userUpdateDTO.firstName(),String.valueOf(Instant.now())));
+                new UserUpdateProfileEvent("UserService-Update", email, userUpdateDTO.firstName(), String.valueOf(Instant.now())));
 
 
         userRepository.save(existingUser);
@@ -87,12 +85,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @EventListener(UserUpdateProfileEvent.class)
     public void notify(UserUpdateProfileEvent event) {
-        emailService.sendProfileUpdateEmail( event.getUserEmail(),event.getUserFirstName(), event.getTimeOfUpdate());
+        emailService.sendProfileUpdateEmail(event.getUserEmail(), event.getUserFirstName(), event.getTimeOfUpdate());
         System.out.println("Notification for profile update is sent to:  " + event.getUserEmail() + " !");
     }
 
+    @Override
+    public List<ShortUserDTO> getByEmailFirstNameOrLastName(String searchWord) {
 
-    private UserEntity map(UserRegisterDTO userRegisterDTO) {
+        return userRepository.
+                findAllByFirstNameOrLastNameOrEmailIsWithinIgnoreCase(searchWord).stream().map(UserServiceImpl::mapToShortDTO).toList();
+
+    }
+
+
+    private UserEntity mapToEntity(UserRegisterDTO userRegisterDTO) {
 
         return new UserEntity()
                 .setLogged(false)
@@ -104,10 +110,15 @@ public class UserServiceImpl implements UserService {
                 .setCountry(userRegisterDTO.country())
                 .setPassword(passwordEncoder.encode(userRegisterDTO.password()));
 
-
     }
 
+    private static ShortUserDTO mapToShortDTO(UserEntity u) {
+        return new ShortUserDTO(
+                u.getEmail(),
+                u.getFirstName(),
+                u.getLastName());
 
+    }
 
 }
 

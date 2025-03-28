@@ -62,28 +62,32 @@
                             <input type="submit" class="nav-link  text-light" value="Logout" >
 
                         </form>
+
                     </ul>
+<!--            next row-->
+                    <ul class="navbar-nav  text-light">
+                            <li class="nav-item pl-2">
+                                <a class="nav-link  text-light">Hello:
+                                <th:block sec:authorize="isAuthenticated()" th:text="${currentUserName}"></th:block>
+                                <th:block sec:authorize="!isAuthenticated()" >Guest</th:block></a>
+                            </li>
+                        <li class="nav-item">
+                            <a class="btn text-light" sec:authorize="isAuthenticated()"
+                               th:href="@{/shopping-cart}"><i class="fa-solid fa-cart-shopping"></i>
+                                <th:block th:unless="${@currentOrder.items==null}"
+                                          th:text="${@currentOrder.items.size()}">
+                                </th:block>
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn text-light" sec:authorize="isAuthenticated()"
+                               th:href="@{/orders}">Orders
+                            </a>
+                        </li>
+                      </ul>
                 </div>
-                <div class="row my-auto">
-                    <div class="nav-link  text-light "><span> Hello: </span>
-                        <th:block sec:authorize="isAuthenticated()" > <th:block sec:authentication='name'></th:block></th:block>
-                        <th:block sec:authorize="!isAuthenticated()" >Guest</th:block>
 
-                        <a class="btn text-light" sec:authorize="isAuthenticated()"
-                           th:href="@{/shopping-cart}"><i class="fa-solid fa-cart-shopping"></i>
-                            <th:block th:unless="${@currentOrder.items==null}"
-                          th:text="${@currentOrder.items.size()}">
-                            </th:block>
-                        </a>
-                        <a class="btn text-light" sec:authorize="isAuthenticated()"
-                           th:href="@{/orders}">Orders
-                        </a>
-                    </div>
-
-
-
-
-                </div>
             </div>
         </div>
         </div>

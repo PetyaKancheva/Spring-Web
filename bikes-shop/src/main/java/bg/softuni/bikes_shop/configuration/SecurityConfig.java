@@ -36,7 +36,7 @@ public class SecurityConfig {    private final ProductService productService;
                         .requestMatchers(HttpMethod.GET,"/product/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()
-                        .requestMatchers("/admin").hasAuthority(UserRoleEnum.ADMIN.toString())
+                        .requestMatchers("/admin/**").hasAuthority(UserRoleEnum.ADMIN.toString())
                         .requestMatchers("/product/add").hasAuthority(UserRoleEnum.EMPLOYEE.toString())
                         .requestMatchers("/shopping-cart","/user","/orders").authenticated()
 //                        .requestMatchers("/shopping-cart-finalize","/user","/orders").authenticated()
