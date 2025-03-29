@@ -7,6 +7,7 @@ import bg.softuni.bikes_shop.model.dto.ShortUserDTO;
 import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
+import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.model.events.UserRegistrationEvent;
 import bg.softuni.bikes_shop.model.events.UserUpdateProfileEvent;
 import bg.softuni.bikes_shop.repository.UserRepository;
@@ -56,31 +57,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserUpdateDTO userUpdateDTO, String email) {
-        // TODO finess
-        UserEntity existingUser = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!"));
 
-        if (userRepository.findUserByEmail(userUpdateDTO.email()).isEmpty()) {
-            existingUser.setEmail(userUpdateDTO.email());
-        } else {
-            throw new IllegalArgumentException("User already exist with email:" + userUpdateDTO.email() + "!");
+        UserEntity updatedUser = getUserExisting(email)
+                .setFirstName(userUpdateDTO.firstName())
+                .setLastName(userUpdateDTO.lastName())
+                .setAddress(userUpdateDTO.address())
+                .setEmail(userUpdateDTO.email())
+                .setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
+        //validation
+//        if (userRepository.findUserByEmail(userUpdateDTO.email()).isEmpty()) {
+//            existingUser
+//        } else {
+//            throw new IllegalArgumentException("User already exist with email:" + userUpdateDTO.email() + "!");
+//        }
 
-        }
 
-        existingUser.setFirstName(userUpdateDTO.firstName());
-        existingUser.setLastName(userUpdateDTO.lastName());
-        existingUser.setAddress(userUpdateDTO.address());
-
-        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), existingUser.getPassword())) {
-            existingUser.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
-        } else {
-            throw new IllegalArgumentException("Old password not matching!");
-        }
+//            custom validation
+//        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), existingUser.getPassword())) {
+//            existingUser.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
+//        } else {
+//            throw new IllegalArgumentException("Old password not matching!");
+//        }
 
         appEventPublisher.publishEvent(
                 new UserUpdateProfileEvent("UserService-Update", userUpdateDTO.email(), userUpdateDTO.firstName(), String.valueOf(Instant.now())));
 
-        userRepository.save (existingUser);
-
+        userRepository.save(updatedUser);
     }
 
     @Override
@@ -101,6 +103,49 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<AdminUpdateDTO> getAdminDTO(String email) {
         return userRepository.findUserByEmail(email).map(UserServiceImpl::mapToAdminDTO);
+    }
+
+    @Override
+    public void updateByAdmin(AdminUpdateDTO adminUpdateDTO, String oldEmail) {
+
+        UserEntity existingUser = getUserExisting(oldEmail);
+        // move to validation?
+        if (userRepository.findUserByEmail(adminUpdateDTO.email()).isEmpty()) {
+            existingUser.setEmail(adminUpdateDTO.email());
+        } else {
+            throw new IllegalArgumentException("User already exist with email:" + adminUpdateDTO.email() + "!");
+        }
+
+
+        existingUser.setRoles(getRolesFromString(adminUpdateDTO));
+        existingUser.setFirstName(adminUpdateDTO.firstName());
+        existingUser.setLastName(adminUpdateDTO.lastName());
+        existingUser.setAddress(adminUpdateDTO.address());
+
+        // move to validation?
+//        if (!passwordEncoder.matches(adminUpdateDTO.newPassword(), existingUser.getPassword())) {
+//            existingUser.setPassword(passwordEncoder.encode(adminUpdateDTO.newPassword()));
+//        } else {
+//            throw new IllegalArgumentException("Old password not matching!");
+//        }
+
+        appEventPublisher.publishEvent(
+                new UserUpdateProfileEvent("UserService-Update", adminUpdateDTO.email(), adminUpdateDTO.firstName(), String.valueOf(Instant.now())));
+
+        userRepository.save(existingUser);
+        System.out.println("updated by Admin");
+
+    }
+
+
+    private List<UserRoleEntity> getRolesFromString(AdminUpdateDTO adminUpdateDTO) {
+        return adminUpdateDTO
+                .roles().stream().map(role -> userRoleService.getUserRoleByName(UserRoleEnum.valueOf(role))
+                        .orElseThrow(() -> new CustomObjectNotFoundException("Roles not found"))).toList();
+    }
+
+    private UserEntity getUserExisting(String email) {
+        return userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!"));
     }
 
     private UserEntity mapToEntity(UserRegisterDTO userRegisterDTO) {
@@ -125,7 +170,7 @@ public class UserServiceImpl implements UserService {
 
     private static AdminUpdateDTO mapToAdminDTO(UserEntity u) {
         return new AdminUpdateDTO(
-                "DUMMY role",
+                u.getRoles().stream().map(ur -> ur.getName().name()).toList(),
                 u.getEmail(),
                 u.getFirstName(),
                 u.getLastName(),

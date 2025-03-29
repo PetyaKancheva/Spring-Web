@@ -8,7 +8,9 @@ INSERT INTO users (`id`,`address`,`country`,`e_mail`,`first_name`,`is_enabled`,`
 INSERT INTO users(`id`,`address`,`country`,`e_mail`,`first_name`,`is_enabled`,`last_name`,`password`) VALUES (14,'Sofia','','stef@mail.com','Stephan',0,'Stefanov','0a5e922f6428cbe2e3e10418bb30889ac11ea3a668c9813b13de28abc6b2e49b814194a3bf0b9a3d43adc46820a57762');
 INSERT INTO users (`id`,`address`,`country`,`e_mail`,`first_name`,`is_enabled`,`last_name`,`password`) VALUES (15,'Sofia','Germany','g@mail.com','Goblin',0,'Goblinov','a32d8cf19b8b7eeec8508bd3ea822a5c0132753d4d8856544e71ccd0c8011d53273322a1cd36764e768f6a86001614da');
 
+INSERT INTO users_roles (`user_id`,`role_id`) VALUES (11,1);
 INSERT INTO users_roles (`user_id`,`role_id`) VALUES (11,2);
+INSERT INTO users_roles (`user_id`,`role_id`) VALUES (11,3);
 INSERT INTO users_roles (`user_id`,`role_id`) VALUES (12,1);
 INSERT INTO users_roles (`user_id`,`role_id`) VALUES (13,3);
 INSERT INTO users_roles (`user_id`,`role_id`) VALUES (14,1);

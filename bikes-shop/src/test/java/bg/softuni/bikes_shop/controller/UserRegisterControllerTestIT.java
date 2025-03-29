@@ -104,7 +104,7 @@ class UserRegisterControllerTestIT {
 
     private UserEntity createUserEntity() {
         return new UserEntity()
-                .setAuthenticated(true)
+                .setEnabled(true)
                 .setFirstName("Ivan")
                 .setLastName("Ivanov")
                 .setEmail("ivan@mail.com")

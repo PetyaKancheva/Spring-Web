@@ -44,6 +44,7 @@
                 </ul>
             </div>
 
+           <span> current roles:<th:block th:text="${adminUpdateDTO.roles()}"></th:block> </span>
 
             <form id="admin-update-user-profile-form"
                   th:action="@{/admin/update={id}(id=${adminUpdateDTO.email})}"
@@ -52,20 +53,15 @@
                   class="mx-auto col-md-12 flex-column justify-content-center ">
 
 
-                <div class="form-group pt-3 py-2 border-top ">
-                    <input id="role"
-                           th:name="role"
-                           th:errorclass="is-invalid "
-                           type="text"
-                           th:value="*{role}"
-                           class="form-control"
-                           placeholder="ROLE type*to fix with checks foa all 3 roles"/>
-                    <label for="role" th:text="${adminUpdateDTO.role()}"></label>
-                    <p th:if="${#fields.hasErrors('role')}" th:errors="*{role()}"
-                       class="invalid-feedback errors alert alert-danger"></p>
+
+                <div class="form-check form-check-inline" th:each="r : ${userRoles}">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox" name="roles" th:value="${r}">
+                    <label class="form-check-label" for="inlineCheckbox" th:text="${r}"></label>
                 </div>
 
+
                 <div class="form-group    py-2 ">
+                    <label for="firstName">Update first name</label>
                     <input id="firstName"
                            th:name="firstName"
                            th:errorclass="is-invalid "
@@ -73,13 +69,13 @@
                            th:field="*{firstName}"
                            class="form-control"
                            placeholder="First name..."/>
-                    <label for="firstName" th:text="${adminUpdateDTO.firstName()}"></label>
                     <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
 
                 <div class="form-group py-2">
+                    <label for="lastName" >Update last name</label>
                     <input id="lastName"
                            th:name="lastName"
                            th:errorclass="is-invalid "
@@ -87,12 +83,12 @@
                            th:field="*{lastName}"
                            class="form-control"
                            placeholder="Last name..."/>
-                    <label for="lastName" th:text="${adminUpdateDTO.lastName()}"></label>
                     <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
                 <div class="form-group py-2 ">
+                    <label for="address">Update address</label>
                     <input id="address"
                            th:name="address"
                            th:errorclass="is-invalid"
@@ -100,11 +96,11 @@
                            th:field="*{address}"
                            class="form-control"
                            placeholder="Update address..."/>
-                    <label for="address" th:text="${adminUpdateDTO.address()}"></label>
                     <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
                 <div class="form-group py-2 ">
+                    <label for="country" >Update country</label>
                     <input id="country"
                            th:name="country"
                            th:errorclass="is-invalid"
@@ -112,12 +108,12 @@
                            th:field="*{country}"
                            class="form-control"
                            placeholder="Update country..."/>
-                    <label for="country" th:text="${adminUpdateDTO.country()}"></label>
                     <p th:if="${#fields.hasErrors('address')}" th:errors="*{country}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
                 <div class="form-group      py-2">
+                    <label for="country" >Update e-mail</label>
                     <input id="email"
                            th:name="email"
                            th:errorclass="is-invalid"
@@ -125,19 +121,18 @@
                            th:field="*{email}"
                            class="form-control"
                            placeholder="New email address..."/>
-                    <label for="email" th:text="${adminUpdateDTO.email()}"></label>
                     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
                 <div class="form-group        py-2">
+                    <label for="newPassword">Enter new password</label>
                     <input id="newPassword"
                            th:name="newPassword"
                            th:errorclass="is-invalid"
                            type="password"
                            class="form-control"
-                           placeholder="Enter new password..."/>
-                    <label for="newPassword" th:text="${adminUpdateDTO.role()}"></label>
+                            placeholder="*******"/>
                     <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
@@ -162,6 +157,13 @@
 <div>
     <footer th:replace="~{fragments/footer}"></footer>
 </div>
+<!--<script th:inline>-->
+
+
+<!--    $("input:checkbox[name=roles]:checked").each(function(){-->
+<!--       $("#hiddenInput").push($(this).val());-->
+<!--    });-->
+<!--</script>-->
 </body>
 
 </html>

@@ -18,7 +18,6 @@ public class BikesUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public BikesUserDetailsService(UserRepository userRepository) {
-
         this.userRepository = userRepository;
     }
 
@@ -28,25 +27,6 @@ public class BikesUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found!"));
 
         return new CustomUserDetails(userEntity);
-//        return mapDetails((userEntity));
-
-
     }
-
-//  ****** DO NOT DELETE below for reference ****
-
-//    private static UserDetails mapDetails(UserEntity userEntity){
-//        return User
-//                .withUsername(userEntity.getEmail())
-//                .password(userEntity.getPassword())
-//                .authorities(userEntity.getRoles().stream().map(BikesUserDetailsService::mapToAuthority).toList())
-//                .build();
-//
-//    }
-
-//    private static GrantedAuthority mapToAuthority(UserRoleEntity userRoleEntity) {
-//        return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.getName().name());
-
-//    }
 
 }

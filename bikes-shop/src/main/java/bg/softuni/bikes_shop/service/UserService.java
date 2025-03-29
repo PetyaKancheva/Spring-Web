@@ -5,6 +5,7 @@ import bg.softuni.bikes_shop.model.dto.ShortUserDTO;
 import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.model.events.UserUpdateProfileEvent;
+import jakarta.validation.Valid;
 import org.aspectj.apache.bcel.classfile.Module;
 
 import javax.swing.text.html.Option;
@@ -18,5 +19,7 @@ public interface UserService {
 
     List<ShortUserDTO> getAllByEmailFirsOrLastName(String searchWord);
 
-   Optional<AdminUpdateDTO>  getAdminDTO(String email);
+    Optional<AdminUpdateDTO>  getAdminDTO(String email);
+
+    void updateByAdmin( AdminUpdateDTO adminUpdateDTO,String email);
 }

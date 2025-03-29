@@ -26,7 +26,7 @@ public class UserProfileController {
     private final static String ATTRIBUTE_MSG_NAME="onSuccess";
 
 
-    public UserProfileController(UserService userService, ApplicationEventPublisher applicationEventPublisher) {
+    public UserProfileController(UserService userService) {
         this.userService = userService;
     }
 
@@ -49,21 +49,12 @@ public class UserProfileController {
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userUpdateDTO", bindingResult);
             return "redirect:/user";
         }
-        UserDetails newUser = User.withUsername("p@gmail.com")
-                .password("test")
-                        .disabled(false).build();
-//        UserDetails ud =
-//                User.
-//                        withUsername(..).
-//        password(..).
-//        authorities(..).
-//        build();
+
         userService.update(userUpdateDTO, currentUser.getUsername());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
 
         return "redirect:/login";
-//        return "redirect:/logout";
     }
 
 
