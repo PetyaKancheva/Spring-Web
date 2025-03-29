@@ -2,40 +2,41 @@ package bg.softuni.bikes_shop.model;
 
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 
-public class CustomUserDetails implements  UserDetails {
+public class CustomUserDetails implements UserDetails {
     private String firstName;
     private String lastName;
+    private String address;
     private String email;
     private String password;
-    private String address;
+    private boolean isEnabled;
+
     private List<GrantedAuthority> authorities;
 
 
     public CustomUserDetails(UserEntity userEntity) {
         this.email = userEntity.getEmail();
         this.password = userEntity.getPassword();
-        this.address=userEntity.getAddress();
+        this.isEnabled = userEntity.getEnabled();
         this.authorities = (userEntity.getRoles().stream().map(CustomUserDetails::mapToAuthority).toList());
-        this.firstName=userEntity.getFirstName();
-        this.lastName=userEntity.getLastName();
+        this.firstName = userEntity.getFirstName();
+        this.lastName = userEntity.getLastName();
+        this.address=userEntity.getAddress();
     }
 
-    private static GrantedAuthority mapToAuthority(UserRoleEntity userRoleEntity){
-        return new SimpleGrantedAuthority("ROLE_" +userRoleEntity.getName().name());
+    private static GrantedAuthority mapToAuthority(UserRoleEntity userRoleEntity) {
+        return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.getName().name());
 
     }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -51,17 +52,41 @@ public class CustomUserDetails implements  UserDetails {
         return email;
     }
 
-    public String getAddress() {
-        return address;
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;   // to customise later
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;   // to customise later
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;   // to customise later
+    }
+
     public String getFirstName() {
         return firstName;
     }
+
 
     public String getLastName() {
         return lastName;
     }
 
-
+    public String getEmail() {
+        return email;
+    }
+    public String getAddress() {
+        return address;
+    }
 
 }
+

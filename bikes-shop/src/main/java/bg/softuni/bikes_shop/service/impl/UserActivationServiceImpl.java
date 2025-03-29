@@ -58,7 +58,7 @@ public class UserActivationServiceImpl implements UserActivationService {
 
             UserEntity user =userRepository.findById(uaEntity.getUser().getId()).orElseThrow(()
                     -> new CustomObjectNotFoundException("User not found"));
-                        user.setAuthenticated(true);
+                        user.setEnabled(true);
         }else{
             throw new CustomObjectNotFoundException("Authentication failed");
         }

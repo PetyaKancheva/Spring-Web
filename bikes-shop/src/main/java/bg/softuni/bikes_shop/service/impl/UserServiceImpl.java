@@ -15,6 +15,7 @@ import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -74,12 +75,11 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new IllegalArgumentException("Old password not matching!");
         }
-        // TODO distinguish between email update!! cause now it is going to old email
+
         appEventPublisher.publishEvent(
-                new UserUpdateProfileEvent("UserService-Update", email, userUpdateDTO.firstName(), String.valueOf(Instant.now())));
+                new UserUpdateProfileEvent("UserService-Update", userUpdateDTO.email(), userUpdateDTO.firstName(), String.valueOf(Instant.now())));
 
-
-        userRepository.save(existingUser);
+        userRepository.save (existingUser);
 
     }
 
@@ -106,8 +106,7 @@ public class UserServiceImpl implements UserService {
     private UserEntity mapToEntity(UserRegisterDTO userRegisterDTO) {
 
         return new UserEntity()
-                .setLogged(false)
-                .setAuthenticated(false)
+                .setEnabled(false)
                 .setFirstName(userRegisterDTO.firstName())
                 .setLastName(userRegisterDTO.lastName())
                 .setEmail(userRegisterDTO.email())
@@ -126,13 +125,13 @@ public class UserServiceImpl implements UserService {
 
     private static AdminUpdateDTO mapToAdminDTO(UserEntity u) {
         return new AdminUpdateDTO(
-                "ROLE:FAKE",
+                "DUMMY role",
                 u.getEmail(),
                 u.getFirstName(),
                 u.getLastName(),
                 u.getAddress(),
                 u.getCountry(),
-                null);
+                "dummy-password");
 
     }
 

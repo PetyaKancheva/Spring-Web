@@ -7,6 +7,8 @@ import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,14 +47,23 @@ public class UserProfileController {
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("userUpdateDTO", userUpdateDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userUpdateDTO", bindingResult);
-            return "user-profile";
+            return "redirect:/user";
         }
-
+        UserDetails newUser = User.withUsername("p@gmail.com")
+                .password("test")
+                        .disabled(false).build();
+//        UserDetails ud =
+//                User.
+//                        withUsername(..).
+//        password(..).
+//        authorities(..).
+//        build();
         userService.update(userUpdateDTO, currentUser.getUsername());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
 
-        return "redirect:/user";
+        return "redirect:/login";
+//        return "redirect:/logout";
     }
 
 

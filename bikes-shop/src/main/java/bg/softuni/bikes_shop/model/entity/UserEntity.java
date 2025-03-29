@@ -38,10 +38,9 @@ public class UserEntity extends BaseEntity{
     private String email;
     @OneToMany(mappedBy = "buyer")
     private List<OrderEntity> orders;
-    @Column(name="is_logged")
-    private Boolean isLogged; //for when updating profiles
-    @Column(name="is_authenticated")
-    private Boolean isAuthenticated; //for when registering and getting authentication email
+
+    @Column(name="is_enabled")
+    private Boolean isEnabled;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -112,21 +111,13 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public Boolean getLogged() {
-        return isLogged;
+
+    public Boolean getEnabled() {
+        return isEnabled;
     }
 
-    public UserEntity setLogged(Boolean logged) {
-        isLogged = logged;
-        return this;
-    }
-
-    public Boolean getAuthenticated() {
-        return isAuthenticated;
-    }
-
-    public UserEntity setAuthenticated(Boolean authenticated) {
-        isAuthenticated = authenticated;
+    public UserEntity setEnabled(Boolean enabled) {
+        isEnabled = enabled;
         return this;
     }
 

@@ -15,6 +15,8 @@
 
         <div th:if= "${error}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
             th:text="${error}"></div>
+        <div th:if= "${onSuccess}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+             th:text="${onSuccess}"></div>
 
         <form
                 th:action="@{/login}"

@@ -4,7 +4,6 @@ import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,15 +17,15 @@ public class BikesUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public BikesUserDetailsService( UserRepository userRepository) {
+    public BikesUserDetailsService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserEntity userEntity= userRepository.findUserByEmail(email)
-                .orElseThrow(()->new UsernameNotFoundException("User with email: "+ email+" not found!"));
+        UserEntity userEntity = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found!"));
 
         return new CustomUserDetails(userEntity);
 //        return mapDetails((userEntity));
@@ -45,9 +44,9 @@ public class BikesUserDetailsService implements UserDetailsService {
 //
 //    }
 
-//    private static GrantedAuthority mapToAuthority(UserRoleEntity userRoleEntity){
-//        return new SimpleGrantedAuthority("ROLE_" +userRoleEntity.getName().name());
-//
+//    private static GrantedAuthority mapToAuthority(UserRoleEntity userRoleEntity) {
+//        return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.getName().name());
+
 //    }
 
 }
