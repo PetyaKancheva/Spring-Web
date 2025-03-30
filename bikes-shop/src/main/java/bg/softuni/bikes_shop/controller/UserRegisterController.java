@@ -40,7 +40,7 @@ public class UserRegisterController {
             return "redirect:/register";
         }
 
-        userService.register(userRegisterDTO);
+//        userService.register(userRegisterDTO);
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, SUCCESSFUL_REGISTRATION_MSG);
         return "redirect:/register";
 

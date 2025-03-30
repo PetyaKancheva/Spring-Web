@@ -2,21 +2,15 @@ package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
-import bg.softuni.bikes_shop.model.events.UserUpdateProfileEvent;
 import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.time.Instant;
 
 @Controller
 public class UserProfileController {
@@ -50,7 +44,7 @@ public class UserProfileController {
             return "redirect:/user";
         }
 
-        userService.update(userUpdateDTO, currentUser.getUsername());
+        userService.updateByUser(userUpdateDTO, currentUser.getUsername());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
 

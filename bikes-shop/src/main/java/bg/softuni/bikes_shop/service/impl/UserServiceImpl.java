@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(UserUpdateDTO userUpdateDTO, String email) {
+    public void updateByUser(UserUpdateDTO userUpdateDTO, String email) {
 
         UserEntity updatedUser = getUserExisting(email)
                 .setFirstName(userUpdateDTO.firstName())
@@ -136,6 +136,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(existingUser);
         
 
+    }
+
+    @Override
+    public boolean isUniqueEmail(String value) {
+        return userRepository.findUserByEmail(value).isEmpty();
     }
 
 

@@ -16,16 +16,15 @@ import java.util.Set;
 @Table(name="users")
 public class UserEntity extends BaseEntity{
 
-    @NotNull
-    @Size(min = 3, message= "Must be at least 3 characters.")
-    @Column(name="first_name")
-    private String firstName;
-    @NotNull
-    @Size( min=3,message="Must be longer that 2 characters.")
-    @Column(name="last_name")
-    private String lastName;
 
-    @Column(name="address")
+    @Size(min = 3, max=15, message= "Must be between 3 and 15 characters.")
+    @Column(name="first_name", nullable = false)
+    private String firstName;
+    @Size(min = 3, max=15, message= "Must be between 3 and 15 characters.")
+    @Column(name="last_name", nullable = false)
+    private String lastName;
+    @Size(min=3, message="Must be at least 3 characters.")
+    @Column(name="address", nullable = false)
     private String address;
     @Column(name="country")
     private String country;
@@ -34,7 +33,7 @@ public class UserEntity extends BaseEntity{
     private String password;// todo Add some regex validation
     @NotNull(message ="Cannot be empty.")
     @Email
-    @Column(name="eMail")
+    @Column(name="e_mail",nullable = false)
     private String email;
     @OneToMany(mappedBy = "buyer")
     private List<OrderEntity> orders;

@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/services", "/contacts", "/about").permitAll()
                         .requestMatchers("/comment/**", "/comments").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/user/activate*").permitAll()//avtivate?
+                        .requestMatchers("/user/activate**").permitAll()//avtivate?
                         .requestMatchers("/admin/**").hasRole(UserRoleEnum.ADMIN.toString())
                         .requestMatchers("/user/").authenticated()
                         .requestMatchers("/product/add/").hasRole(UserRoleEnum.EMPLOYEE.name())
