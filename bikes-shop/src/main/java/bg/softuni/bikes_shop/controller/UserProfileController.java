@@ -44,7 +44,7 @@ public class UserProfileController {
             return "redirect:/user";
         }
 
-        userService.updateByUser(userUpdateDTO, currentUser.getUsername());
+//        userService.updateByUser(userUpdateDTO, currentUser.getUsername());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
 

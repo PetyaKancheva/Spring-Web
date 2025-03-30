@@ -1,19 +1,21 @@
 package bg.softuni.bikes_shop.model.dto;
 
 
-
-
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
 
 public record OrderDTO(
-       @NotEmpty String buyer,
+        @NotNull
+        String buyer,
+        @NotEmpty
         List<ItemDTO> items,
+        @NotNull
         Double totalSum) {
 
-        public static OrderDTO empty(){
-                return new OrderDTO(null,null,null);
-        }
+    public static OrderDTO empty() {
+        return new OrderDTO(null, null, null);
+    }
 }

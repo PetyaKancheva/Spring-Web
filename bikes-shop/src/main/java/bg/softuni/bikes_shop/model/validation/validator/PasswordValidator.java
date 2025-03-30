@@ -1,5 +1,6 @@
-package bg.softuni.bikes_shop.model.validation;
+package bg.softuni.bikes_shop.model.validation.validator;
 
+import bg.softuni.bikes_shop.model.validation.annotation.PasswordMatch;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

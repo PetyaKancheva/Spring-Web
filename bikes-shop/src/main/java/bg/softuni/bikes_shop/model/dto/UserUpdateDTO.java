@@ -1,32 +1,36 @@
 package bg.softuni.bikes_shop.model.dto;
 
+import bg.softuni.bikes_shop.model.validation.annotation.FieldsMisMatching;
+import bg.softuni.bikes_shop.model.validation.annotation.PasswordMatch;
+import bg.softuni.bikes_shop.model.validation.annotation.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+@FieldsMisMatching(
+        firstField = "oldPassword",
+        secondField = "newPassword",
+        message = "Fields must be different"
+)
 public record UserUpdateDTO(
-
-        @NotEmpty(message ="Cannot be empty.")
-        @Email
-        // TODO custom validation that updated email is not already taken
+        @NotEmpty(message = "Must be populated.")
+        @Email(message = "Must be an e-mail format.")
+        @UniqueEmail
         String email,
-        @NotEmpty(message ="Cannot be null.")
-        @Size(min = 3, message= "Must be at least 3 characters.")
+        @Size(min = 3, max = 15, message = "Must be between 3 and 15 characters.")
         String firstName,
-        @NotEmpty(message ="Cannot be null.")
-        @Size(min = 3, message= "Must be at least 3 characters.")
+        @Size(min = 3, max = 15, message = "Must be between 3 and 15 characters.")
         String lastName,
-        @Size(min = 4, message= "Must be at least 4 characters.")
+        @Size(min = 3, message = "Must be at least 3 characters.")
         String address,
         String country,
-        @NotEmpty(message ="Cannot be null.")
-        @Size(min = 3, message= "Must be at least 3 characters.")
-        String oldPassword, // TODO: @UniqueUserEmail check old email is corredczt
-        @NotEmpty(message ="Cannot be empty.")
-        @Size(min = 3, message= "Must be at least 3 characters.")
+        @PasswordMatch
+        String oldPassword,
+        @PasswordMatch
         String newPassword
-)            {
+
+) {
     public static UserUpdateDTO empty() {
-        return new UserUpdateDTO(null, null, null,null, null,null,null);
+        return new UserUpdateDTO(null, null, null, null, null, null, null);
     }
-    }
+}

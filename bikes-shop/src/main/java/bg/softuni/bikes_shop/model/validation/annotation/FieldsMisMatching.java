@@ -1,7 +1,7 @@
-package bg.softuni.bikes_shop.model.validation;
+package bg.softuni.bikes_shop.model.validation.annotation;
 
+import bg.softuni.bikes_shop.model.validation.validator.FieldsMatchingValidator;
 import jakarta.validation.Constraint;
-import jakarta.validation.ConstraintValidator;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.ElementType;
@@ -11,12 +11,12 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Constraint(validatedBy=MatchesFieldValidator.class)
-public @interface MatchesField  {
+@Constraint(validatedBy= FieldsMatchingValidator.class)
+public @interface FieldsMisMatching {
 
     String firstField();
     String secondField();
-    String message() default "Must match second field";
+    String message() default "Fields must be different";
 
     Class<?>[] groups() default {};
 

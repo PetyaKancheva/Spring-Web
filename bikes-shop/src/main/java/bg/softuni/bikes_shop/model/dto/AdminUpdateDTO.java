@@ -1,25 +1,28 @@
 package bg.softuni.bikes_shop.model.dto;
 
 import bg.softuni.bikes_shop.model.UserRoleEnum;
+import bg.softuni.bikes_shop.model.validation.annotation.PasswordMatch;
+import bg.softuni.bikes_shop.model.validation.annotation.UniqueEmail;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
 
 public record AdminUpdateDTO(
 
-        @Size(min=1)
+        @NotEmpty
         List<String> roles,
-
-        @Email
+        @NotEmpty(message="Must be populated.")
+        @Email(message = "Must be an e-mail format.")
+        @UniqueEmail
         String email,
-        @Size(min = 3,max=15, message = "Must be at least 3 characters.")
+        @Size(min = 3, max = 15, message = "Must be between 3 and 15 characters.")
         String firstName,
-        @NotEmpty
+        @Size(min = 3, max = 15, message = "Must be between 3 and 15 characters.")
         String lastName,
-        @NotEmpty
+        @Size(min = 3, message = "Must be at least 3 characters.")
         String address,
         String country,
-        @NotEmpty
+        @PasswordMatch
         String newPassword
 ) {
     public static AdminUpdateDTO empty() {

@@ -1,5 +1,6 @@
-package bg.softuni.bikes_shop.model.validation;
+package bg.softuni.bikes_shop.model.validation.annotation;
 
+import bg.softuni.bikes_shop.model.validation.validator.PasswordValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -8,13 +9,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
-
-@Constraint(validatedBy=UniqueEmailValidator.class)
-@Target({ElementType.FIELD})
+@Constraint(validatedBy= PasswordValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UniqueEmail {
-    String message() default "Email already exists.";
+@Target(ElementType.FIELD)
+public @interface PasswordMatch {
+    String message() default "Password must be between 6 and 8 characters and contain at least one digit.";
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
