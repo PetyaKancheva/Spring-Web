@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
+import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,10 @@ public class ProductAddController {
     @GetMapping("/add")
     private String addProduct(Model model) {
 
-        model.addAttribute("productAddDTO", ProductAddDTO.empty());
+        if (!model.containsAttribute("productAddDTO")) {
+            model.addAttribute("productAddDTO", ProductAddDTO.empty());
+        }
+
         return "product-add";
     }
 

@@ -43,6 +43,7 @@ public class HomeController {
     private String allProducts(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue ="3") Integer size,
                                Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
         // TODO implement dropdown for sorting
+
         model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by("name"))));
         if(currentUser!=null){
             model.addAttribute("currentUserName",currentUser.getFirstName());

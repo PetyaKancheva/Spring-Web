@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 @Table(name="items")
 public class ItemEntity extends BaseEntity{
     @ManyToOne
+    @JoinColumn(name="product_id",nullable = false)
     private ProductEntity product;
-    @Column(name="quantity")
+    @Column(name="quantity",nullable = false)
     private Integer quantity;
     @ManyToOne
     @JoinColumn(name="order_id",nullable = false)

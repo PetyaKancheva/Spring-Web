@@ -60,6 +60,7 @@
                        th:name="lastName"
                        th:errorclass="is-invalid "
                        type="text"
+                       th:field="*{lastName}"
                        class="form-control"
                        placeholder="Last name..."/>
                 <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
@@ -72,6 +73,7 @@
                        th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
+                       th:field="*{address()}"
                        placeholder="Enter your address..."/>
                 <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
                    class="invalid-feedback errors alert alert-danger"></p>
@@ -83,6 +85,7 @@
                        th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
+                       th:field="*{email}"
                        placeholder="Enter your e-mail address..."/>
                 <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                    class="invalid-feedback errors alert alert-danger"></p>

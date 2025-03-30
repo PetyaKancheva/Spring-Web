@@ -25,9 +25,9 @@ public class OrdersController {
 
     @GetMapping("/orders")
     public String orders(Principal principal, Model model) {
-
-      model.addAttribute("allOrders", orderService.getAllByUser(principal.getName()));
-
+        if(!model.containsAttribute("allOrders")){
+            model.addAttribute("allOrders", orderService.getAllByUser(principal.getName()));
+        }
         return "orders";
     }
 

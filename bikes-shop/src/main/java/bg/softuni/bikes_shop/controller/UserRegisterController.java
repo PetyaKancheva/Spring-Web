@@ -25,7 +25,7 @@ public class UserRegisterController {
     private String register(Model model){
 
         if (!model.containsAttribute("userRegisterDTO")) {
-            model.addAttribute("userRegisterDTO", UserRegisterDTO.empty());
+           model.addAttribute("userRegisterDTO", UserRegisterDTO.empty());
         }
 
         return "user-register";

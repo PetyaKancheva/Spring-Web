@@ -1,18 +1,19 @@
 package bg.softuni.bikes_shop.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.Instant;
 @Entity
 @Table(name="user_activation_codes")
 public class UserActivationCodeEntity extends BaseEntity{
-    @NotNull
+
+    @Column(name="activation_code",nullable = false)
     private  String activationCode;
+    @Column(name="created")
     private Instant created;
     @ManyToOne
+    @JoinColumn(name="user_id",nullable=false)
     private UserEntity user;
 
     public String getActivationCode() {

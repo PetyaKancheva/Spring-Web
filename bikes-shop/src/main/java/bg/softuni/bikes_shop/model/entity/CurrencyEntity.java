@@ -2,6 +2,7 @@ package bg.softuni.bikes_shop.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
@@ -9,10 +10,9 @@ import java.math.BigDecimal;
 @Table(name="currency")
 public class CurrencyEntity {
     @Id
-    @Column(name="name")
+    @Column(name="name",nullable = false)
     String name;
-
-    @Column(name="rate")
+    @Column(name="rate",nullable = false)
     BigDecimal rate;
 
     public  String getName() {

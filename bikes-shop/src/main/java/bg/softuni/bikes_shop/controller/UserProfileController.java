@@ -27,6 +27,7 @@ public class UserProfileController {
     @GetMapping("/user")
 
     private String profile(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+
         if (!model.containsAttribute("userUpdateDTO")) {
             model.addAttribute("userUpdateDTO", UserUpdateDTO.empty());
         }
@@ -44,7 +45,7 @@ public class UserProfileController {
             return "redirect:/user";
         }
 
-//        userService.updateByUser(userUpdateDTO, currentUser.getUsername());
+        userService.updateByUser(userUpdateDTO, currentUser.getUsername());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
 

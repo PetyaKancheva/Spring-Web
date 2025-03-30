@@ -16,7 +16,6 @@ public class ProductEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
-    // todo add custom validation as email
     @Column(name = "composite_name")
     private String compositeName;
     @Column(name = "description")

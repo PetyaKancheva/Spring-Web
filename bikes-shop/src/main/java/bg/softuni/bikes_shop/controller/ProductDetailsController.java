@@ -3,6 +3,7 @@ package bg.softuni.bikes_shop.controller;
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
+import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
 import jakarta.validation.Valid;
@@ -19,8 +20,6 @@ public class ProductDetailsController {
     private final ProductService productService;
     private final static String SUCCESSFUL_PURCHASE_MSG=  "Successfully purchased: %s. Please go to shopping cart to see your current items.";
      private final static String ATTRIBUTE_MSG_NAME = "onSuccess";
-
-
     private final CurrentOrder currentOrder;
 
     public ProductDetailsController(ProductService productService, CurrentOrder currentOrder) {
@@ -30,13 +29,15 @@ public class ProductDetailsController {
 
     @GetMapping("/product/{composite_name}")
     public String details(@PathVariable("composite_name") String compositeName, Model model) {
+        if (!model.containsAttribute("singleProduct")) {
+            model.addAttribute("singleProduct", productService.
+                    getSingleProduct(compositeName)
+                    .orElseThrow(() -> new CustomObjectNotFoundException("Product with name " + compositeName + " not found!")));
+        }
 
-        ProductDTO singleProductDTO = productService.
-                getSingleProduct(compositeName)
-                .orElseThrow(() -> new CustomObjectNotFoundException("Product with name " + compositeName + " not found!"));
-
-        model.addAttribute("singleProduct", singleProductDTO);
-        model.addAttribute("itemDTO", new ItemDTO());
+        if (!model.containsAttribute("itemDTO")) {
+            model.addAttribute("itemDTO", new ItemDTO());
+        }
 
         return "product-details";
     }
@@ -44,8 +45,8 @@ public class ProductDetailsController {
     @PostMapping("/product/{composite_name}")
     public String buy(@Valid ItemDTO itemDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
 
+
         if (bindingResult.hasErrors()) {
-            rAtt.addFlashAttribute("itemDTO", new ItemDTO());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.itemDTO", bindingResult);
           return  "redirect:/product/{composite_name}";
         }

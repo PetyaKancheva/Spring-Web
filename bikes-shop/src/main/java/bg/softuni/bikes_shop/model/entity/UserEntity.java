@@ -16,7 +16,6 @@ import java.util.Set;
 @Table(name="users")
 public class UserEntity extends BaseEntity{
 
-
     @Size(min = 3, max=15, message= "Must be between 3 and 15 characters.")
     @Column(name="first_name", nullable = false)
     private String firstName;
@@ -28,16 +27,13 @@ public class UserEntity extends BaseEntity{
     private String address;
     @Column(name="country")
     private String country;
-    @NotNull
     @Column(name="password", nullable = false)
-    private String password;// todo Add some regex validation
-    @NotNull(message ="Cannot be empty.")
+    private String password;
     @Email
     @Column(name="e_mail",nullable = false)
     private String email;
     @OneToMany(mappedBy = "buyer")
     private List<OrderEntity> orders;
-
     @Column(name="is_enabled")
     private Boolean isEnabled;
     @ManyToMany(fetch = FetchType.EAGER)
