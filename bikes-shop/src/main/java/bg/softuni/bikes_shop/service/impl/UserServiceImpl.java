@@ -117,7 +117,8 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        existingUser.setRoles(getRolesFromString(adminUpdateDTO));
+        existingUser.getRoles().clear();
+        existingUser.getRoles().addAll(getRolesFromString(adminUpdateDTO));
         existingUser.setFirstName(adminUpdateDTO.firstName());
         existingUser.setLastName(adminUpdateDTO.lastName());
         existingUser.setAddress(adminUpdateDTO.address());
@@ -133,7 +134,7 @@ public class UserServiceImpl implements UserService {
                 new UserUpdateProfileEvent("UserService-Update", adminUpdateDTO.email(), adminUpdateDTO.firstName(), String.valueOf(Instant.now())));
 
         userRepository.save(existingUser);
-        System.out.println("updated by Admin");
+        
 
     }
 

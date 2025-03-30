@@ -1,10 +1,12 @@
 package bg.softuni.bikes_shop.controller;
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
 import bg.softuni.bikes_shop.model.dto.ShortUserDTO;
 import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    private String view(Model model) {
+    private String view(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+            currentUser.getAuthorities();
         model.addAttribute("adminUpdateDTO", AdminUpdateDTO.empty());
         return "admin-profile";
     }
@@ -50,7 +52,7 @@ public class AdminController {
         return "admin-profile";
     }
 
-    @GetMapping("/admin/update={id}")
+    @GetMapping("/admin/update/{id}")
     private String selectUser(@PathVariable("id") String email, Model model) {
         AdminUpdateDTO newDTO = userService.getAdminDTO(email).orElseThrow();
         model.addAttribute("adminUpdateDTO", newDTO);
@@ -58,7 +60,7 @@ public class AdminController {
 
     }
 
-    @PostMapping("/admin/update={id}")
+    @PostMapping("/admin/update/{id}")
     private String updateProfile(Principal principal, @PathVariable("id") String oldEmail,
                                 AdminUpdateDTO adminUpdateDTO, BindingResult bindingResult, RedirectAttributes rAtt) {
 

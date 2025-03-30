@@ -37,7 +37,7 @@
 
             <div th:if="${listPeople}!=null">
                 <ul th:each="p:${listPeople}">
-                    <li><a class="link-underline-info" th:href="@{/admin/update={id}(id=${p.email})}"
+                    <li><a class="link-underline-info" th:href="@{/admin/update/{id}(id=${p.email})}"
                            th:text="${T(java.lang.String).format(p.stringMessage,p.firstName(),p.lastName(),p.email())}"> </a>
                     </li>
                     <td></td>
@@ -47,7 +47,7 @@
            <span> current roles:<th:block th:text="${adminUpdateDTO.roles()}"></th:block> </span>
 
             <form id="admin-update-user-profile-form"
-                  th:action="@{/admin/update={id}(id=${adminUpdateDTO.email})}"
+                  th:action="@{/admin/update/{id}(id=${adminUpdateDTO.email})}"
                   th:method="POST"
                   th:object="${adminUpdateDTO}"
                   class="mx-auto col-md-12 flex-column justify-content-center ">
@@ -60,7 +60,7 @@
                 </div>
 
 
-                <div class="form-group    py-2 ">
+                <div class="form-group py-2 ">
                     <label for="firstName">Update first name</label>
                     <input id="firstName"
                            th:name="firstName"
