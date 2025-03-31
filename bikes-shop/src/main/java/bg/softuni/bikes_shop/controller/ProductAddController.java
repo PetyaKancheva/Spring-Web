@@ -1,7 +1,6 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
-import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

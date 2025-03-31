@@ -7,7 +7,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PasswordValidator implements ConstraintValidator<PasswordMatch, String> {
+public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch, String> {
     private final static String PASSWORD_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[a-zA-Z]).{6,8}$";
 
     @Override

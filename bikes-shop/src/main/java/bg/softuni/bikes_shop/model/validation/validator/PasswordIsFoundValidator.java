@@ -1,25 +1,25 @@
 package bg.softuni.bikes_shop.model.validation.validator;
 
 
-import bg.softuni.bikes_shop.model.validation.annotation.PasswordIsCorrect;
+import bg.softuni.bikes_shop.model.validation.annotation.PasswordIsFound;
 import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 
-public class PasswordIsCorrectValidator implements ConstraintValidator<PasswordIsCorrect, Object> {
+public class PasswordIsFoundValidator implements ConstraintValidator<PasswordIsFound, Object> {
     private final UserService userService;
     private String email;
     private String password;
     private String message;
 
-    public PasswordIsCorrectValidator(UserService userService) {
+    public PasswordIsFoundValidator(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public void initialize(PasswordIsCorrect constraintAnnotation) {
+    public void initialize(PasswordIsFound constraintAnnotation) {
        this.email=constraintAnnotation.email();
         this.password = constraintAnnotation.password();
         this.message = constraintAnnotation.message();
@@ -30,7 +30,7 @@ public class PasswordIsCorrectValidator implements ConstraintValidator<PasswordI
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(value);
         Object emailProperty=beanWrapper.getPropertyValue(this.email);
         Object passwordProperty=beanWrapper.getPropertyValue(this.password);
-
+            //TODO not checked if this owrks
         boolean isValid=userService.isPasswordCorrect(String.valueOf(emailProperty), String.valueOf(passwordProperty));
 
         return  isValid;

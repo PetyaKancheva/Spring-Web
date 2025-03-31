@@ -2,10 +2,7 @@ package bg.softuni.bikes_shop.service.impl;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.UserRoleEnum;
-import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
-import bg.softuni.bikes_shop.model.dto.ShortUserDTO;
-import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
-import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
+import bg.softuni.bikes_shop.model.dto.*;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.model.events.UserRegistrationEvent;
@@ -16,7 +13,6 @@ import bg.softuni.bikes_shop.service.UserRoleService;
 import bg.softuni.bikes_shop.service.UserService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,21 +52,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateByUser(UserUpdateDTO userUpdateDTO, String email) {
+    public void updateByUser(UserMainUpdateDTO userMainUpdateDTO, UserSelfUpdateDTO userSelfUpdateDTO, String email) {
 
-        UserEntity updatedUser = getUserExisting(email)
-                .setFirstName(userUpdateDTO.firstName())
-                .setLastName(userUpdateDTO.lastName())
-                .setAddress(userUpdateDTO.address())
-                .setCountry(userUpdateDTO.country())
-                .setEmail(userUpdateDTO.email())
-                .setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
+        UserEntity updatedUser = getExistingUser(email);
+        updateMainUserDetails(userMainUpdateDTO, updatedUser);
+        updatedUser.setPassword(passwordEncoder.encode(userSelfUpdateDTO.newPassword()));
 
         appEventPublisher.publishEvent(
-                new UserUpdateProfileEvent("UserService-Update", userUpdateDTO.email(), userUpdateDTO.firstName(), String.valueOf(Instant.now())));
+                new UserUpdateProfileEvent("UserService-Update", userMainUpdateDTO.email(), userMainUpdateDTO.firstName(), String.valueOf(Instant.now())));
 
         userRepository.save(updatedUser);
     }
+
+    @Override
+    public void updateByAdmin(UserMainUpdateDTO userMainUpdateDTO, UserAdminUpdateDTO userAdminUpdateDTO, String email) {
+
+        UserEntity updatedUser = getExistingUser(email);
+        updateMainUserDetails(userMainUpdateDTO, updatedUser);
+        updatedUser.getRoles().clear();
+        updatedUser.getRoles().addAll(getRolesFromString(userAdminUpdateDTO));
+
+        updatedUser.setPassword(passwordEncoder.encode(userAdminUpdateDTO.newPassword()));
+
+        appEventPublisher.publishEvent(
+                new UserUpdateProfileEvent("UserService-Update", userMainUpdateDTO.email(), userMainUpdateDTO.firstName(), String.valueOf(Instant.now())));
+
+        userRepository.save(updatedUser);
+
+
+    }
+
+    private void updateMainUserDetails(UserMainUpdateDTO userMainUpdateDTO, UserEntity updatedUser) {
+        updatedUser.setEmail(userMainUpdateDTO.email());
+        updatedUser.setFirstName(userMainUpdateDTO.firstName());
+        updatedUser.setLastName(userMainUpdateDTO.lastName());
+        updatedUser.setAddress(userMainUpdateDTO.address());
+        updatedUser.setCountry(userMainUpdateDTO.country());
+    }
+
 
     @Override
     @EventListener(UserUpdateProfileEvent.class)
@@ -81,40 +100,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<ShortUserDTO> getAllByEmailFirsOrLastName(String searchWord) {
-
         return userRepository.findAllByEmailFirsOrLastName
                 (searchWord).stream().map(UserServiceImpl::mapToShortDTO).toList();
-
     }
 
     @Override
-    public Optional<AdminUpdateDTO> getAdminDTO(String email) {
-        return userRepository.findUserByEmail(email).map(UserServiceImpl::mapToAdminDTO);
+    public Optional<UserAdminUpdateDTO> getUserAdminDTO(String email) {
+        return Optional.of(mapToUserAdminUpdateDTO(getExistingUser(email)));
     }
 
     @Override
-    public Optional<UserUpdateDTO> getUserDTO(String email) {
-        return Optional.empty();
+    public Optional<UserMainUpdateDTO> getUserMainUpdateDTO(String email) {
+        return Optional.of(mapToMainDTO(getExistingUser(email)));
     }
 
-    @Override
-    public void updateByAdmin(AdminUpdateDTO adminUpdateDTO, String oldEmail) {
-        UserEntity existingUser = getUserExisting(oldEmail);
-        existingUser.getRoles().clear();
-        existingUser.getRoles().addAll(getRolesFromString(adminUpdateDTO));
-        existingUser.setFirstName(adminUpdateDTO.firstName());
-        existingUser.setLastName(adminUpdateDTO.lastName());
-        existingUser.setAddress(adminUpdateDTO.address());
-        existingUser.setCountry(adminUpdateDTO.country());
-        existingUser.setPassword(passwordEncoder.encode(adminUpdateDTO.newPassword()));
-
-        appEventPublisher.publishEvent(
-                new UserUpdateProfileEvent("UserService-Update", adminUpdateDTO.email(), adminUpdateDTO.firstName(), String.valueOf(Instant.now())));
-
-        userRepository.save(existingUser);
-        
-
-    }
 
     @Override
     public boolean isUniqueEmail(String value) {
@@ -123,19 +122,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isPasswordCorrect(String email, String password) {
-     return passwordEncoder.matches( password,userRepository
+        return passwordEncoder.matches(password, userRepository
                 .findUserByEmail(email).map(UserEntity::getPassword)
-             .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!"))) ;
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!")));
     }
 
 
-    private List<UserRoleEntity> getRolesFromString(AdminUpdateDTO adminUpdateDTO) {
-        return adminUpdateDTO
+    private List<UserRoleEntity> getRolesFromString(UserAdminUpdateDTO userAdminUpdateDTO) {
+        return userAdminUpdateDTO
                 .roles().stream().map(role -> userRoleService.getUserRoleByName(UserRoleEnum.valueOf(role))
                         .orElseThrow(() -> new CustomObjectNotFoundException("Roles not found"))).toList();
     }
 
-    private UserEntity getUserExisting(String email) {
+    private UserEntity getExistingUser(String email) {
         return userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!"));
     }
 
@@ -159,14 +158,19 @@ public class UserServiceImpl implements UserService {
                 u.getLastName());
     }
 
-    private static AdminUpdateDTO mapToAdminDTO(UserEntity u) {
-        return new AdminUpdateDTO(
-                u.getRoles().stream().map(ur -> ur.getName().name()).toList(),
+    private static UserMainUpdateDTO mapToMainDTO(UserEntity u) {
+        return new UserMainUpdateDTO(
                 u.getEmail(),
                 u.getFirstName(),
                 u.getLastName(),
                 u.getAddress(),
-                u.getCountry(),
+                u.getCountry());
+
+    }
+
+    private static UserAdminUpdateDTO mapToUserAdminUpdateDTO(UserEntity u) {
+        return new UserAdminUpdateDTO(
+                u.getRoles().stream().map(ur -> ur.getName().name()).toList(),
                 "dummy-password");
 
     }
