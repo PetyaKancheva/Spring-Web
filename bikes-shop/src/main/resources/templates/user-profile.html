@@ -73,7 +73,7 @@
                        th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
-                       th:field="*{address()}"
+                       th:field="*{address}"
                        placeholder="Enter your address..."/>
                 <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
                    class="invalid-feedback errors alert alert-danger"></p>

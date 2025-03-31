@@ -29,7 +29,7 @@ public class UserProfileController {
     private String profile(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
 
         if (!model.containsAttribute("userUpdateDTO")) {
-            model.addAttribute("userUpdateDTO", UserUpdateDTO.empty());
+            model.addAttribute("userUpdateDTO", userService.getUserDTO(currentUser.getEmail()));
         }
         model.addAttribute("currentUser", currentUser);
 

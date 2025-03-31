@@ -12,14 +12,18 @@ import java.util.Optional;
 public interface UserService {
     void register(UserRegisterDTO userRegisterDTO);
     void updateByUser(UserUpdateDTO userUpdateDTO, String  email);
+    void updateByAdmin( AdminUpdateDTO adminUpdateDTO,String email);
+
     void notify(UserUpdateProfileEvent event);
 
     List<ShortUserDTO> getAllByEmailFirsOrLastName(String searchWord);
 
     Optional<AdminUpdateDTO>  getAdminDTO(String email);
+    Optional<UserUpdateDTO>  getUserDTO(String email);
 
-    void updateByAdmin( AdminUpdateDTO adminUpdateDTO,String email);
 
-    boolean isUniqueEmail(String value);
+    boolean isUniqueEmail(String email);
+    boolean isPasswordCorrect(String email,String password);
+
 
 }

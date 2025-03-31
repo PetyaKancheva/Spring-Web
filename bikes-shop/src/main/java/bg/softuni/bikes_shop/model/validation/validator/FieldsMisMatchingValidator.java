@@ -2,6 +2,7 @@ package bg.softuni.bikes_shop.model.validation.validator;
 
 
 import bg.softuni.bikes_shop.model.validation.annotation.FieldsMatching;
+import bg.softuni.bikes_shop.model.validation.annotation.FieldsMisMatching;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapper;
@@ -9,14 +10,14 @@ import org.springframework.beans.PropertyAccessorFactory;
 
 import java.util.Objects;
 
-public class FieldsMisMatchingValidator implements ConstraintValidator<FieldsMatching, Object> {
+public class FieldsMisMatchingValidator implements ConstraintValidator<FieldsMisMatching, Object> {
 
     private String first;
     private String second;
     private String message;
 
     @Override
-    public void initialize(FieldsMatching constraintAnnotation) {
+    public void initialize(FieldsMisMatching constraintAnnotation) {
        this.first=constraintAnnotation.firstField();
         this.second = constraintAnnotation.secondField();
         this.message = constraintAnnotation.message();

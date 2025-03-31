@@ -62,22 +62,9 @@ public class UserServiceImpl implements UserService {
                 .setFirstName(userUpdateDTO.firstName())
                 .setLastName(userUpdateDTO.lastName())
                 .setAddress(userUpdateDTO.address())
+                .setCountry(userUpdateDTO.country())
                 .setEmail(userUpdateDTO.email())
                 .setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
-        //validation
-//        if (userRepository.findUserByEmail(userUpdateDTO.email()).isEmpty()) {
-//            existingUser
-//        } else {
-//            throw new IllegalArgumentException("User already exist with email:" + userUpdateDTO.email() + "!");
-//        }
-
-
-//            custom validation
-//        if (!passwordEncoder.matches(userUpdateDTO.newPassword(), existingUser.getPassword())) {
-//            existingUser.setPassword(passwordEncoder.encode(userUpdateDTO.newPassword()));
-//        } else {
-//            throw new IllegalArgumentException("Old password not matching!");
-//        }
 
         appEventPublisher.publishEvent(
                 new UserUpdateProfileEvent("UserService-Update", userUpdateDTO.email(), userUpdateDTO.firstName(), String.valueOf(Instant.now())));
@@ -106,29 +93,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserUpdateDTO> getUserDTO(String email) {
+        return Optional.empty();
+    }
+
+    @Override
     public void updateByAdmin(AdminUpdateDTO adminUpdateDTO, String oldEmail) {
-
         UserEntity existingUser = getUserExisting(oldEmail);
-        // move to validation?
-        if (userRepository.findUserByEmail(adminUpdateDTO.email()).isEmpty()) {
-            existingUser.setEmail(adminUpdateDTO.email());
-        } else {
-            throw new IllegalArgumentException("User already exist with email:" + adminUpdateDTO.email() + "!");
-        }
-
-
         existingUser.getRoles().clear();
         existingUser.getRoles().addAll(getRolesFromString(adminUpdateDTO));
         existingUser.setFirstName(adminUpdateDTO.firstName());
         existingUser.setLastName(adminUpdateDTO.lastName());
         existingUser.setAddress(adminUpdateDTO.address());
-
-        // move to validation?
-//        if (!passwordEncoder.matches(adminUpdateDTO.newPassword(), existingUser.getPassword())) {
-//            existingUser.setPassword(passwordEncoder.encode(adminUpdateDTO.newPassword()));
-//        } else {
-//            throw new IllegalArgumentException("Old password not matching!");
-//        }
+        existingUser.setCountry(adminUpdateDTO.country());
+        existingUser.setPassword(passwordEncoder.encode(adminUpdateDTO.newPassword()));
 
         appEventPublisher.publishEvent(
                 new UserUpdateProfileEvent("UserService-Update", adminUpdateDTO.email(), adminUpdateDTO.firstName(), String.valueOf(Instant.now())));
@@ -141,6 +119,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUniqueEmail(String value) {
         return userRepository.findUserByEmail(value).isEmpty();
+    }
+
+    @Override
+    public boolean isPasswordCorrect(String email, String password) {
+     return passwordEncoder.matches( password,userRepository
+                .findUserByEmail(email).map(UserEntity::getPassword)
+             .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!"))) ;
     }
 
 

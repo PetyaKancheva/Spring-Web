@@ -1,17 +1,21 @@
 package bg.softuni.bikes_shop.model.dto;
 
 import bg.softuni.bikes_shop.model.validation.annotation.FieldsMisMatching;
+import bg.softuni.bikes_shop.model.validation.annotation.PasswordIsCorrect;
 import bg.softuni.bikes_shop.model.validation.annotation.PasswordMatch;
 import bg.softuni.bikes_shop.model.validation.annotation.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-
 @FieldsMisMatching(
         firstField = "oldPassword",
-        secondField = "newPassword",
-        message = "Fields must be different"
+        secondField = "newPassword"
 )
+@PasswordIsCorrect(
+        email="email",
+        password = "oldPassword"
+)
+
 public record UserUpdateDTO(
         @NotEmpty(message = "Must be populated.")
         @Email(message = "Must be an e-mail format.")
