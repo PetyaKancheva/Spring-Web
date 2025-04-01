@@ -7,4 +7,5 @@ public record AdminUpdateDTO(@Valid UserMainUpdateDTO userMainUpdateDTO,
     public static AdminUpdateDTO empty(){
         return new AdminUpdateDTO(UserMainUpdateDTO.empty(),UserAdminUpdateDTO.empty());
     }
+
 }

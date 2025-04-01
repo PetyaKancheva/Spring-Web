@@ -30,8 +30,15 @@ public class PasswordIsFoundValidator implements ConstraintValidator<PasswordIsF
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(value);
         Object emailProperty=beanWrapper.getPropertyValue(this.email);
         Object passwordProperty=beanWrapper.getPropertyValue(this.password);
-            //TODO not checked if this owrks
+
         boolean isValid=userService.isPasswordCorrect(String.valueOf(emailProperty), String.valueOf(passwordProperty));
+        if (!isValid) {
+            context
+                    .buildConstraintViolationWithTemplate(message)
+                    .addPropertyNode(password)
+                    .addConstraintViolation()
+                    .disableDefaultConstraintViolation();
+        }
 
         return  isValid;
     }

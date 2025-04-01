@@ -13,10 +13,8 @@ public interface UserService {
 
     List<ShortUserDTO> getAllByEmailFirsOrLastName(String searchWord);
 
-    UserAdminUpdateDTO getUserAdminDTO(String email);
+    AdminUpdateDTO getAdminDTO(String email);
     UserMainUpdateDTO  getUserMainUpdateDTO(String email);
-
-
 
     void updateByUser(UserUpdateDTO userUpdateDTO, String  email);
     void updateByAdmin(AdminUpdateDTO adminUpdateDTO,String email);

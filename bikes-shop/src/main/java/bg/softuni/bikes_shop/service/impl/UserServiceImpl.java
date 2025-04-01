@@ -109,8 +109,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserAdminUpdateDTO getUserAdminDTO(String email) {
-        return mapToUserAdminUpdateDTO(getExistingUser(email));
+    public AdminUpdateDTO getAdminDTO(String email) {
+
+        return new AdminUpdateDTO(getUserMainUpdateDTO(email),
+                mapToUserAdminUpdateDTO(getExistingUser(email)));
     }
 
     @Override

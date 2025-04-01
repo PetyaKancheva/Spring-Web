@@ -53,8 +53,8 @@ public class UserProfileController {
         userService.updateByUser(updateDTO,currentUser.getUsername());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
-        // to actually log you out
-        return "redirect:/logout";
+
+        return "redirect:/login?logout";
     }
 
 

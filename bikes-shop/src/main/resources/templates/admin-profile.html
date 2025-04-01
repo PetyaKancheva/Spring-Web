@@ -44,7 +44,7 @@
                 </ul>
             </div>
 
-           <span> current roles:<th:block th:text="${adminUpdateDTO.roles()}"></th:block> </span>
+           <span> current roles:<th:block th:text="${adminUpdateDTO.userAdminUpdateDTO.roles()}"></th:block> </span>
 
             <form id="admin-update-user-profile-form"
                   th:action="@{/admin/update/{id}(id=${adminUpdateDTO.email})}"
@@ -66,10 +66,10 @@
                            th:name="firstName"
                            th:errorclass="is-invalid "
                            type="text"
-                           th:field="*{firstName}"
+                           th:field="*{userMainUpdateDTO.firstName}"
                            class="form-control"
                            placeholder="First name..."/>
-                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                    <p th:if="${#fields.hasErrors('userMainUpdateDTO.firstName')}" th:errors="*{userMainUpdateDTO.firstName}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
@@ -80,10 +80,10 @@
                            th:name="lastName"
                            th:errorclass="is-invalid "
                            type="text"
-                           th:field="*{lastName}"
+                           th:field="*{userMainUpdateDTO.lastName}"
                            class="form-control"
                            placeholder="Last name..."/>
-                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                    <p th:if="${#fields.hasErrors('userMainUpdateDTO.lastName')}" th:errors="*{userMainUpdateDTO.lastName}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
@@ -93,10 +93,10 @@
                            th:name="address"
                            th:errorclass="is-invalid"
                            type="text"
-                           th:field="*{address}"
+                           th:field="*{userMainUpdateDTO.address}"
                            class="form-control"
                            placeholder="Update address..."/>
-                    <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                    <p th:if="${#fields.hasErrors('address')}" th:errors="*{userMainUpdateDTO.address}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
                 <div class="form-group py-2 ">
@@ -105,10 +105,10 @@
                            th:name="country"
                            th:errorclass="is-invalid"
                            type="text"
-                           th:field="*{country}"
+                           th:field="*{userMainUpdateDTO.country}"
                            class="form-control"
                            placeholder="Update country..."/>
-                    <p th:if="${#fields.hasErrors('address')}" th:errors="*{country}"
+                    <p th:if="${#fields.hasErrors('userMainUpdateDTO.address')}" th:errors="*{userMainUpdateDTO.country}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
@@ -118,10 +118,10 @@
                            th:name="email"
                            th:errorclass="is-invalid"
                            type="text"
-                           th:field="*{email}"
+                           th:field="*{userMainUpdateDTO.email}"
                            class="form-control"
                            placeholder="New email address..."/>
-                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                    <p th:if="${#fields.hasErrors('userMainUpdateDTO.email')}" th:errors="*{userMainUpdateDTO.email}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
@@ -133,7 +133,7 @@
                            type="password"
                            class="form-control"
                             placeholder="*******"/>
-                    <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"
+                    <p th:if="${#fields.hasErrors('userAdminUpdateDTO.newPassword')}" th:errors="*{userAdminUpdateDTO.newPassword}"
                        class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
