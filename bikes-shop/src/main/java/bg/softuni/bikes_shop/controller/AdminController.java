@@ -37,7 +37,11 @@ public class AdminController {
     @GetMapping("/admin")
     private String view( Model model) {
 
-        model.addAttribute("adminUpdateDTO",AdminUpdateDTO.empty());
+        if(!model.containsAttribute("adminUpdateDTO")){
+            model.addAttribute("adminUpdateDTO",AdminUpdateDTO.empty());
+        }
+
+
 
         return "admin-profile";
     }
@@ -45,9 +49,13 @@ public class AdminController {
     @PostMapping("/admin")
     private String search(String personToSearch, Model model) {
 
-        model.addAttribute("listPeople", userService.getAllByEmailFirsOrLastName(personToSearch));
+        if(!model.containsAttribute("listPeople")){
+            model.addAttribute("listPeople", userService.getAllByEmailFirsOrLastName(personToSearch));
+        }
 
-        model.addAttribute("adminUpdateDTO",AdminUpdateDTO.empty());
+        if(!model.containsAttribute("adminUpdateDTO")){
+            model.addAttribute("adminUpdateDTO",AdminUpdateDTO.empty());
+        }
 
 
         return "admin-profile";
@@ -55,9 +63,13 @@ public class AdminController {
 
     @GetMapping("/admin/update/{id}")
     private String selectUser(@PathVariable("id") String email, Model model) {
-
-        model.addAttribute("adminUpdateDTO",
-                userService.getAdminDTO(email));
+            if(email.isEmpty()){
+                return "admin-profile";
+            }
+        if(!model.containsAttribute("adminUpdateDTO")){
+            model.addAttribute("adminUpdateDTO",
+                    userService.getAdminDTO(email));
+        }
 
         return "admin-profile";
 
@@ -71,7 +83,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("adminUpdateDTO", adminUpdateDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.adminUpdateDTO", bindingResult);
-          return "admin-profile";
+          return "redirect:/admin/update/{id}";
         }
 
         userService.updateByAdmin(adminUpdateDTO,oldEmail);

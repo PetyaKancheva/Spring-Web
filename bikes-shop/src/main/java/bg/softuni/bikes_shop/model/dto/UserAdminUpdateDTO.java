@@ -9,11 +9,13 @@ public record UserAdminUpdateDTO(
         @NotEmpty
         List<String> roles,
         @PasswordMatch
-        String newPassword
+        String newPassword,
+        @NotEmpty
+        String oldEmail
 ) {
 
     public static UserAdminUpdateDTO empty() {
         return
-                new UserAdminUpdateDTO(null, null);
+                new UserAdminUpdateDTO(null, null,null);
     }
 }

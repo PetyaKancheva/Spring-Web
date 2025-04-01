@@ -177,7 +177,7 @@ public class UserServiceImpl implements UserService {
     private static UserAdminUpdateDTO mapToUserAdminUpdateDTO(UserEntity u) {
         return new UserAdminUpdateDTO(
                 u.getRoles().stream().map(ur -> ur.getName().name()).toList(),
-                "dummy-password");
+                "dummy-password",u.getEmail());
 
     }
 

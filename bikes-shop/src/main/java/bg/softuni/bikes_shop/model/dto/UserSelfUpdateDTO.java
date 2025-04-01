@@ -6,7 +6,7 @@ import bg.softuni.bikes_shop.model.validation.annotation.PasswordIsFound;
 import bg.softuni.bikes_shop.model.validation.annotation.PasswordMatch;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.groups.ConvertGroup;
+
 
 @PasswordIsFound(
         email="oldEmail",
