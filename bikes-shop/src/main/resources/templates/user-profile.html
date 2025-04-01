@@ -37,8 +37,8 @@
         <form   id="updateProfileForm"
                 th:action="@{/user}"
                 th:method="POST"
+                th:object="${updateDTO}"
                 class="mx-auto col-md-12 flex-column justify-content-center "
-
                 >
 
             <div class="form-group pt-3 py-2 border-top ">
@@ -46,10 +46,10 @@
                        th:name="firstName"
                        th:errorclass="is-invalid "
                        type="text"
-                       th:field="*{userMaifirstName}"
+                       th:field="*{userMainUpdateDTO.firstName}"
                        class="form-control"
                        placeholder="First name..."/>
-                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                <p th:if="${#fields.hasErrors('userMainUpdateDTO.firstName')}" th:errors="*{userMainUpdateDTO.firstName}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
 
@@ -59,10 +59,10 @@
                        th:name="lastName"
                        th:errorclass="is-invalid "
                        type="text"
-                       th:field="*{lastName}"
+                       th:field="*{userMainUpdateDTO.lastName}"
                        class="form-control"
                        placeholder="Last name..."/>
-                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                <p th:if="${#fields.hasErrors('userMainUpdateDTO.lastName')}" th:errors="*{userMainUpdateDTO.lastName}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
 
@@ -72,9 +72,20 @@
                        th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
-                       th:field="*{address}"
+                       th:field="*{userMainUpdateDTO.address}"
                        placeholder="Enter your address..."/>
-                <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                <p th:if="${#fields.hasErrors('userMainUpdateDTO.address')}" th:errors="*{userMainUpdateDTO.address}"
+                   class="invalid-feedback errors alert alert-danger"></p>
+            </div>
+            <div class="form-group py-2 ">
+                <input id="country"
+                       th:name="country"
+                       th:errorclass="is-invalid"
+                       type="text"
+                       class="form-control"
+                       th:field="*{userMainUpdateDTO.country}"
+                       placeholder="Enter your country..."/>
+                <p th:if="${#fields.hasErrors('userMainUpdateDTO.country')}" th:errors="*{userMainUpdateDTO.country}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
 
@@ -84,46 +95,56 @@
                        th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
-                       th:field="*{email}"
+                       th:field="*{userMainUpdateDTO.email}"
                        placeholder="Enter your e-mail address..."/>
-                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                <p th:if="${#fields.hasErrors('userMainUpdateDTO.email')}" th:errors="*{userMainUpdateDTO.email}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
 
+<!--        </form>-->
+
+<!--        second form-->
+<!--        <form   id="updateProfileForm2"-->
+<!--                th:action="@{/user}"-->
+<!--                th:method="POST"-->
+<!--                th:object="${selfUpdateDTO}"-->
+<!--                class="mx-auto col-md-12 flex-column justify-content-center " >-->
+
+            <input type="hidden"th:name="userSelfUpdateDTO.oldEmail" th:value="${currentUser.getEmail()}">
             <div class="form-group py-2">
 
                 <input id="oldPassword"
-                       th:name="oldPassword"
+                       th:name="userSelfUpdateDTO.oldPassword"
                        th:errorclass="is-invalid"
                        type="password"
                        class="form-control"
                        placeholder="Enter your old password..."/>
-                <p th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"
+                <p th:if="${#fields.hasErrors('userSelfUpdateDTO.oldPassword')}" th:errors="*{userSelfUpdateDTO.oldPassword}"
                    class="invalid-feedback errors alert alert-danger"></p>
 
             </div>
 
            <div class="form-group py-2">
                 <input id="newPassword"
-                       th:name="newPassword"
+                       th:name="userSelfUpdateDTO.newPassword"
                        th:errorclass="is-invalid"
                        type="password"
                        class="form-control"
                        placeholder="Enter your new password..."/>
-                <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"
+                <p th:if="${#fields.hasErrors('userSelfUpdateDTO.newPassword')}" th:errors="*{userSelfUpdateDTO.newPassword}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
-
-
-
             <div class="button-holder justify-content-center m-auto d-flex">
 
-                <input type="submit" class="btn btn-danger btn-block " value="Update profile"/>
+                <input type="submit" id="submitAll" class="btn btn-danger btn-block " value="Update profile" >
 
             </div>
 
-
         </form>
+
+
+
+
 
     </div>
 
@@ -141,11 +162,14 @@
 
     $(document).ready(function(){
         $("#updateProfileForm").hide();
+
         $("#buttonShow").click(function(){
             $("#updateProfileForm").toggle(1000);
 
         });
+
     });
+
 </script>
 </body>
 

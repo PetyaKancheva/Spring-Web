@@ -52,34 +52,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateByUser(UserMainUpdateDTO userMainUpdateDTO, UserSelfUpdateDTO userSelfUpdateDTO, String email) {
+    public void updateByUser(UserUpdateDTO userUpdateDTO, String email) {
 
         UserEntity updatedUser = getExistingUser(email);
-        updateMainUserDetails(userMainUpdateDTO, updatedUser);
-        updatedUser.setPassword(passwordEncoder.encode(userSelfUpdateDTO.newPassword()));
+        updateMainUserDetails(userUpdateDTO.userMainUpdateDTO(), updatedUser);
+        updatedUser.setPassword(passwordEncoder.encode(userUpdateDTO.userSelfUpdateDTO().newPassword()));
 
         appEventPublisher.publishEvent(
-                new UserUpdateProfileEvent("UserService-Update", userMainUpdateDTO.email(), userMainUpdateDTO.firstName(), String.valueOf(Instant.now())));
+                new UserUpdateProfileEvent("UserService-Update",
+                        userUpdateDTO.userMainUpdateDTO().email(),
+                        userUpdateDTO.userMainUpdateDTO().firstName(),
+                        String.valueOf(Instant.now())));
 
         userRepository.save(updatedUser);
     }
 
     @Override
-    public void updateByAdmin(UserMainUpdateDTO userMainUpdateDTO, UserAdminUpdateDTO userAdminUpdateDTO, String email) {
+    public void updateByAdmin(AdminUpdateDTO adminUpdateDTO, String email) {
 
         UserEntity updatedUser = getExistingUser(email);
-        updateMainUserDetails(userMainUpdateDTO, updatedUser);
+        updateMainUserDetails(adminUpdateDTO.userMainUpdateDTO(), updatedUser);
         updatedUser.getRoles().clear();
-        updatedUser.getRoles().addAll(getRolesFromString(userAdminUpdateDTO));
+        updatedUser.getRoles().addAll(getRolesFromString(adminUpdateDTO.userAdminUpdateDTO()));
 
-        updatedUser.setPassword(passwordEncoder.encode(userAdminUpdateDTO.newPassword()));
+        updatedUser.setPassword(passwordEncoder.encode(adminUpdateDTO.userAdminUpdateDTO().newPassword()));
 
         appEventPublisher.publishEvent(
-                new UserUpdateProfileEvent("UserService-Update", userMainUpdateDTO.email(), userMainUpdateDTO.firstName(), String.valueOf(Instant.now())));
+                new UserUpdateProfileEvent("UserService-Update",
+                        adminUpdateDTO.userMainUpdateDTO().email(),
+                        adminUpdateDTO.userMainUpdateDTO().firstName(),
+                        String.valueOf(Instant.now())));
 
         userRepository.save(updatedUser);
-
-
     }
 
     private void updateMainUserDetails(UserMainUpdateDTO userMainUpdateDTO, UserEntity updatedUser) {
@@ -105,13 +109,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserAdminUpdateDTO> getUserAdminDTO(String email) {
-        return Optional.of(mapToUserAdminUpdateDTO(getExistingUser(email)));
+    public UserAdminUpdateDTO getUserAdminDTO(String email) {
+        return mapToUserAdminUpdateDTO(getExistingUser(email));
     }
 
     @Override
-    public Optional<UserMainUpdateDTO> getUserMainUpdateDTO(String email) {
-        return Optional.of(mapToMainDTO(getExistingUser(email)));
+    public UserMainUpdateDTO getUserMainUpdateDTO(String email) {
+        return mapToMainDTO(getExistingUser(email));
     }
 
 

@@ -1,8 +1,8 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.model.CustomUserDetails;
-import bg.softuni.bikes_shop.model.dto.UserMainUpdateDTO;
 import bg.softuni.bikes_shop.model.dto.UserSelfUpdateDTO;
+import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,12 +29,11 @@ public class UserProfileController {
 
     private String profile(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
 
-        if (!model.containsAttribute("mainUpdateDTO")) {
-            model.addAttribute("mainUpdateDTO", userService.getUserMainUpdateDTO(currentUser.getEmail()));
+        if (!model.containsAttribute("updateDTO")) {
+            model.addAttribute("updateDTO",
+                    new UserUpdateDTO(userService.getUserMainUpdateDTO(currentUser.getEmail()),UserSelfUpdateDTO.empty()));
         }
-        if (!model.containsAttribute("selfUpdateDTO")) {
-            model.addAttribute("selfUpdateDTO", UserSelfUpdateDTO.empty());
-        }
+
         model.addAttribute("currentUser", currentUser);
 
         return "user-profile";
@@ -42,22 +41,20 @@ public class UserProfileController {
 
     @PostMapping("/user")
     private String profile(@AuthenticationPrincipal CustomUserDetails currentUser,
-                           @Valid UserMainUpdateDTO userMainUpdateDTO,@Valid UserSelfUpdateDTO userSelfUpdateDTO,
+                       @Valid UserUpdateDTO updateDTO,
                            BindingResult bindingResult, RedirectAttributes rAtt) {
 
         if (bindingResult.hasErrors()) {
-            rAtt.addFlashAttribute("mainUpdateDTO", userMainUpdateDTO);
-            rAtt.addFlashAttribute("selfUpdateDTO", userSelfUpdateDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userUpdateDTO", bindingResult);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.selfUpdateDTO", bindingResult);
+            rAtt.addFlashAttribute("updateDTO", updateDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.updateDTO", bindingResult);
             return "redirect:/user";
         }
 
-        userService.updateByUser(userMainUpdateDTO, userSelfUpdateDTO,currentUser.getUsername());
+        userService.updateByUser(updateDTO,currentUser.getUsername());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
-
-        return "redirect:/login";
+        // to actually log you out
+        return "redirect:/logout";
     }
 
 
