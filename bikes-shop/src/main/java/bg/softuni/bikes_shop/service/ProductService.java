@@ -15,10 +15,13 @@ import java.util.Set;
 
 public interface ProductService {
     Page<ProductDTO> getProductsPageable(Pageable pageable);
+
     Optional<ProductDTO> getSingleProduct(String compositeName);
     void addProduct(ProductAddDTO productAddDTO);
     List<String> getDistinctCategories();
     Page<ProductDTO> getProductsFromCategoryPageable(Pageable pageable, String category);
     void setCompositeName(ProductEntity productEntity);
     void addCompositeName(ProductAdditionEvent event);
+
+    Page<ProductDTO>  searchForProducts(String productToSearch, Pageable pageable);
 }

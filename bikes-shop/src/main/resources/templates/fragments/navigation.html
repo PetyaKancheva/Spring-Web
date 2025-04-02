@@ -13,8 +13,10 @@
             <a class="navbar-brand" th:href="@{/}"><img alt="logo" src="/images/logo.png" class="logo" height="50"></a>
 
             <div class="row-ms-auto">
-                <form class="d-flex" role="search">
-                    <input class="form-control col-sm me-2" type="search" placeholder="Search" aria-label="Search">
+                <form th:action="@{/search-result}"
+                      th:method="POST"
+                      class="d-flex"            role="search">
+                    <input class="form-control col-sm me-2" type="search" placeholder="Search" aria-label="Search" th:name="productToSearch">
                     <button class="btn btn-outline-danger" type="submit">Search</button>
                 </form>
             </div>
@@ -68,7 +70,7 @@
                     <ul class="navbar-nav  text-light">
                             <li class="nav-item pl-2">
                                 <a class="nav-link  text-light">Hello:
-                                <th:block sec:authorize="isAuthenticated()" th:text="${currentUserName}"></th:block>
+                                <th:block sec:authorize="isAuthenticated()" sec:authentication="principal.firstName"></th:block>
                                 <th:block sec:authorize="!isAuthenticated()" >Guest</th:block></a>
                             </li>
                         <li class="nav-item">

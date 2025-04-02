@@ -60,6 +60,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<ProductDTO> searchForProducts(String productToSearch,Pageable pageable) {
+        return productRepository.findAllByKeyword(productToSearch,pageable)
+                .map(ProductServiceImpl::mapToDTO);
+    }
+
+    @Override
     public List<String> getDistinctCategories() {
         return productRepository.getDistinctCategories();
     }
