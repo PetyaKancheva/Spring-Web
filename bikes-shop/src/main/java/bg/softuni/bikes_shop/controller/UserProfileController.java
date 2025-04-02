@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 @Controller
 public class UserProfileController {
     private final UserService userService;
@@ -27,21 +29,19 @@ public class UserProfileController {
 
     @GetMapping("/user")
 
-    private String profile(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+    private String profile( Principal principal,Model model) {
 
         if (!model.containsAttribute("updateDTO")) {
             model.addAttribute("updateDTO",
-                    new UserUpdateDTO(userService.getUserMainUpdateDTO(currentUser.getEmail()),UserSelfUpdateDTO.empty()));
+                    new UserUpdateDTO(userService.getUserMainUpdateDTO(principal.getName()),UserSelfUpdateDTO.empty()));
         }
 
-        model.addAttribute("currentUser", currentUser);
 
         return "user-profile";
     }
 
     @PostMapping("/user")
-    private String profile(@AuthenticationPrincipal CustomUserDetails currentUser,
-                       @Valid UserUpdateDTO updateDTO,
+    private String profile(Principal principal, @Valid UserUpdateDTO updateDTO,
                            BindingResult bindingResult, RedirectAttributes rAtt) {
 
         if (bindingResult.hasErrors()) {
@@ -50,7 +50,7 @@ public class UserProfileController {
             return "redirect:/user";
         }
 
-        userService.updateByUser(updateDTO,currentUser.getUsername());
+        userService.updateByUser(updateDTO,principal.getName());
 
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
 
