@@ -3,6 +3,7 @@ package com.example.demo.util;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 @Component
@@ -16,8 +17,19 @@ public class CLGreeter implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("running");
 
+        String activationCode="hidddencode";
+
+     String uri = UriComponentsBuilder.newInstance()
+             .scheme("http").host("localhost").port(8080).path("/user/") .queryParam("activate",activationCode)
+
+           .toUriString();
+
+        System.out.println(uri);
 
 
+//        queryParam("activate",activationCode)
+//        http://localhost:8080/user/?activate=hidddencode
+//  .query("activate(activation_code={activationCode})").buildAndExpand(activationCode)
 //        String URLTemplate = String.valueOf(new StringBuilder()
 //                .append(exchangeRateConfig.getSchema())
 //                .append("://")
