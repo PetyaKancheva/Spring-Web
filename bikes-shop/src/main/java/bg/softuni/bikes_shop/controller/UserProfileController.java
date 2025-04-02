@@ -1,11 +1,9 @@
 package bg.softuni.bikes_shop.controller;
 
-import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.UserSelfUpdateDTO;
 import bg.softuni.bikes_shop.model.dto.UserUpdateDTO;
 import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,9 +16,9 @@ import java.security.Principal;
 @Controller
 public class UserProfileController {
     private final UserService userService;
-    private final static String SUCCESSFUL_UPDATE_MSG =
+    private final static String SUCCESSFULLY_UPDATED_OWN_PROFILE_MSG =
             "Your profile is successfully updated!";
-    private final static String ATTRIBUTE_MSG_NAME="onSuccess";
+    private final static String ATTRIBUTE_MSG_NAME="message";
 
 
     public UserProfileController(UserService userService) {
@@ -52,7 +50,7 @@ public class UserProfileController {
 
         userService.updateByUser(updateDTO,principal.getName());
 
-        rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_UPDATE_MSG );
+        rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, SUCCESSFULLY_UPDATED_OWN_PROFILE_MSG);
 
         return "redirect:/login?logout";
     }

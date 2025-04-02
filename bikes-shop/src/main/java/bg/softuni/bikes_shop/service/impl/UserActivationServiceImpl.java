@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.Random;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -46,24 +47,25 @@ public class UserActivationServiceImpl implements UserActivationService {
     @Override
     @Transactional
     public void cleanUpObsoleteActivationLinks() {
-        activationCodeRepository.deleteUserActivationCodeEntitiesByCreatedIsBefore(Instant.now() .minus(7, DAYS));
+        activationCodeRepository.deleteUserActivationCodeEntitiesByCreatedIsBefore(Instant.now() .minus(1, DAYS));
     }
 
     @Override
-    public void userActivate(String userActivationCode) {
-        UserActivationCodeEntity uaEntity = activationCodeRepository.findByActivationCode(userActivationCode).orElseThrow(
-                () -> new CustomObjectNotFoundException("Activation code not found:" + userActivationCode));
+    public boolean userActivate(String userActivationCode) {
+        if (activationCodeRepository.findByActivationCode(userActivationCode).isPresent()) {
+            Optional<UserActivationCodeEntity> uaEntity = activationCodeRepository.findByActivationCode(userActivationCode);
+            if (DAYS.between(uaEntity.get().getCreated(), Instant.now()) <= 1) {
+            if(userRepository.findById(uaEntity.get().getUser().getId()).isPresent()) {
 
-        if (DAYS.between(uaEntity.getCreated(), Instant.now()) <= 1) {
+                userRepository.save(userRepository.findById(uaEntity.get().getUser().getId()).get().setEnabled(true));
 
-            UserEntity user =userRepository.findById(uaEntity.getUser().getId()).orElseThrow(()
-                    -> new CustomObjectNotFoundException("User not found"));
-                        user.setEnabled(true);
-        }else{
-            throw new CustomObjectNotFoundException("Authentication failed");
+                activationCodeRepository.delete(uaEntity.orElseThrow());
+                return true;
+            }
+
+            }
         }
-
-
+        return false;
     }
 
     @Override

@@ -17,7 +17,7 @@ public class UserLoginController {
 
     @PostMapping("/login-error")
     public String loginError(RedirectAttributes rAtt) {
-        rAtt.addFlashAttribute("error", "Invalid username or password.");
+        rAtt.addFlashAttribute("message", "Invalid username or password.");
         return "redirect:/login";
     }
 

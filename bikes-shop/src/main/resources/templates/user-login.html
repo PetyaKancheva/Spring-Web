@@ -13,10 +13,9 @@
 
         <h4 class="text-center text-dark pt-5">Login</h4>
 
-        <div th:if= "${error}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
-            th:text="${error}"></div>
-        <div th:if= "${onSuccess}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
-             th:text="${onSuccess}"></div>
+        <div th:if= "${message}"class="container text-center text-color w-25 p-3 border border-success-subtle border-5 rounded-1"
+            th:text="${message}"></div>
+
 
         <form
                 th:action="@{/login}"

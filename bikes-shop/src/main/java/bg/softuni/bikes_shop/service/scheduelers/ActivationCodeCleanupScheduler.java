@@ -14,7 +14,7 @@ public class ActivationCodeCleanupScheduler {
         this.userActivationService = userActivationService;
     }
 
-        @Scheduled(cron="* 5 9 * * 7") //every Sunday at 9_05
+        @Scheduled(cron="0 5 5 * * *") //every day at 5:05
 //    @Scheduled(cron ="0 */1 */1 * * *")// every 1 min
     public void cleanUp(){
         userActivationService.cleanUpObsoleteActivationLinks();

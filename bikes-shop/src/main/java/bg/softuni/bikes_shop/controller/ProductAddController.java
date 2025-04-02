@@ -17,7 +17,7 @@ public class ProductAddController {
     private final ProductService productService;
     private final static String SUCCESSFUL_PRODUCT_ADDITION_MSG =
             "New Product created!";
-    private final static String ATTRIBUTE_MSG_NAME = "onSuccess";
+    private final static String ATTRIBUTE_MSG_NAME = "message";
 
     public ProductAddController(ProductService productService) {
         this.productService = productService;

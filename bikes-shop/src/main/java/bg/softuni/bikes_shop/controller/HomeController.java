@@ -1,21 +1,16 @@
 package bg.softuni.bikes_shop.controller;
 
 
-import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentCurrency;
 
-import org.springframework.boot.Banner;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HomeController {
-    private final static String ERROR_KEYWORD_NOT_FOUND =
+    private final static String ERROR_KEYWORD_NOT_FOUND_MSG =
             "No results found for %s !";
-    private final static String ATTRIBUTE_MSG_NAME = "onError";
+    private final static String KEYWORD_FOUND_MSG ="Found %d results for %s !";
+    private final static String ATTRIBUTE_MSG_NAME = "message";
 
     private final ProductService productService;
     private final static List<String> CURRENCY_LIST = List.of("EUR", "BGN", "PLN", "USD");
@@ -51,11 +46,13 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    private String allProducts(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue ="3") Integer size,
+    private String allProducts(@RequestParam(defaultValue = "0") Integer page,
+                               @RequestParam(defaultValue ="3") Integer size,
+                               @RequestParam (defaultValue ="name")String sort,
                                Model model) {
         // TODO implement dropdown for sorting
 
-        model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by("name"))));
+        model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by(sort))));
 
         //TODO get currency list from currency service
         return "index";
@@ -82,11 +79,13 @@ public class HomeController {
       Page<ProductDTO> resultList= productService.searchForProducts(productToSearch,Pageable.unpaged());
 
         if(resultList.isEmpty() ){
-            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,String.format(ERROR_KEYWORD_NOT_FOUND,productToSearch));
+            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,String.format(ERROR_KEYWORD_NOT_FOUND_MSG,productToSearch));
             return "redirect:/";
         }else{
+            //TODO check if it works
+            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,String.format(KEYWORD_FOUND_MSG,resultList.getSize(),productToSearch));
             model.addAttribute("products",resultList );
-            return "index";
+            return "redirect:/";
         }
 
         }

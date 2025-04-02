@@ -15,7 +15,7 @@ public class UserRegisterController {
     private final UserService userService;
     private final static String SUCCESSFUL_REGISTRATION_MSG =
             "Congratulations! You are now registered at Bikes-Shop. Please proceed to authenticate your email address.";
-    private final static String ATTRIBUTE_MSG_NAME="onSuccess";
+    private final static String ATTRIBUTE_MSG_NAME="message";
 
     public UserRegisterController(UserService userService) {
         this.userService = userService;

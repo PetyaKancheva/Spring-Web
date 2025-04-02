@@ -2,8 +2,6 @@ package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
-import bg.softuni.bikes_shop.model.dto.UserAdminUpdateDTO;
-import bg.softuni.bikes_shop.model.dto.UserMainUpdateDTO;
 import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -17,11 +15,11 @@ import java.security.Principal;
 @Controller
 public class AdminController {
     private final UserService userService;
-    private final static String SUCCESSFULLY_UPDATED_MSG =
+    private final static String SUCCESSFULLY_UPDATED_OWN_PROFILE_MSG =
             "Your profile is successfully updated!";
     private final static String SUCCESSFULLY_UPDATED_USER_MSG =
             "User %s is now updated!";
-    private final static String ATTRIBUTE_MSG_NAME = "onSuccess";
+    private final static String ATTRIBUTE_MSG_NAME = "message";
 
 
 
@@ -88,8 +86,9 @@ public class AdminController {
 
         userService.updateByAdmin(adminUpdateDTO,oldEmail);
 
+
         if (principal.getName().equals(oldEmail)) {
-            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, SUCCESSFULLY_UPDATED_MSG);
+            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, SUCCESSFULLY_UPDATED_OWN_PROFILE_MSG);
             return "redirect:/login?logout";
         } else {
             rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, String.format(SUCCESSFULLY_UPDATED_USER_MSG, adminUpdateDTO.userMainUpdateDTO().firstName()));

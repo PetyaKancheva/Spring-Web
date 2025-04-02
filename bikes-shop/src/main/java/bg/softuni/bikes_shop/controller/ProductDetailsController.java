@@ -2,8 +2,6 @@ package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
-import bg.softuni.bikes_shop.model.dto.ProductDTO;
-import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
 import jakarta.validation.Valid;
@@ -18,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class ProductDetailsController {
     private final ProductService productService;
-    private final static String SUCCESSFUL_PURCHASE_MSG=  "Successfully purchased: %s. Please go to shopping cart to see your current items.";
-     private final static String ATTRIBUTE_MSG_NAME = "onSuccess";
+    private final static String SUCCESSFUL_PURCHASE_MSG =  "Successfully purchased: %s. Please go to shopping cart to see your current items.";
+     private final static String ATTRIBUTE_MSG_NAME = "message";
     private final CurrentOrder currentOrder;
 
     public ProductDetailsController(ProductService productService, CurrentOrder currentOrder) {

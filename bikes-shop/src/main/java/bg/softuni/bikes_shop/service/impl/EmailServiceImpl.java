@@ -7,6 +7,8 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriTemplate;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -43,8 +45,10 @@ public class EmailServiceImpl implements EmailService {
 
     private String generateUpdateEmailBody(String userFirstName, String timeOfUpdate) {
         Context context = new Context();
+
         context.setVariable("user_first_name", userFirstName);
         context.setVariable("timeOfUpdate", timeOfUpdate);
+
 
         return templateEngine.process("/email/profile-update-email.html", context);
 
@@ -53,8 +57,14 @@ public class EmailServiceImpl implements EmailService {
     private String generateRegistrationEmailBody(String userFirstName, String activationCode) {
         Context context = new Context();
         context.setVariable("user_first_name", userFirstName);
-        context.setVariable("activation_code", activationCode);
 
+        String uri = UriComponentsBuilder.newInstance()
+                .scheme("http").host("localhost").
+                port(8080).path("/user/activate/").
+                queryParam("activation_code",activationCode)
+                .toUriString();
+
+        context.setVariable("uri", uri);
         return templateEngine.process("/email/authentication-email.html", context);
 
     }
