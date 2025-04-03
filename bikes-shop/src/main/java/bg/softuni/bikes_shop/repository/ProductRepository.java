@@ -26,12 +26,14 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query(value = "SELECT * FROM shop.products WHERE  composite_name IS NOT NULL"
             , nativeQuery = true)
     Page<ProductEntity> findAllProductsWithCompositeNameNotNull(Pageable pageable);
-        List<ProductEntity> findAllByCompositeNameNull();
+
+    List<ProductEntity> findAllByCompositeNameNull();
+
     Page<ProductEntity> findByCategory(Pageable pageable, String name);
 
     Optional<ProductEntity> findByCompositeName(String compositeName);
 
-    Optional<ProductEntity> findByName(String name);
+//    Optional<ProductEntity> findByName(String name);
 
     @Query(value="SELECT *  FROM shop.products WHERE MATCH (category, name, description) against( ? ) AND composite_name IS NOT NULL ",
             nativeQuery = true)

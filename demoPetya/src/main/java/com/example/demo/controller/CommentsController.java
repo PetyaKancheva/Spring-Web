@@ -32,11 +32,12 @@ public class CommentsController {
     @GetMapping("/comments")
     public String comments( @RequestParam(defaultValue ="3") Integer s,
                             @RequestParam(defaultValue = "0") Integer p,
-                            @RequestParam (defaultValue ="title: asc") String string,
+                            @RequestParam (defaultValue ="title: asc") String o,
                                                        Model model){
-        Object[] arr= Arrays.stream(string.split(": ")).toArray();
+        String parameter=o.split(": ")[0];
+       String direction=o.split(": ")[1];
 
-      Sort.Order newOrder = new Sort.Order(Sort.Direction.fromString((String) arr[1]),(String) arr[0]);
+      Sort.Order newOrder = new Sort.Order(Sort.Direction.fromString(direction),parameter);
 //      Sort.Order newOrder = new Sort.Order(Sort.Direction.fromString("asc"),"title");
 
 //?s=3&p=0&string=id:%20desc

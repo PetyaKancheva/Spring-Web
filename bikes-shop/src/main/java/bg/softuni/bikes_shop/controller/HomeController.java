@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -46,15 +47,23 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    private String allProducts(@RequestParam(defaultValue = "0") Integer page,
-                               @RequestParam(defaultValue ="3") Integer size,
-                               @RequestParam (defaultValue ="name")String sort,
+    private String allProducts( @RequestParam(defaultValue ="3") Integer s,
+                                @RequestParam(defaultValue = "0") Integer p,
+                                @RequestParam (defaultValue ="name: asc")String o,
                                Model model) {
-        // TODO implement dropdown for sorting
 
-        model.addAttribute("products",  productService.getProductsPageable(PageRequest.of(page,size, Sort.by(sort))));
+
+
+           String parameter=o.split(": ")[0];
+           String direction=o.split(": ")[1];
+// todo move to sevice
+
+        Sort.Order newOrder = new Sort.Order(Sort.Direction.fromString(direction),parameter);
+        model.addAttribute("products",
+                productService.getProductsPageable(PageRequest.of(p,s,Sort.by(newOrder))));
 
         //TODO get currency list from currency service
+
         return "index";
     }
 
@@ -77,6 +86,7 @@ public class HomeController {
     @PostMapping("/search-result")
        private String search(Model model, String productToSearch, RedirectAttributes rAtt){
       Page<ProductDTO> resultList= productService.searchForProducts(productToSearch,Pageable.unpaged());
+
 
         if(resultList.isEmpty() ){
             rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,String.format(ERROR_KEYWORD_NOT_FOUND_MSG,productToSearch));
