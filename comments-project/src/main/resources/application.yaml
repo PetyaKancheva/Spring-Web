@@ -24,6 +24,7 @@ logging:
         type:
           descriptor: DEBUG
       nodeValue: WARN
+      springframework.web: DEBUG
     blog: WARN
 server:
   port: 6363

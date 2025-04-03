@@ -1,14 +1,17 @@
 package bg.softuni.comments_project.service;
 
+import bg.softuni.comments_project.model.CommentDTO;
 import bg.softuni.comments_project.model.CommentEntity;
+import bg.softuni.comments_project.model.NewCommentDTO;
 
 import java.util.List;
 
 public interface CommentService {
 
-    List<CommentEntity> getAll();
+    List<CommentDTO> getAll();
 
-    CommentEntity getById(Long i);
+    CommentDTO getById(String id);
 
 
+    NewCommentDTO addNewComment(NewCommentDTO newCommentDTO);
 }

@@ -1,5 +1,7 @@
 package bg.softuni.comments_project.model;
 
-public record ErrorClass(String url,String ex ) {
+import jakarta.servlet.http.HttpServletRequest;
+
+public record ErrorClass( String ex ) {
 
 }
