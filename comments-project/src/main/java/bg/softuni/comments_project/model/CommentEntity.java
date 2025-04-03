@@ -20,31 +20,35 @@ public class CommentEntity {
         return id;
     }
 
-    public void setId(Long id) {
+    public CommentEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public CommentEntity setUser(UserEntity user) {
         this.user = user;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public CommentEntity setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public CommentEntity setBody(String body) {
         this.body = body;
+        return this;
     }
 }

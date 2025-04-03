@@ -13,5 +13,7 @@ public interface CommentService {
     CommentDTO getById(String id);
 
 
-    NewCommentDTO addNewComment(NewCommentDTO newCommentDTO);
+    CommentEntity addNewComment(NewCommentDTO newCommentDTO);
+
+    void deleteComment(String id);
 }
