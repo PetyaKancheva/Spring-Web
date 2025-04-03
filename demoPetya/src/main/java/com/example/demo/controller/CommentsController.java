@@ -4,6 +4,7 @@ package com.example.demo.controller;
 import com.example.demo.model.CommentEntity;
 import com.example.demo.repo.CommentsRepository;
 import com.example.demo.service.CommentService;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,21 +30,25 @@ public class CommentsController {
         this.commentsRepository = commentsRepository;
     }
     @GetMapping("/comments")
-    public String comments( Model model ,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,@RequestParam("sort") Optional<Integer>n){
+    public String comments( @RequestParam(defaultValue ="3") Integer s,
+                            @RequestParam(defaultValue = "0") Integer p,
+                            @RequestParam (defaultValue ="title: asc") String string,
+                                                       Model model){
+        Object[] arr= Arrays.stream(string.split(": ")).toArray();
 
-            int currentPage = page.orElse(0);
-            int pageSize = size.orElse(3);
-            int sort=n.orElse(1);
-            String pageSort="";
-        if(sort == 1){
-            pageSort="id";
-        }else if(sort==2) {
-            pageSort="title";
-        }
+      Sort.Order newOrder = new Sort.Order(Sort.Direction.fromString((String) arr[1]),(String) arr[0]);
+//      Sort.Order newOrder = new Sort.Order(Sort.Direction.fromString("asc"),"title");
+
+//?s=3&p=0&string=id:%20desc
+
+       Page<CommentEntity> commentPage=  commentsRepository.findAll(PageRequest.of(p,s,Sort.by(newOrder)));
+        System.out.println("page - " +commentPage.getTotalPages());
+        System.out.println("size - " +commentPage.getSize());
+
+        System.out.println("property is: " + commentPage.getSort());
 
 
 
-       Page<CommentEntity> commentPage=  commentsRepository.findAll(PageRequest.of(currentPage,pageSize, Sort.by(pageSort)));
 
         model.addAttribute("comments",commentPage);
 

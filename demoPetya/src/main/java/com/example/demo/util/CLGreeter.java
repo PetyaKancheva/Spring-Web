@@ -17,14 +17,6 @@ public class CLGreeter implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("running");
 
-        String activationCode="hidddencode";
-
-     String uri = UriComponentsBuilder.newInstance()
-             .scheme("http").host("localhost").port(8080).path("/user/") .queryParam("activate",activationCode)
-
-           .toUriString();
-
-        System.out.println(uri);
 
 
 //        queryParam("activate",activationCode)
@@ -55,6 +47,17 @@ public class CLGreeter implements CommandLineRunner {
 //      CommentDTO oneComment= restTemplate.getForObject(CommentsURL, CommentDTO.class);
 //
 //        System.out.println(oneComment);
+
+
+//
+//        String activationCode="hidddencode";
+//
+//     String uri = UriComponentsBuilder.newInstance()
+//             .scheme("http").host("localhost").port(8080).path("/user/") .queryParam("activate",activationCode)
+//
+//           .toUriString();
+
+//        System.out.println(uri);
 
     }
 
