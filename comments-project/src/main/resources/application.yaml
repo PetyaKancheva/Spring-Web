@@ -17,24 +17,12 @@ spring:
     init:
       mode: never
 
-
-  thymeleaf: # Thymeleaf
-    cache: false
-    mode: HTML
-    encoding: UTF-8
-    prefix: file:src/main/resources/templates/
-    resources: # Static resources
-      static-locations: file:src/main/resources/static/
-      cache:
-        period: 0
-
 logging:
   level:
     org:
       hibernate:
         type:
           descriptor: DEBUG
-        SQL: DEBUG
       nodeValue: WARN
     blog: WARN
 server:

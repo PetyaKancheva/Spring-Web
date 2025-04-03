@@ -26,7 +26,6 @@ import java.util.List;
 public class HomeController {
     private final static String ERROR_KEYWORD_NOT_FOUND_MSG =
             "No results found for %s !";
-    private final static String KEYWORD_FOUND_MSG ="Found %d results for %s !";
     private final static String ATTRIBUTE_MSG_NAME = "message";
 
     private final ProductService productService;
@@ -37,30 +36,25 @@ public class HomeController {
         this.productService = productService;
         this.currentCurrency = currentCurrency;
     }
+
     @ModelAttribute("categories")
-    public List<String>categoriesList(){
+    public List<String> categoriesList() {
         return productService.getDistinctCategories();
     }
+
     @ModelAttribute("listCurrencies")
     public List<String> currencyList() {
         return CURRENCY_LIST;
     }
 
     @GetMapping("/")
-    private String allProducts( @RequestParam(defaultValue ="3") Integer s,
-                                @RequestParam(defaultValue = "0") Integer p,
-                                @RequestParam (defaultValue ="name: asc")String o,
+    private String allProducts(@RequestParam(defaultValue = "3") Integer s,
+                               @RequestParam(defaultValue = "0") Integer p,
+                               @RequestParam(defaultValue = "name: asc") String o,
                                Model model) {
 
 
-
-           String parameter=o.split(": ")[0];
-           String direction=o.split(": ")[1];
-// todo move to sevice
-
-        Sort.Order newOrder = new Sort.Order(Sort.Direction.fromString(direction),parameter);
-        model.addAttribute("products",
-                productService.getProductsPageable(PageRequest.of(p,s,Sort.by(newOrder))));
+        model.addAttribute("products", productService.getProducts(s, p, o));
 
         //TODO get currency list from currency service
 
@@ -84,21 +78,18 @@ public class HomeController {
 
 
     @PostMapping("/search-result")
-       private String search(Model model, String productToSearch, RedirectAttributes rAtt){
-      Page<ProductDTO> resultList= productService.searchForProducts(productToSearch,Pageable.unpaged());
+    private String search(Model model, String productToSearch, RedirectAttributes rAtt) {
+        Page<ProductDTO> resultList = productService.searchForProducts(productToSearch);
 
-
-        if(resultList.isEmpty() ){
-            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,String.format(ERROR_KEYWORD_NOT_FOUND_MSG,productToSearch));
-            return "redirect:/";
-        }else{
-            //TODO check if it works
-            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,String.format(KEYWORD_FOUND_MSG,resultList.getSize(),productToSearch));
-            model.addAttribute("products",resultList );
+        if (resultList.isEmpty()) {
+            rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, String.format(ERROR_KEYWORD_NOT_FOUND_MSG, productToSearch));
             return "redirect:/";
         }
+        model.addAttribute("products", resultList);
+        return "index";
 
-        }
+
+    }
 
 //    private String post(CurrencyExchangeDTO ceDTO,RedirectAttributes rAtt){
 //        rAtt.addFlashAttribute("currencyDTO",ceDTO);

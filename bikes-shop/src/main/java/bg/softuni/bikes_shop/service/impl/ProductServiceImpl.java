@@ -10,7 +10,10 @@ import bg.softuni.bikes_shop.service.ProductService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -32,7 +35,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDTO> getProductsPageable(Pageable pageable) {
+    public Page<ProductDTO> getProducts(Integer size,Integer page, String sort) {
+        String parameter=sort.split(": ")[0];
+        String direction=sort.split(": ")[1];
+
+        Sort.Order order = new Sort.Order(Sort.Direction.fromString(direction),parameter);
+        Pageable pageable =PageRequest.of(page,size,Sort.by(order));
         return productRepository.findAllProductsWithCompositeNameNotNull(pageable)
                 .map(ProductServiceImpl::mapToDTO);
     }
@@ -60,8 +68,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDTO> searchForProducts(String productToSearch,Pageable pageable) {
-        return productRepository.findAllByKeyword(productToSearch,pageable)
+    public Page<ProductDTO> searchForProducts(String productToSearch) {
+
+        return productRepository.findAllByKeyword(productToSearch,Pageable.unpaged())
                 .map(ProductServiceImpl::mapToDTO);
     }
 

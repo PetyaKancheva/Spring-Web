@@ -21,7 +21,7 @@ public class CategoryController {
 
 
     @GetMapping("/{category}")
-    private String category(@PathVariable("category") String category, Model model, @PageableDefault(size = 3, sort = "id") Pageable pageable) {
+    private String category(@PathVariable("category") String category, Model model, @PageableDefault(size = 9, sort = "name") Pageable pageable) {
         List<String> categories = productService.getDistinctCategories();
 
         if (!categories.contains(category)) {

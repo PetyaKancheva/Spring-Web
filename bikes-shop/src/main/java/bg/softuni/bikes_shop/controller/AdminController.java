@@ -39,8 +39,6 @@ public class AdminController {
             model.addAttribute("adminUpdateDTO",AdminUpdateDTO.empty());
         }
 
-
-
         return "admin-profile";
     }
 

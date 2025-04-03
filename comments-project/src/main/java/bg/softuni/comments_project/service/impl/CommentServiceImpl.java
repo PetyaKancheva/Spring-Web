@@ -1,13 +1,12 @@
 package bg.softuni.comments_project.service.impl;
 
-import bg.softuni.comments_project.model.CommentDTO;
+import bg.softuni.comments_project.exception.CommentNotFoundException;
 import bg.softuni.comments_project.model.CommentEntity;
 import bg.softuni.comments_project.repo.CommentRepository;
 import bg.softuni.comments_project.service.CommentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -18,20 +17,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDTO> getAll() {
-        return commentRepository.findAll().stream().map(CommentServiceImpl::map).toList();
+    public List<CommentEntity> getAll() {
+        return commentRepository.findAll();
     }
 
     @Override
-    public Optional<CommentEntity> findById(Long i) {
-        return commentRepository.findById(i);
+    public CommentEntity getById(Long id) {
+
+        return commentRepository.findById(id).orElseThrow(()-> new CommentNotFoundException("Comment with id:" +id +" not found!"));
     }
 
-    private static CommentDTO map(CommentEntity commentEntity){
-        CommentDTO commentDTO= new CommentDTO();
-        commentDTO.setBody(commentEntity.getBody());
-        commentDTO.setId(commentEntity.getId());
-        commentDTO.setTitle(commentEntity.getTitle());
-        return commentDTO;
-    }
+
 }
