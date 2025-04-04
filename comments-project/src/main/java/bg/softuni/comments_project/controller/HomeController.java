@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-// three endpoints, get post, and delete
+
 public class HomeController {
     private final CommentService commentService;
 
@@ -20,8 +20,7 @@ public class HomeController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Object> getAll(){
-
+    public ResponseEntity<List<CommentDTO>> getAll(){
 
         return new ResponseEntity<>(commentService.getAll(), HttpStatus.OK);
     }
@@ -31,10 +30,9 @@ public class HomeController {
 
         return  new  ResponseEntity<>(commentService.getById(id),HttpStatus.OK);
     }
-    @PostMapping("/add_comment/")
-    public void addComment(@RequestBody NewCommentDTO newCommentDTO){
-       commentService.addNewComment(newCommentDTO);
-
+       @PostMapping("/add_comment")
+     public CommentDTO addComment(@RequestBody NewCommentDTO newCommentDTO){
+       return commentService.addNewComment(newCommentDTO);
     }
 
     @DeleteMapping("/delete_comment/{id}")

@@ -14,13 +14,16 @@ public interface UserService {
     List<ShortUserDTO> getAllByEmailFirsOrLastName(String searchWord);
 
     AdminUpdateDTO getAdminDTO(String email);
-    UserMainUpdateDTO  getUserMainUpdateDTO(String email);
 
-    void updateByUser(UserUpdateDTO userUpdateDTO, String  email);
-    void updateByAdmin(AdminUpdateDTO adminUpdateDTO,String email);
+    UserMainUpdateDTO getUserMainUpdateDTO(String email);
+
+    void updateByUser(UserUpdateDTO userUpdateDTO, String email);
+
+    void updateByAdmin(AdminUpdateDTO adminUpdateDTO, String email);
 
     boolean isUniqueEmail(String email);
-    boolean isPasswordCorrect(String email,String password);
+
+    boolean isPasswordCorrect(String email, String password);
 
 
 }

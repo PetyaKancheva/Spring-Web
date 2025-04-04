@@ -36,11 +36,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentEntity addNewComment(NewCommentDTO newCommentDTO) {
+    public CommentDTO addNewComment(NewCommentDTO newCommentDTO) {
 
         UserEntity user= userService.findByName(newCommentDTO.user_name());
+       CommentEntity comment= commentRepository.save( mapToEntity(newCommentDTO,user));
 
-        return commentRepository.save( mapToEntity(newCommentDTO,user));
+        return mapToDTO(comment);
     }
 
     @Override

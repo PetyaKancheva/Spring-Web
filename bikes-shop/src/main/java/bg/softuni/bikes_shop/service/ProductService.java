@@ -11,14 +11,19 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    Page<ProductDTO> getProducts(Integer size,Integer page, String sort);
+    Page<ProductDTO> getProducts(Integer size, Integer page, String sort);
 
     Optional<ProductDTO> getSingleProduct(String compositeName);
+
     void addProduct(ProductAddDTO productAddDTO);
+
     List<String> getDistinctCategories();
+
     Page<ProductDTO> getProductsFromCategoryPageable(Pageable pageable, String category);
+
     void setCompositeName(ProductEntity productEntity);
+
     void addCompositeName(ProductAdditionEvent event);
 
-    Page<ProductDTO>  searchForProducts(String productToSearch);
+    Page<ProductDTO> searchForProducts(String productToSearch);
 }

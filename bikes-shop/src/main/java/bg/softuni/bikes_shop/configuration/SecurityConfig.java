@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableMethodSecurity
@@ -63,6 +64,9 @@ public class SecurityConfig {
                         .rememberMeCookieName("remembermecookie")
                         .tokenValiditySeconds(604800000)// one week in ms
 
+        ).csrf(
+                csrf -> csrf
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         );
 
         return httpSecurity.build();

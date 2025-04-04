@@ -58,3 +58,10 @@ mail:
   port: 1025
   username: ${MAIL_USER:admin}
   password: ${MAIL_PASSWORD:password}
+
+comments-server:
+  schema: http
+  host: localhost
+  port: 6363
+  path: /
+  enabled: true

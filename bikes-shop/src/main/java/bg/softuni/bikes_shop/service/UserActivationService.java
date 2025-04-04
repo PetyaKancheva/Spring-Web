@@ -8,7 +8,8 @@ public interface UserActivationService {
 
     void cleanUpObsoleteActivationLinks();
 
-    boolean userActivate( String userActivationCode);
+    boolean userActivate(String userActivationCode);
+
     String createActivationCode(String userEmail);
 
 }

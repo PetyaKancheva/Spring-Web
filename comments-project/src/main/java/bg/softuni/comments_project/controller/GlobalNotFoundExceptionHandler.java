@@ -23,7 +23,7 @@ public class GlobalNotFoundExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class, NumberFormatException.class})
     public ErrorClass onErrorBadRequest(Exception ex) {
-        return new ErrorClass( ex.getMessage()+"Custom error message");
+        return new ErrorClass( ex.getMessage()+" at Comments server.");
     }
 //        "timestamp": "2025-04-03T16:26:40.198+00:00",
 //                "status": 405,
