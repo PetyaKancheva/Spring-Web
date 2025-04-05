@@ -30,7 +30,7 @@ public class HomeController {
 
         return  new  ResponseEntity<>(commentService.getById(id),HttpStatus.OK);
     }
-       @PostMapping("/add_comment")
+    @PostMapping("/add_comment")
      public CommentDTO addComment(@RequestBody NewCommentDTO newCommentDTO){
        return commentService.addNewComment(newCommentDTO);
     }

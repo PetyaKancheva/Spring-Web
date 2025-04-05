@@ -82,7 +82,7 @@ public class HomeController {
         if (!model.containsAttribute("commentDTO")) {
             model.addAttribute("commentDTO", CommentDTO.empty());
         }
-        return "/static/comments";
+        return "comments";
     }
 
 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+
+<div class="container ">
+    <div class="row text-center ">
+        <div class="col  ">
+            <div class="col-4 mx-auto  m-5 ">
+                <h4>Add your own comment:</h4>
+                <form id="new-comment-form"
+                      th:action="@{/api/comment/add}"
+                      th:method="POST"
+                      th:object="${commentDTO}"
+                      class="  d-flex flex-column ">
+                    <div class="form-floating pt-3 ">
+                        <input id="user_name"
+                               th:name="user_name"
+                               th:errorclass="is-invalid "
+                               type="text"
+                               class="form-control">
+                        <label for="user_name">*Enter your name</label>
+                        <p th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}"
+                           class="invalid-feedback errors alert alert-danger"></p>
+                    </div>
+
+                    <div class="form-floating  pt-3  ">
+                        <input id="title"
+                               th:name="title"
+                               th:errorclass="is-invalid "
+                               type="text"
+                               class="form-control"/>
+                        <label for="title">*Enter title for your comment</label>
+                        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                           class="invalid-feedback errors alert alert-danger"></p>
+                    </div>
+                    <div class="form-floating  pt-3  ">
+                        <input id="body"
+                               th:name="body"
+                               th:errorclass="is-invalid "
+                               type="text"
+                               class="form-control"/>
+                        <label for="body">*Share your thoughts</label>
+                        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+                           class="invalid-feedback errors alert alert-danger"></p>
+                    </div>
+
+                    <div class="button-holder p-3 d-flex">
+                        <button id="add-comment-button" class="btn btn-danger btn mx-auto">Add comment</button>
+                    </div>
+                </form>
+
+                <div class="input-group input-group-sm mb-3" id="single-comment-container">
+                    <span class="input-group-text">ID:</span>
+                    <input type="number" class="form-control" id='single-comment-input'>
+                    <button id='single-comment-button' class='btn btn-danger'>Get</button>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">ID:</span>
+                    <input type="number" class="form-control" id='delete-comment-input'>
+                    <button id='delete-comment-button' class='btn btn-danger'>Delete</button>
+                    <p  id='delete-comment-error'class="invalid-feedback errors alert alert-danger"></p>
+                </div>
+
+
+            </div>
+            <div class='button-holder mt-5'>
+                <button id='get-all-button' class='btn btn-danger'>View all</button>
+            </div>
+            <div class='data-container mt-5'></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
+
+<script>
+
+    $('#get-all-button').click(() => {
+        fetch('/api/comments/fetch') // Fetch the data (GET request)
+            .then((response) => response.json()) // Extract the JSON from the Response
+            .then((json) => json.forEach((c, comments) => {
+                // Render the JSON data to the HTML
+
+                if (comments % 3 === 0) {
+                    $('.data-container').append('<div class="row d-flex justify-content-around mt-4">');
+                }
+                let commentCard =
+
+                    '<div class="card m-3" style="width: 18rem">' +
+                    '<div className="card-body">' +
+                    '<h5 class="card-title">' + c.title + '</h5>' +
+                    '<h6 class="card-subtitle mb-2 text-body-secondary">ID: ' + c.id + ' By: ' + c.user_name + '</h6>' +
+                    '<p class="card-text ">' + c.body + '</p>'
+                    + '</div>' + '</div>' + '</div>';
+                $('.data-container .row:last-child').append(commentCard);
+            }));
+    });
+
+    $('#add-comment-button').click(() => $('#new-comment-form').submit());
+    $('#single-comment-button').click(() => {
+        let singleCommentID = $('#single-comment-input').val();
+
+        fetch(`/api/comment/${singleCommentID}`)
+            .then((response) => response.json())
+            .then((c) => {
+                let commentCard =
+                    // '<div class="row d-flex">' +
+                    '<div class="card m-3" style="width: 18rem">' +
+                    '<div className="card-body">' +
+                    '<h5 class="card-title">' + c.title + '</h5>' +
+                    '<h6 class="card-subtitle mb-2 text-body-secondary">ID: ' + c.id + ' By: ' + c.user_name + '</h6>' +
+                    '<p class="card-text ">' + c.body + '</p>'
+                    + '</div>' + '</div>' + '</div>';
+                $('#single-comment-container').append(commentCard);
+            })
+            .catch(error =>$('#delete-comment-error').append(error))   });
+    //error handling missing
+
+    $('#delete-comment-button').click(() => {
+        let deleteID = $('#delete-comment-input').val();
+
+        fetch(`/api/comment/delete/${deleteID}`)
+            .then((response) => response.json())
+            .then((json) => {$('#delete-comment-error').append(json)})
+            .catch(error =>$('#delete-comment-error').append(error));
+    });
+    //error handling missing
+
+
+</script>
+</body>
+
+</html>
