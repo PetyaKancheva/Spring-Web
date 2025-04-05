@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +26,12 @@ private final CommentService commentService;
         return restTemplate.getForObject(commentService.getURLForOneComment(id), CommentDTO.class, requestPram);
     }
 
-    @GetMapping("/comments")
-    public ResponseEntity<Object[]> getAll() {
+//    @GetMapping("/comments")
+//    public ResponseEntity<Object[]> getAll() {
+//
+////        return restTemplate.getForEntity(commentService.getURLForAllComments(), Object[].class);
+//    }
 
-        return restTemplate.getForEntity(commentService.getURLForAllComments(), Object[].class);
-    }
     @GetMapping("/comment/add")
     public CommentDTO getToCommentAdd()  {
         CommentDTO newComment = new CommentDTO(
@@ -38,14 +40,18 @@ private final CommentService commentService;
         return   restTemplate.postForObject(commentService.getURLForCommentAddition(),newComment, CommentDTO.class);
     }
 
-//    @PostMapping("/comment/add")
-//    public CommentDTO post() { // should be getting it from somewhere
-/// / CSRF token
-///
-////        url, request, responseType
-//// not working
-//      return   restTemplate.postForObject(REST_URL_ADD_NEW,newComment, CommentDTO.class);
-//    }
+    @GetMapping(value = "/api/comments/fetch", produces = "application/json")
+    public Object fetchAllComments() {
+
+        return restTemplate.getForEntity(commentService.getURLForAllComments(), Object[].class);
+
+    }
+
+    @PostMapping("/api/comment/add")
+    public CommentDTO post(CommentDTO commentDTO) { // should be getting it from somewhere
+
+      return   restTemplate.postForObject(commentService.getURLForCommentAddition(),commentDTO, CommentDTO.class);
+    }
 
     @GetMapping("/comment/delete/{id}")
     public void delete(@PathVariable("id") Long id) {

@@ -1,7 +1,9 @@
 package bg.softuni.bikes_shop.controller;
 
 
+import bg.softuni.bikes_shop.model.dto.CommentDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
+import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentCurrency;
 
@@ -74,6 +76,13 @@ public class HomeController {
     @GetMapping("/contacts")
     private String contacts() {
         return "/static/contacts";
+    }
+    @GetMapping("/api/comments")
+    private String comments(Model model) {
+        if (!model.containsAttribute("commentDTO")) {
+            model.addAttribute("commentDTO", CommentDTO.empty());
+        }
+        return "/static/comments";
     }
 
 

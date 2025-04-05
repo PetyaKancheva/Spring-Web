@@ -2,27 +2,103 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
 </head>
-<body >
-<div>    <nav th:replace="~{fragments/navigation}"></nav></div>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
 
 <div class="container ">
     <div class="row text-center contacts">
         <div class="col  ">
-           <h6>Comments:</h6>
-            <div class="border border-primary m-2 col-6" th:each="comment:${allCommentDTO}" >
-                <div th:text="${comment.title}"></div>
-                <div th:text="${comment.body}"></div>
+            <h4>Comments:</h4>
+            <div class="col-4 mx-auto  m-5 ">
+                <h4>Add your own comment:</h4>
+                <form id="new-comment-form"
+                      th:action="@{/api/comment/add}"
+                      th:method="POST"
+                      th:object="${commentDTO}"
+                      class="  d-flex flex-column ">
+                    <div class="form-floating pt-3 ">
+                        <input id="user_name"
+                               th:name="user_name"
+                               th:errorclass="is-invalid "
+                               type="text"
+                               class="form-control">
+                        <label for="user_name">*Enter your name</label>
+                        <p th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}"
+                           class="invalid-feedback errors alert alert-danger"></p>
+                    </div>
+
+                    <div class="form-floating  pt-3  ">
+                        <input id="title"
+                               th:name="title"
+                               th:errorclass="is-invalid "
+                               type="text"
+                               class="form-control"/>
+                        <label for="title">*Enter title for your comment</label>
+                        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                           class="invalid-feedback errors alert alert-danger"></p>
+                    </div>
+                    <div class="form-floating  pt-3  ">
+                        <input id="body"
+                               th:name="body"
+                               th:errorclass="is-invalid "
+                               type="text"
+                               class="form-control"/>
+                        <label for="body">*Share your thoughts</label>
+                        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+                           class="invalid-feedback errors alert alert-danger"></p>
+                    </div>
+
+                    <div class="button-holder pt-3 d-flex">
+                        <button id="add-comment-button" class="btn btn-danger btn mx-auto">Add comment</button>
+                    </div>
+                </form>
+
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class='data-container mt-5'></div>
+                <div class='button-holder mt-5'>
+                    <button id='fetch-button' class='btn btn-info'>View all comments</button>
+                </div>
+
+
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <div>
+        <footer th:replace="~{fragments/footer}"></footer>
+    </div>
+    <script>
+        // jQuery Event handlers
 
-<div>
-    <footer th:replace="~{fragments/footer}"></footer>
-</div>
+        $('#fetch-button').click(() => {
+            fetch('http://localhost:8080/api/comments/fetch') // Fetch the data (GET request)
+                .then((response) => response.json()) // Extract the JSON from the Response
+                .then((json) => json.forEach((x, y) => { // Render the JSON data to the HTML
+                    if (y % 5 === 0) {
+                        $('.data-container').append('<div class="row d-flex justify-content-around mt-4">');
+                    }
+                    let divColumn =
+                        '<div class="col-md-3">' +
+                        '<p class="text-start font-weight-bold">Comment id: ' + x.id + '</p>' +
+                        '<p class="text-start">User: ' + x.user_name + '</p>' +
+                        '<p class="text-start">Title: ' + x.title + '</p>' +
+                        '<p class="text-start">Body: ' + x.body + '</p>' +
+                        '</div>';
+                    $('.data-container .row:last-child').append(divColumn);
+                }));
+        });
+        // Fetch and render the data
+        $('#clear-button').click(() => $('.data-container').empty()); // Clear the data
+        $('#add-comment-button').click(() => $('#new-comment-form').submit());
+
+    </script>
 </body>
 
 </html>
