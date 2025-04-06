@@ -24,7 +24,7 @@
                                type="text"
                                class="form-control">
                         <label for="user_name">*Enter your name</label>
-                        <p th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}"
+                        <p id="errorMsg"
                            class="invalid-feedback errors alert alert-danger"></p>
                     </div>
 
@@ -59,11 +59,12 @@
                     <input type="number" class="form-control" id='single-comment-input'>
                     <button id='single-comment-button' class='btn btn-danger'>Get</button>
                 </div>
-                <div class="input-group input-group-sm mb-3">
+
+
+                <div class="input-group input-group-sm mb-3" id="delete-comment-container">
                     <span class="input-group-text">ID:</span>
                     <input type="number" class="form-control" id='delete-comment-input'>
                     <button id='delete-comment-button' class='btn btn-danger'>Delete</button>
-                    <p  id='delete-comment-error'class="invalid-feedback errors alert alert-danger"></p>
                 </div>
 
 
@@ -82,61 +83,8 @@
     <footer th:replace="~{fragments/footer}"></footer>
 </div>
 
-<script>
+<script type="text/javascript" th:src="@{/js/comments.js}"></script>
 
-    $('#get-all-button').click(() => {
-        fetch('/api/comments/fetch') // Fetch the data (GET request)
-            .then((response) => response.json()) // Extract the JSON from the Response
-            .then((json) => json.forEach((c, comments) => {
-                // Render the JSON data to the HTML
-
-                if (comments % 3 === 0) {
-                    $('.data-container').append('<div class="row d-flex justify-content-around mt-4">');
-                }
-                let commentCard =
-
-                    '<div class="card m-3" style="width: 18rem">' +
-                    '<div className="card-body">' +
-                    '<h5 class="card-title">' + c.title + '</h5>' +
-                    '<h6 class="card-subtitle mb-2 text-body-secondary">ID: ' + c.id + ' By: ' + c.user_name + '</h6>' +
-                    '<p class="card-text ">' + c.body + '</p>'
-                    + '</div>' + '</div>' + '</div>';
-                $('.data-container .row:last-child').append(commentCard);
-            }));
-    });
-
-    $('#add-comment-button').click(() => $('#new-comment-form').submit());
-    $('#single-comment-button').click(() => {
-        let singleCommentID = $('#single-comment-input').val();
-
-        fetch(`/api/comment/${singleCommentID}`)
-            .then((response) => response.json())
-            .then((c) => {
-                let commentCard =
-                    // '<div class="row d-flex">' +
-                    '<div class="card m-3" style="width: 18rem">' +
-                    '<div className="card-body">' +
-                    '<h5 class="card-title">' + c.title + '</h5>' +
-                    '<h6 class="card-subtitle mb-2 text-body-secondary">ID: ' + c.id + ' By: ' + c.user_name + '</h6>' +
-                    '<p class="card-text ">' + c.body + '</p>'
-                    + '</div>' + '</div>' + '</div>';
-                $('#single-comment-container').append(commentCard);
-            })
-            .catch(error =>$('#delete-comment-error').append(error))   });
-    //error handling missing
-
-    $('#delete-comment-button').click(() => {
-        let deleteID = $('#delete-comment-input').val();
-
-        fetch(`/api/comment/delete/${deleteID}`)
-            .then((response) => response.json())
-            .then((json) => {$('#delete-comment-error').append(json)})
-            .catch(error =>$('#delete-comment-error').append(error));
-    });
-    //error handling missing
-
-
-</script>
 </body>
 
 </html>

@@ -23,17 +23,20 @@
 
 <!--            Currency part start -->
             <div class="row-ms-auto">
-<!--                <form th:action="@{/}"-->
-<!--                      th:method="POST"-->
-<!--                      th:object(="${currencyDTO}" id="formSubmit"-->
-<!--                >-->
-                <select  >
+                <form th:action="@{/currency}"
+                      th:method="POST"
+
+                     id="form-currency"
+                >
+                <select  th:name= "name">
                     <option th:each="curr:${listCurrencies}"
                             th:value="${curr}"
-                            th:text="${curr}">
+                            th:text="${curr}"
+                            th:selected="${curr}== ${@currentCurrency.getName()}">
                     </option>
                 </select>
-<!--                </form>-->
+<!--                    <input type="submit" value="curr submit btn">-->
+                </form>
              </div>
 
             <!--            Currency part End -->
@@ -62,7 +65,6 @@
                         </li>
                         <form th:method="POST"  sec:authorize="isAuthenticated()" th:action="@{/logout}" >
                             <input type="submit" class="nav-link  text-light" value="Logout" >
-
                         </form>
 
                     </ul>
@@ -100,9 +102,9 @@
 
 <script>
 
-    // document.getElementById("formSubmit").addEventListener("change", ({ target }) =>
-    //
-    //  target.form.submit());
+   $("#form-currency").change(() =>{
+       $("#form-currency").submit()});
+
 </script>
 </body>
 </html>
