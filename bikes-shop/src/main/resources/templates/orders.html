@@ -26,13 +26,13 @@
                     <tr class="border border-dark" th:each="item,i:${order.items}">
                         <td th:text="${i.index+1}"></td>
                         <td th:text="${item.getProductName}"></td>
-                        <td th:text="${#numbers.formatCurrency(item.getPrice*cRate)}"></td>
+                        <td th:text="${#numbers.formatCurrency(item.getPrice*currDTO.rate)}"></td>
                         <td th:text="${item.getQuantity}"></td>
                         </td>
                     </tr>
 
                 </table>
-                    <span class="fst-italic">Total: </span> <th:block class="fst-italic" th:text="${#numbers.formatCurrency(order.totalSum()*cRate)}"></th:block>
+                    <span class="fst-italic">Total: </span> <th:block class="fst-italic" th:text="${#numbers.formatCurrency(order.totalSum()*currDTO.rate)}"></th:block>
 
 
             </div>

@@ -33,9 +33,10 @@ public class OrdersController {
             model.addAttribute("allOrders", orderService.getAllByUser(principal.getName()));
         }
 
-        if (!model.containsAttribute("cRate")) {
-            model.addAttribute("cRate", currencyService.getCurrencyRate(cookie));
+        if (!model.containsAttribute("currDTO")) {
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
         }
+
 
         return "orders";
     }

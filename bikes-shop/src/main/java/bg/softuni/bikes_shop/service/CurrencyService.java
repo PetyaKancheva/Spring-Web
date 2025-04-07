@@ -2,12 +2,15 @@ package bg.softuni.bikes_shop.service;
 
 import bg.softuni.bikes_shop.model.dto.CurrencyExchangeDTO;
 import bg.softuni.bikes_shop.model.dto.MapRatesDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface CurrencyService {
     void add(MapRatesDTO mapRatesDTO);
 
-    CurrencyExchangeDTO convert(CurrencyExchangeDTO currencyExchangeDTO);
-    Double getCurrencyRate(String cookie);
+    void updateLocale(HttpServletRequest request, HttpServletResponse response, String selectedCurrency);
 
-    String getCurrencyName(String cookie);
+    void updateCookie(HttpServletRequest request, HttpServletResponse response, String selectedCurrency);
+
+    CurrencyExchangeDTO getCurrencyDTO(String cookie);
 }

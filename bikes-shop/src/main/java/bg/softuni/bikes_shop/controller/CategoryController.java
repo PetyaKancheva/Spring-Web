@@ -1,11 +1,13 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
+import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +17,12 @@ import java.util.List;
 @Controller
 public class CategoryController {
     private final ProductService productService;
+    private final CurrencyService currencyService;
     private final static List<String> CURRENCY_LIST = List.of("EUR", "BGN", "PLN", "USD");
 
-    public CategoryController(ProductService productService) {
+    public CategoryController(ProductService productService, CurrencyService currencyService) {
         this.productService = productService;
+        this.currencyService = currencyService;
     }
     @ModelAttribute("listCurrencies")
     public List<String> currencyList() {
@@ -26,7 +30,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{category}")
-    private String category(@PathVariable("category") String category, Model model, @PageableDefault(size = 9, sort = "name") Pageable pageable) {
+    private String category(@PathVariable("category") String category, Model model, @PageableDefault(size = 9, sort = "name") Pageable pageable,
+                            @CookieValue(value = "currency", required = false)String cookie) {
         List<String> categories = productService.getDistinctCategories();
 
         if (!categories.contains(category)) {
@@ -35,6 +40,10 @@ public class CategoryController {
         model.addAttribute("products", productService.getProductsFromCategoryPageable(pageable, category));
         model.addAttribute("categories", categories);
         model.addAttribute("currentCategory", category);
+
+        if (!model.containsAttribute("currDTO")) {
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+        }
         return "category";
     }
 

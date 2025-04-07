@@ -43,8 +43,8 @@ public class ProductDetailsController {
         if (!model.containsAttribute("itemDTO")) {
             model.addAttribute("itemDTO", new ItemDTO());
         }
-        if (!model.containsAttribute("cRate")) {
-            model.addAttribute("cRate", currencyService.getCurrencyRate(cookie));
+        if (!model.containsAttribute("currDTO")) {
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
         }
 
         return "product-details";

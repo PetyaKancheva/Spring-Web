@@ -88,7 +88,7 @@
                                 <option th:each="curr:${listCurrencies}"
                                         th:value="${curr}"
                                         th:text="${curr}"
-                                        th:selected="${curr}==${cName}"
+                                        th:selected="${curr}==${currDTO.name}"
                                         class="bg-dark  text-light">
                                 </option>
                             </select>
@@ -112,20 +112,6 @@
         $("#form-currency").submit();
     })  ;
 
-
-    // $("#form-currency").on("change", function() {
-    //         var str = "";
-    //         $("select option:selected").each(function () {
-    //             str += $(this).text() + " is selected";
-    //             $('input[name="selectedCurr"]'). val($(this).text());
-    //
-    //         });
-    //         alert(str)
-    //         alert( $('input[name="selectedCurr"]'). val())
-    //
-    //     })  ;
-    // remember selected
-    // /submit form
 </script>
 </body>
 </html>

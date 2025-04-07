@@ -29,12 +29,11 @@ public class HomeController {
 
     private final ProductService productService;
     private final CurrencyService currencyService;
-    private final LocaleResolver localeResolver;
 
-    public HomeController(ProductService productService, CurrencyService currencyService,LocaleResolver localeResolver) {
+
+    public HomeController(ProductService productService, CurrencyService currencyService) {
         this.productService = productService;
         this.currencyService = currencyService;
-        this.localeResolver = localeResolver;
     }
 
     @ModelAttribute("categories")
@@ -54,14 +53,15 @@ public class HomeController {
                                @RequestParam(defaultValue = "name: asc") String o,
                                Model model,@CookieValue(value = "currency", required = false)String cookie) {
 
+        //TODO if old cookie exists that is not DE
+
         if (!model.containsAttribute("products")) {
             model.addAttribute("products", productService.getProducts(s, p, o));
         }
-
-        if (!model.containsAttribute("cRate")) {
-            model.addAttribute("cRate", currencyService.getCurrencyRate(cookie));
-            model.addAttribute("cName", currencyService.getCurrencyName(cookie));
+        if (!model.containsAttribute("currDTO")) {
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
         }
+
         return "index";
     }
 
@@ -104,40 +104,11 @@ public class HomeController {
     }
 @PostMapping("/currency")
 private String changeCurrency(HttpServletRequest request, HttpServletResponse response,String selectedCurrency ){
-    // habndle locale
-    Locale newLocale = null;
-    switch (selectedCurrency) {
-        case "BGN" -> newLocale = new Locale("bg", "BG");
-        case "PLN" -> newLocale = new Locale("pl", "PL");
-        case "USD" -> newLocale = new Locale("en", "US");
-        case "EUR" -> newLocale = new Locale("de", "DE");
 
-    }
-    localeResolver.setLocale(request, response, newLocale);
-    // habndle cookie
-    Cookie[] cookies = request.getCookies();
-    //move to service.
-    Cookie currencyCookie = null;
-    if (cookies != null) {
-        if (Arrays.stream(cookies).anyMatch(cookie -> cookie.getName().equals("currency"))) {
-            currencyCookie = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("currency")).findFirst().get();
-            currencyCookie.setValue(selectedCurrency);
-        }
-    }
-    if (currencyCookie == null) {
-        currencyCookie = new Cookie("currency", selectedCurrency);
-        currencyCookie.setHttpOnly(true);
-        currencyCookie.setMaxAge(604800000);
-    }
-
-    response.addCookie(currencyCookie);
-
-
-    System.out.println("new Locale set");
-    System.out.println(selectedCurrency);
+    currencyService.updateLocale(request,response,selectedCurrency);
+    currencyService.updateCookie(request,response,selectedCurrency);
 
     return "redirect:/";
-
 }
 
 

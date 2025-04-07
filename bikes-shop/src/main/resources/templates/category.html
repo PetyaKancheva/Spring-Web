@@ -21,7 +21,7 @@
                                     <img th:src="@{${p.pictureURL}}" alt="image" class="h-100"></div>
                                 <div th:text="${p.name}"></div>
                                 <div><span> Price: </span>
-                                    <th:block th:text="${#numbers.formatCurrency(p.price)}"></th:block>
+                                    <th:block th:text="${#numbers.formatCurrency(p.price*currDTO.rate)}"></th:block>
                                 </div>
                             </div>
                         </a>

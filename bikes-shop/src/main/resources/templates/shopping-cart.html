@@ -30,7 +30,7 @@
                     <tr class="border border-dark" th:each="item,i:${@currentOrder.getItems}">
                         <td th:text="${i.index+1}"></td>
                         <td th:text="${item.getProductName}"></td>
-                        <td th:text="${#numbers.formatCurrency(item.getPrice*cRate)}"></td>
+                        <td th:text="${#numbers.formatCurrency(item.getPrice*currDTO.rate)}"></td>
                         <td th:text="${item.getQuantity}"></td>
                         <td>
                             <form th:action="@{/shopping-cart/delete}"
@@ -44,7 +44,7 @@
 
                 </table>
                 <div class="text-end fw-bold"><span> Total: </span>
-                    <th:block th:text="${@currentOrder.getTotalPrice*cRate}"></th:block>
+                    <th:block th:text="${@currentOrder.getTotalPrice*currDTO.rate}"></th:block>
                 </div>
 
                 <div class="py-2 text-center" th:unless="${@currentOrder.items.isEmpty()}">

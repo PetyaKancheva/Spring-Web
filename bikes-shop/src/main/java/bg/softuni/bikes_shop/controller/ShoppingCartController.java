@@ -32,8 +32,8 @@ public class ShoppingCartController {
     public String cart(Model model, @CookieValue(value = "currency", required = false) String cookie) {
 
         model.addAttribute(currentOrder);
-        if (!model.containsAttribute("cRate")) {
-            model.addAttribute("cRate", currencyService.getCurrencyRate(cookie));
+        if (!model.containsAttribute("currDTO")) {
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
         }
 
         return "shopping-cart";
