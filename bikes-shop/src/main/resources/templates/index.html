@@ -64,11 +64,11 @@
                                         class="h-100"></div>
                                 <div th:text="${product.name}"></div>
                                 <div><span> Price: </span>
-                                    <th:block th:text="${#numbers.formatCurrency(product.price)}">></th:block>
-                                    <th:block th:text="${#numbers.formatCurrency(product.price )}">></th:block>
+                                    <th:block th:text="${#numbers.formatCurrency(product.price*cRate)}">></th:block>
+
                                 </div>
-                            </div>
-                        </a>
+                                </div>
+                            </a>
                     </div>
 
                 </div>

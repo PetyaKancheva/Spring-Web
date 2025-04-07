@@ -3,40 +3,38 @@ package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.model.dto.CommentDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
-import bg.softuni.bikes_shop.model.dto.UserRegisterDTO;
+import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
-import bg.softuni.bikes_shop.util.CurrentCurrency;
-
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
+
 public class HomeController {
     private final static String ERROR_KEYWORD_NOT_FOUND_MSG =
             "No results found for %s !";
     private final static String ATTRIBUTE_MSG_NAME = "message";
+    private final static List<String> CURRENCY_LIST = List.of("EUR", "BGN", "PLN", "USD");
 
     private final ProductService productService;
-    private final static List<String> CURRENCY_LIST = List.of("EUR", "BGN", "PLN", "USD");
-    private final CurrentCurrency currentCurrency;
+    private final CurrencyService currencyService;
+    private final LocaleResolver localeResolver;
 
-    public HomeController(ProductService productService, CurrentCurrency currentCurrency) {
+    public HomeController(ProductService productService, CurrencyService currencyService,LocaleResolver localeResolver) {
         this.productService = productService;
-        this.currentCurrency = currentCurrency;
+        this.currencyService = currencyService;
+        this.localeResolver = localeResolver;
     }
 
     @ModelAttribute("categories")
@@ -49,17 +47,21 @@ public class HomeController {
         return CURRENCY_LIST;
     }
 
+
     @GetMapping("/")
     private String allProducts(@RequestParam(defaultValue = "3") Integer s,
                                @RequestParam(defaultValue = "0") Integer p,
                                @RequestParam(defaultValue = "name: asc") String o,
-                               Model model) {
+                               Model model,@CookieValue(value = "currency", required = false)String cookie) {
 
+        if (!model.containsAttribute("products")) {
+            model.addAttribute("products", productService.getProducts(s, p, o));
+        }
 
-        model.addAttribute("products", productService.getProducts(s, p, o));
-
-        //TODO get currency list from currency service
-
+        if (!model.containsAttribute("cRate")) {
+            model.addAttribute("cRate", currencyService.getCurrencyRate(cookie));
+            model.addAttribute("cName", currencyService.getCurrencyName(cookie));
+        }
         return "index";
     }
 
@@ -77,6 +79,7 @@ public class HomeController {
     private String contacts() {
         return "/static/contacts";
     }
+
     @GetMapping("/api/comments")
     private String comments(Model model) {
         if (!model.containsAttribute("commentDTO")) {
@@ -99,10 +102,44 @@ public class HomeController {
 
 
     }
+@PostMapping("/currency")
+private String changeCurrency(HttpServletRequest request, HttpServletResponse response,String selectedCurrency ){
+    // habndle locale
+    Locale newLocale = null;
+    switch (selectedCurrency) {
+        case "BGN" -> newLocale = new Locale("bg", "BG");
+        case "PLN" -> newLocale = new Locale("pl", "PL");
+        case "USD" -> newLocale = new Locale("en", "US");
+        case "EUR" -> newLocale = new Locale("de", "DE");
 
-//    private String post(CurrencyExchangeDTO ceDTO,RedirectAttributes rAtt){
-//        rAtt.addFlashAttribute("currencyDTO",ceDTO);
-//        // TODO fix currency being passing to model
-//        return "redirect:/";
-//    }
+    }
+    localeResolver.setLocale(request, response, newLocale);
+    // habndle cookie
+    Cookie[] cookies = request.getCookies();
+    //move to service.
+    Cookie currencyCookie = null;
+    if (cookies != null) {
+        if (Arrays.stream(cookies).anyMatch(cookie -> cookie.getName().equals("currency"))) {
+            currencyCookie = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("currency")).findFirst().get();
+            currencyCookie.setValue(selectedCurrency);
+        }
+    }
+    if (currencyCookie == null) {
+        currencyCookie = new Cookie("currency", selectedCurrency);
+        currencyCookie.setHttpOnly(true);
+        currencyCookie.setMaxAge(604800000);
+    }
+
+    response.addCookie(currencyCookie);
+
+
+    System.out.println("new Locale set");
+    System.out.println(selectedCurrency);
+
+    return "redirect:/";
+
+}
+
+
+
 }

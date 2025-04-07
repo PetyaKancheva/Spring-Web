@@ -45,4 +45,5 @@ public class CommentServiceImpl implements CommentService {
                 .append(commentsServerConfigProperties.getPort())
                 .append(commentsServerConfigProperties.getPath()));
     }
+
 }

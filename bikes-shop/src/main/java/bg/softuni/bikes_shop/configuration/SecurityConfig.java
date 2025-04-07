@@ -37,6 +37,8 @@ public class SecurityConfig {
                         .requestMatchers("/services", "/contacts", "/about").permitAll()
                         .requestMatchers("/comment/**", "/comments").permitAll()
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/locale/**").permitAll() // toddo remove
+                        .requestMatchers("/currency").permitAll() // toddo remove
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/search-result").permitAll()
                         .requestMatchers("/user/activate/*").permitAll()
@@ -65,9 +67,6 @@ public class SecurityConfig {
                         .rememberMeCookieName("remembermecookie")
                         .tokenValiditySeconds(604800000)// one week in ms
 
-        ).csrf(
-                csrf -> csrf
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         );
 
         return httpSecurity.build();

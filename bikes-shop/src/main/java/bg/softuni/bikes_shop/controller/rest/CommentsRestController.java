@@ -27,21 +27,6 @@ public class CommentsRestController {
         Map<String, Long> requestPram = Map.of("id", id);
         return restTemplate.getForObject(commentService.getURLForOneComment(id), CommentDTO.class, requestPram);
     }
-
-//    @GetMapping("/comments")
-//    public ResponseEntity<Object[]> getAll() {
-//
-
-    /// /        return restTemplate.getForEntity(commentService.getURLForAllComments(), Object[].class);
-//    }
-//    @GetMapping("/comment/add")
-//    public CommentDTO getToCommentAdd() {
-//        CommentDTO newComment = new CommentDTO(
-//                null, "Petya", "This is my first comment", "This bike is the best!");
-//
-//        return restTemplate.postForObject(commentService.getURLForCommentAddition(), newComment, CommentDTO.class);
-//    }
-
     @GetMapping(value = "/api/comments/fetch", produces = "application/json")
     public Object fetchAllComments() {
         return restTemplate.getForEntity(commentService.getURLForAllComments(), Object[].class);

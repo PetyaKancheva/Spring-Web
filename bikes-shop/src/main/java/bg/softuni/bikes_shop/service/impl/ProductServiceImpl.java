@@ -6,6 +6,7 @@ import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.model.entity.ProductEntity;
 import bg.softuni.bikes_shop.model.events.ProductAdditionEvent;
 import bg.softuni.bikes_shop.repository.ProductRepository;
+import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
@@ -30,7 +31,6 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductServiceImpl(ProductRepository productRepository, ApplicationEventPublisher appEventPublisher) {
         this.productRepository = productRepository;
-
         this.appEventPublisher = appEventPublisher;
     }
 
@@ -102,12 +102,12 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private static ProductDTO mapToDTO(ProductEntity p) {
+    private static ProductDTO mapToDTO(ProductEntity p ) {
         return new ProductDTO(p.getCompositeName(), p.getName(), p.getDescription(), p.getCategory(),
                 doubleValue(p.getPrice()), p.getPictureURL());
     }
 
-    private static ProductEntity mapToEntity(ProductAddDTO productAddDTO) {
+    private static ProductEntity mapToEntity(ProductAddDTO productAddDTO  ) {
         return new ProductEntity()
                 .setName(productAddDTO.name())
                 .setDescription(productAddDTO.description())

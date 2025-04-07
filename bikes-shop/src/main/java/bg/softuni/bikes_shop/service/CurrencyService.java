@@ -7,4 +7,7 @@ public interface CurrencyService {
     void add(MapRatesDTO mapRatesDTO);
 
     CurrencyExchangeDTO convert(CurrencyExchangeDTO currencyExchangeDTO);
+    Double getCurrencyRate(String cookie);
+
+    String getCurrencyName(String cookie);
 }

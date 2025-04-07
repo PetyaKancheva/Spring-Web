@@ -100,7 +100,7 @@
                 <p th:if="${#fields.hasErrors('userMainUpdateDTO.email')}" th:errors="*{userMainUpdateDTO.email}"
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
-            <input type="hidden" th:name="userSelfUpdateDTO.oldEmail" th:value="${currentUser.getEmail()}">
+            <input type="hidden" th:name="userSelfUpdateDTO.oldEmail" th:value= "principal.email">
 
             <div class="form-group py-2">
 
