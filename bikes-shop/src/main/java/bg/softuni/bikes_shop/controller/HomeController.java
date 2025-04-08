@@ -5,19 +5,15 @@ import bg.softuni.bikes_shop.model.dto.CommentDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 
@@ -41,10 +37,7 @@ public class HomeController {
         return productService.getDistinctCategories();
     }
 
-    @ModelAttribute("listCurrencies")
-    public List<String> currencyList() {
-        return CURRENCY_LIST;
-    }
+
 
 
     @GetMapping("/")
@@ -61,6 +54,10 @@ public class HomeController {
         if (!model.containsAttribute("currDTO")) {
             model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
         }
+        if (!model.containsAttribute("listCurrencies")) {
+            model.addAttribute("listCurrencies", CURRENCY_LIST);
+        }
+
 
         return "index";
     }

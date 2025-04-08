@@ -37,14 +37,13 @@ public class SecurityConfig {
                         .requestMatchers("/services", "/contacts", "/about").permitAll()
                         .requestMatchers("/comment/**", "/comments").permitAll()
                         .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/locale/**").permitAll() // toddo remove
-                        .requestMatchers("/currency").permitAll() // toddo remove
+                        .requestMatchers("/currency").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/search-result").permitAll()
                         .requestMatchers("/user/activate/*").permitAll()
                         .requestMatchers("/admin/**").hasRole(UserRoleEnum.ADMIN.toString())
                         .requestMatchers("/user/").authenticated()
-                        .requestMatchers("/product/add/").hasRole(UserRoleEnum.EMPLOYEE.name())
+                        .requestMatchers("/products/add/").hasRole(UserRoleEnum.EMPLOYEE.name())
                         .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
                         .requestMatchers("/{categories}", String.valueOf(productService.getDistinctCategories())).permitAll()
                         .anyRequest().authenticated()

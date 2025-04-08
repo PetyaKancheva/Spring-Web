@@ -15,19 +15,21 @@ public class CurrencyEntity {
     @Column(name="rate",nullable = false)
     BigDecimal rate;
 
-    public  String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName( String name) {
+    public CurrencyEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public  BigDecimal getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public void setRate( BigDecimal rate) {
+    public CurrencyEntity setRate(BigDecimal rate) {
         this.rate = rate;
+        return this;
     }
 }

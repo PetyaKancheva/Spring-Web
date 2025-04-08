@@ -10,7 +10,9 @@ import bg.softuni.bikes_shop.service.UserRoleService;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
 
+import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -62,9 +64,6 @@ class UserRegisterControllerTestIT {
         greenMail = new GreenMail(new ServerSetup(port,host,"smtp"));
         greenMail.start();
         greenMail.setUser(username,password);
-
-
-
     }
     @AfterEach
     void tearDown(){
@@ -81,12 +80,22 @@ class UserRegisterControllerTestIT {
                 .param("lastName","Ivanov")
                 .param("address", "Sofia")
                 .param("country","Bulgaria")
-                .param("password","testPassword")
-                .param("confirmPassword","testPassword")
+                .param("password","test1234")
+                .param("confirmPassword","test1234")
                 .with(csrf())
         ).andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/register"));
 
+
+        greenMail.waitForIncomingEmail(1);
+        MimeMessage[] receivedMessages = greenMail.getReceivedMessages();
+
+        Assertions.assertEquals(1, receivedMessages.length);
+        MimeMessage registrationMessage = receivedMessages[0];
+
+        Assertions.assertTrue(registrationMessage.getContent().toString().contains("Ivan"));
+        Assertions.assertEquals(1, registrationMessage.getAllRecipients().length);
+        Assertions.assertEquals("ivan@mail.com", registrationMessage.getAllRecipients()[0].toString());
 
 
 

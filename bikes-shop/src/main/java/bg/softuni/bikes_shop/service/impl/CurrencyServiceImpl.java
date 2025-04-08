@@ -71,6 +71,7 @@ public class CurrencyServiceImpl implements CurrencyService {
             if (Arrays.stream(cookies).anyMatch(cookie -> cookie.getName().equals("currency"))) {
                 currencyCookie = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("currency")).findFirst().get();
                 currencyCookie.setValue(selectedCurrency);
+
             }
         }
         if (currencyCookie == null) {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/product/")
+@RequestMapping("/products/")
 public class ProductAddController {
     private final ProductService productService;
     private final static String SUCCESSFUL_PRODUCT_ADDITION_MSG =
@@ -45,6 +45,6 @@ public class ProductAddController {
 
         productService.addProduct(productAddDTO);
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_PRODUCT_ADDITION_MSG);
-        return "redirect:/product/add";
+        return "redirect:/products/add";
     }
 }

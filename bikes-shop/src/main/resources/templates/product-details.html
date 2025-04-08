@@ -32,7 +32,7 @@
                 <div class=" text-start py-2" th:text="*{description}"></th:block>
                 </div>
                 <div class="py-2"><span>Price: </span>
-                    <th:block th:text="*{#numbers.formatCurrency(price*${currDTO.rate})}"></th:block>
+                    <th:block th:text="${#numbers.formatCurrency(singleProduct.price*currDTO.rate)}"></th:block>
                 </div>
                 <!--   Form Start -->
                 <form th:action="@{/product/{pid}(pid=${singleProduct.compositeName()})}"
