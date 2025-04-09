@@ -15,14 +15,11 @@
             <!--            <div class="row-ms-auto">-->
             <form th:action="@{/search-result}"
                   th:method="POST"
-                  class="d-flex form-inline  text-light" role="search">
-                <input class="form-control col-sm bg-dark  text-bg-danger border-primary" type="search"
+                  class="d-flex form-inline " role="search">
+                <input class="form-control col-sm  text-light bg-transparent border-danger" type="search"
                        placeholder="Search" aria-label="Search"
                        th:name="productToSearch">
-                <!--                    <div class="input-group-append">-->
-                <!--                        <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-cart-shopping"></i></span>-->
-                <!--                    </div>-->
-                <button class="btn btn-outline-danger" type="submit">Search</button>
+                   <button class="btn btn-outline-danger" type="submit">Search</button>
             </form>
             <!--            </div>-->
 
@@ -58,6 +55,7 @@
                     <ul class="navbar-nav  text-light">
                         <li class="nav-item pl-2">
                             <a class="nav-link  text-light">Hello:
+
                                 <th:block sec:authorize="isAuthenticated()"
                                           sec:authentication="principal.firstName"></th:block>
                                 <th:block sec:authorize="!isAuthenticated()">Guest</th:block>

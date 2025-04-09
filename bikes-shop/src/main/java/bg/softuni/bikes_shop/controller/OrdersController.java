@@ -5,6 +5,8 @@ import bg.softuni.bikes_shop.model.dto.OrderDTO;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +29,15 @@ public class OrdersController {
     }
 
     @GetMapping("/orders")
-    public String orders(Principal principal, Model model, @CookieValue(value = "currency", required = false) String cookie) {
+    public String orders(Principal principal, Model model, @CookieValue(value = "currency", required = false) String cookie,
+                         HttpServletResponse response, HttpServletRequest request) {
 
         if (!model.containsAttribute("allOrders")) {
             model.addAttribute("allOrders", orderService.getAllByUser(principal.getName()));
         }
 
         if (!model.containsAttribute("currDTO")) {
-            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(request,response,cookie));
         }
 
 

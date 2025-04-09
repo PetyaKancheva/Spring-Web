@@ -5,9 +5,11 @@ import bg.softuni.bikes_shop.model.dto.MapRatesDTO;
 import bg.softuni.bikes_shop.model.entity.CurrencyEntity;
 import bg.softuni.bikes_shop.repository.CurrencyRepository;
 import bg.softuni.bikes_shop.service.CurrencyService;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.LocaleResolver;
 
@@ -84,7 +86,8 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public CurrencyExchangeDTO getCurrencyDTO(String cookie) {
+    public CurrencyExchangeDTO getCurrencyDTO(HttpServletRequest request,HttpServletResponse response, String cookie) {
+            compareLocale(request,response,cookie);
 
         if (cookie == null || cookie.equals(EUR)) {
             return new CurrencyExchangeDTO(EUR, 1d);
@@ -95,6 +98,14 @@ public class CurrencyServiceImpl implements CurrencyService {
         }
 
     }
+    private void compareLocale(HttpServletRequest request,HttpServletResponse response, String cookie){
+       Locale currentLocale=localeResolver.resolveLocale(request);
+        System.out.println(currentLocale.getCountry());
+        if(currentLocale.getCountry().equals("DE") && !cookie.equals("EUR")){
+             updateLocale(request,response,cookie);
+            System.out.println("to update");
+        };
 
+    }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -51,8 +52,10 @@ public class AdminControllerTestIT {
 //    }
 
     @Test
-    @WithMockUser(roles = {"ADMIN"})
+
+    @WithUserDetails(userDetailsServiceBeanName = "bikesUserDetailsService",value="email@test.com")
     void testAdminUpdateProfileSuccess() throws Exception {
+        testUserUtil.createTestAdmin("email@test.com");
         mockMvc.perform(MockMvcRequestBuilders.post("/admin")
                         .param("personToSearch", "tesName")
                         .with(csrf())

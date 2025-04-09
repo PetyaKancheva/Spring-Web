@@ -12,5 +12,5 @@ public interface CurrencyService {
 
     void updateCookie(HttpServletRequest request, HttpServletResponse response, String selectedCurrency);
 
-    CurrencyExchangeDTO getCurrencyDTO(String cookie);
+    CurrencyExchangeDTO getCurrencyDTO(HttpServletRequest request,HttpServletResponse response,String cookie);
 }

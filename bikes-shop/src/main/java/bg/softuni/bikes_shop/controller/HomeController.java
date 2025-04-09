@@ -44,7 +44,8 @@ public class HomeController {
     private String allProducts(@RequestParam(defaultValue = "3") Integer s,
                                @RequestParam(defaultValue = "0") Integer p,
                                @RequestParam(defaultValue = "name: asc") String o,
-                               Model model,@CookieValue(value = "currency", required = false)String cookie) {
+                               Model model,@CookieValue(value = "currency", required = false)String cookie,
+                               HttpServletResponse response,HttpServletRequest request) {
 
         //TODO if old cookie exists that is not DE
 
@@ -52,7 +53,7 @@ public class HomeController {
             model.addAttribute("products", productService.getProducts(s, p, o));
         }
         if (!model.containsAttribute("currDTO")) {
-            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(request,response,cookie));
         }
         if (!model.containsAttribute("listCurrencies")) {
             model.addAttribute("listCurrencies", CURRENCY_LIST);
@@ -87,7 +88,8 @@ public class HomeController {
 
 
     @PostMapping("/search-result")
-    private String search(Model model, String productToSearch, RedirectAttributes rAtt,@CookieValue(value = "currency", required = false)String cookie) {
+    private String search(Model model, String productToSearch, RedirectAttributes rAtt,@CookieValue(value = "currency", required = false)String cookie,
+     HttpServletResponse response,HttpServletRequest request) {
         Page<ProductDTO> resultList = productService.searchForProducts(productToSearch);
 
         if (resultList.isEmpty()) {
@@ -95,7 +97,7 @@ public class HomeController {
             return "redirect:/";
         }
         if (!model.containsAttribute("currDTO")) {
-            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(request,response,cookie));
         }
         if (!model.containsAttribute("listCurrencies")) {
             model.addAttribute("listCurrencies", CURRENCY_LIST);

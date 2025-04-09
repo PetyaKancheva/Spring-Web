@@ -3,6 +3,8 @@ package bg.softuni.bikes_shop.controller;
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,8 @@ public class CategoryController {
 
     @GetMapping("/{category}")
     private String category(@PathVariable("category") String category, Model model, @PageableDefault(size = 9, sort = "name") Pageable pageable,
-                            @CookieValue(value = "currency", required = false)String cookie) {
+                            @CookieValue(value = "currency", required = false)String cookie,
+                            HttpServletResponse response, HttpServletRequest request) {
         List<String> categories = productService.getDistinctCategories();
 
         if (!categories.contains(category)) {
@@ -42,7 +45,7 @@ public class CategoryController {
         model.addAttribute("currentCategory", category);
 
         if (!model.containsAttribute("currDTO")) {
-            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(request,response,cookie));
         }
         return "category";
     }

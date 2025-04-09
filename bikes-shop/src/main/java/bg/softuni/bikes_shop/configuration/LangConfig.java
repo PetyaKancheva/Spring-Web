@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
@@ -31,4 +32,10 @@ public class LangConfig implements WebMvcConfigurer {
         lci.setParamName("lang");
         return lci;
     }
+//    @Bean
+//    public CookieLocaleResolver cookieLocaleResolver()
+//        {
+//            CookieLocaleResolver clr= new CookieLocaleResolver("currency");
+//       return clr;
+//    }
 }

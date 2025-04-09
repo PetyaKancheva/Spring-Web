@@ -4,6 +4,8 @@ import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.OrderService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,11 +31,12 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shopping-cart")
-    public String cart(Model model, @CookieValue(value = "currency", required = false) String cookie) {
+    public String cart(Model model, @CookieValue(value = "currency", required = false) String cookie,
+                       HttpServletResponse response, HttpServletRequest request) {
 
         model.addAttribute(currentOrder);
         if (!model.containsAttribute("currDTO")) {
-            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(request,response,cookie));
         }
 
         return "shopping-cart";

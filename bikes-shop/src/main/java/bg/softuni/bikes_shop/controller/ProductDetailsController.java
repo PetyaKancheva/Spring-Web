@@ -5,6 +5,8 @@ import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
 import bg.softuni.bikes_shop.util.CurrentOrder;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +35,8 @@ public class ProductDetailsController {
     }
 
     @GetMapping("/product/{composite_name}")
-    public String details(@PathVariable("composite_name") String compositeName, Model model,@CookieValue(value = "currency", required = false)String cookie) {
+    public String details(@PathVariable("composite_name") String compositeName, Model model, @CookieValue(value = "currency", required = false)String cookie,
+                          HttpServletResponse response, HttpServletRequest request) {
 
         if (!model.containsAttribute("singleProduct")) {
             model.addAttribute("singleProduct", productService.getSingleProduct(compositeName)
@@ -44,7 +47,7 @@ public class ProductDetailsController {
             model.addAttribute("itemDTO", new ItemDTO());
         }
         if (!model.containsAttribute("currDTO")) {
-            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(request,response,cookie));
         }
 
         return "product-details";
