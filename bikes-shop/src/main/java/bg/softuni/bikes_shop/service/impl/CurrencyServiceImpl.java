@@ -100,10 +100,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
     private void compareLocale(HttpServletRequest request,HttpServletResponse response, String cookie){
        Locale currentLocale=localeResolver.resolveLocale(request);
-        System.out.println(currentLocale.getCountry());
+
         if(currentLocale.getCountry().equals("DE") && !cookie.equals("EUR")){
              updateLocale(request,response,cookie);
-            System.out.println("to update");
         };
 
     }

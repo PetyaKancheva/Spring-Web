@@ -11,10 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ShoppingCartController {
@@ -29,7 +26,10 @@ public class ShoppingCartController {
         this.currentOrder = currentOrder;
 
     }
-
+    @ModelAttribute("currentUser")
+    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
+        return  currentUser;
+    }
     @GetMapping("/shopping-cart")
     public String cart(Model model, @CookieValue(value = "currency", required = false) String cookie,
                        HttpServletResponse response, HttpServletRequest request) {

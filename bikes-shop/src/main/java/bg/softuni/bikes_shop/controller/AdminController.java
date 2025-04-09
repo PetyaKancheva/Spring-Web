@@ -1,9 +1,11 @@
 package bg.softuni.bikes_shop.controller;
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
 import bg.softuni.bikes_shop.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +28,10 @@ public class AdminController {
     public AdminController(UserService userService) {
         this.userService = userService;
     }
-
+    @ModelAttribute("currentUser")
+    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
+        return  currentUser;
+    }
     @ModelAttribute("userRoles")
     public UserRoleEnum[] roleEnums(){
         return UserRoleEnum.values();

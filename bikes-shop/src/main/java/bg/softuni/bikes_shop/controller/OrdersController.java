@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -26,6 +27,10 @@ public class OrdersController {
     public OrdersController( CurrencyService currencyService, OrderService orderService) {
         this.currencyService = currencyService;
         this.orderService = orderService;
+    }
+    @ModelAttribute("currentUser")
+    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
+        return  currentUser;
     }
 
     @GetMapping("/orders")

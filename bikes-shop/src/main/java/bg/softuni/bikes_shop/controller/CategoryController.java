@@ -1,12 +1,14 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -30,7 +32,10 @@ public class CategoryController {
     public List<String> currencyList() {
         return CURRENCY_LIST;
     }
-
+    @ModelAttribute("currentUser")
+    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
+        return  currentUser;
+    }
     @GetMapping("/{category}")
     private String category(@PathVariable("category") String category, Model model, @PageableDefault(size = 9, sort = "name") Pageable pageable,
                             @CookieValue(value = "currency", required = false)String cookie,

@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.controller;
 
 import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
@@ -8,6 +9,7 @@ import bg.softuni.bikes_shop.util.CurrentOrder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +35,10 @@ public class ProductDetailsController {
     public List<String> currencyList() {
         return CURRENCY_LIST;
     }
-
+    @ModelAttribute("currentUser")
+    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
+        return  currentUser;
+    }
     @GetMapping("/product/{composite_name}")
     public String details(@PathVariable("composite_name") String compositeName, Model model, @CookieValue(value = "currency", required = false)String cookie,
                           HttpServletResponse response, HttpServletRequest request) {

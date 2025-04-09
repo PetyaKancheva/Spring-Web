@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.controller;
 
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.CommentDTO;
 import bg.softuni.bikes_shop.model.dto.ProductDTO;
 import bg.softuni.bikes_shop.service.CurrencyService;
@@ -8,6 +9,7 @@ import bg.softuni.bikes_shop.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +39,10 @@ public class HomeController {
         return productService.getDistinctCategories();
     }
 
-
+@ModelAttribute("currentUser")
+public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
+        return  currentUser;
+}
 
 
     @GetMapping("/")

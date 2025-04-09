@@ -52,10 +52,9 @@ public class AdminControllerTestIT {
 //    }
 
     @Test
-
-    @WithUserDetails(userDetailsServiceBeanName = "bikesUserDetailsService",value="email@test.com")
+    @WithMockUser(roles = {"ADMIN"})
     void testAdminUpdateProfileSuccess() throws Exception {
-        testUserUtil.createTestAdmin("email@test.com");
+
         mockMvc.perform(MockMvcRequestBuilders.post("/admin")
                         .param("personToSearch", "tesName")
                         .with(csrf())

@@ -21,8 +21,8 @@
         <div class=" container text-center ">
             <div class="col border-bottom">Personal data:</div>
 
-            <div class="row" sec:authentication="principal.firstName"> First name</div>
-            <div class="row" sec:authentication="principal.lastName">Last name</div>
+            <div class="row"  th:text="${currentUser.firstName}"> First name</div>
+            <div class="row"  th:text="${currentUser.lastName}">Last name</div>
 
             <div class="col border-bottom ">Address:</div>
             <div class="row" sec:authentication="principal.email">email</div>
