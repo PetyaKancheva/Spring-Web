@@ -3,6 +3,7 @@ package bg.softuni.bikes_shop.controller;
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
 import bg.softuni.bikes_shop.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/products/")
+@RequestMapping("/product")
 public class ProductAddController {
     private final ProductService productService;
     private final static String SUCCESSFUL_PRODUCT_ADDITION_MSG =
@@ -45,6 +46,6 @@ public class ProductAddController {
 
         productService.addProduct(productAddDTO);
         rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME,SUCCESSFUL_PRODUCT_ADDITION_MSG);
-        return "redirect:/products/add";
+        return "redirect:/product/add";
     }
 }

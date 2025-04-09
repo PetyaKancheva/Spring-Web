@@ -22,7 +22,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             , nativeQuery = true)
     List<String> getDistinctCategories();
 
-    @Query(value = "SELECT * FROM shop.products WHERE  composite_name IS NOT NULL"
+    @Query(value = "SELECT * FROM products WHERE  composite_name IS NOT NULL"
             , nativeQuery = true)
     Page<ProductEntity> findAllProductsWithCompositeNameNotNull(Pageable pageable);
 
@@ -34,7 +34,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 
 
-    @Query(value="SELECT *  FROM shop.products WHERE MATCH (category, name, description) against( ? ) AND composite_name IS NOT NULL ",
+    @Query(value="SELECT *  FROM products WHERE MATCH (category, name, description) against( ? ) AND composite_name IS NOT NULL ",
             nativeQuery = true)
     Page<ProductEntity> findAllByKeyword(String keyword, Pageable pageable);
 }

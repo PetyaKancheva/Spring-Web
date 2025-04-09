@@ -27,7 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.3.RELEASE'
 	implementation 'org.springframework.session:spring-session-core'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -36,6 +36,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'com.icegreen:greenmail:2.0.0'
 	testImplementation 'org.hsqldb:hsqldb'
+	runtimeOnly 'org.thymeleaf.testing:thymeleaf-testing-lib:3.1.3.RELEASE'
 }
 
 tasks.named('test') {

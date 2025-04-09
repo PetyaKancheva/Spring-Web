@@ -111,17 +111,7 @@ class UserRegisterControllerTestIT {
         }
     }
 
-    private UserEntity createUserEntity() {
-        return new UserEntity()
-                .setEnabled(true)
-                .setFirstName("Ivan")
-                .setLastName("Ivanov")
-                .setEmail("ivan@mail.com")
-                .setAddress("Sofia")
-                .setCountry("Bulgaria")
-                .setRoles(List.of(new UserRoleEntity().setName(UserRoleEnum.USER)))
-                .setPassword("test");
-    }
+
 
 
 }

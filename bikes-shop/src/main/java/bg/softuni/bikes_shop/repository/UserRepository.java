@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface   UserRepository extends JpaRepository<UserEntity,Long> {
        Optional< UserEntity> findUserByEmail(String email);
-@Query(value="SELECT *  FROM shop.users AS u WHERE ? IN (u.e_mail, u.first_name , u.last_name ) AND u.is_enabled is TRUE",
+@Query(value="SELECT *  FROM users AS u WHERE ? IN (u.e_mail, u.first_name , u.last_name ) AND u.is_enabled is TRUE",
         nativeQuery = true)
     List<UserEntity> findAllByEmailFirsOrLastName(String name);
 }

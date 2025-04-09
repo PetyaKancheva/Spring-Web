@@ -59,7 +59,7 @@
                         <li class="nav-item pl-2">
                             <a class="nav-link  text-light">Hello:
                                 <th:block sec:authorize="isAuthenticated()"
-                                          sec:authentication="#principal.firstName"></th:block>
+                                          sec:authentication="principal.firstName"></th:block>
                                 <th:block sec:authorize="!isAuthenticated()">Guest</th:block>
                             </a>
                         </li>

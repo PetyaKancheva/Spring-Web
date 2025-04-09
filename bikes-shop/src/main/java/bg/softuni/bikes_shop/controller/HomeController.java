@@ -87,12 +87,18 @@ public class HomeController {
 
 
     @PostMapping("/search-result")
-    private String search(Model model, String productToSearch, RedirectAttributes rAtt) {
+    private String search(Model model, String productToSearch, RedirectAttributes rAtt,@CookieValue(value = "currency", required = false)String cookie) {
         Page<ProductDTO> resultList = productService.searchForProducts(productToSearch);
 
         if (resultList.isEmpty()) {
             rAtt.addFlashAttribute(ATTRIBUTE_MSG_NAME, String.format(ERROR_KEYWORD_NOT_FOUND_MSG, productToSearch));
             return "redirect:/";
+        }
+        if (!model.containsAttribute("currDTO")) {
+            model.addAttribute("currDTO", currencyService.getCurrencyDTO(cookie));
+        }
+        if (!model.containsAttribute("listCurrencies")) {
+            model.addAttribute("listCurrencies", CURRENCY_LIST);
         }
         model.addAttribute("products", resultList);
         return "index";
