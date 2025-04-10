@@ -1,14 +1,13 @@
 package bg.softuni.bikes_shop.controller.rest;
 
+import bg.softuni.bikes_shop.exceptions.CustomObjectNotFoundException;
 import bg.softuni.bikes_shop.model.dto.CommentDTO;
 import bg.softuni.bikes_shop.service.CommentService;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,6 +42,18 @@ public class CommentsRestController {
 
         restTemplate.delete(commentService.getURLForCommentDeletion(id), id);
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CustomObjectNotFoundException.class)
+    public String handleNotFound(Exception exception) {
+        return  "/error";
+    }
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler( IllegalArgumentException.class)
+    public String handleInternalServerError(Exception exception) {
+        return  "/error";
+    }
+
 
 
 }

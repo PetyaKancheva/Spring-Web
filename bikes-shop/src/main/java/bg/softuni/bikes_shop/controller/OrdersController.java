@@ -28,10 +28,7 @@ public class OrdersController {
         this.currencyService = currencyService;
         this.orderService = orderService;
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
 
     @GetMapping("/orders")
     public String orders(Principal principal, Model model, @CookieValue(value = "currency", required = false) String cookie,

@@ -32,10 +32,7 @@ public class CategoryController {
     public List<String> currencyList() {
         return CURRENCY_LIST;
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
     @GetMapping("/{category}")
     private String category(@PathVariable("category") String category, Model model, @PageableDefault(size = 9, sort = "name") Pageable pageable,
                             @CookieValue(value = "currency", required = false)String cookie,

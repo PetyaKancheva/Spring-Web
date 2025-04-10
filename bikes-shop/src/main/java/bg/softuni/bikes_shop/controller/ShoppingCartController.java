@@ -26,10 +26,7 @@ public class ShoppingCartController {
         this.currentOrder = currentOrder;
 
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
     @GetMapping("/shopping-cart")
     public String cart(Model model, @CookieValue(value = "currency", required = false) String cookie,
                        HttpServletResponse response, HttpServletRequest request) {

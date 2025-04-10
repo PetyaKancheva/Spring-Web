@@ -39,10 +39,7 @@ public class HomeController {
         return productService.getDistinctCategories();
     }
 
-@ModelAttribute("currentUser")
-public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-}
+
 
 
     @GetMapping("/")
@@ -52,7 +49,7 @@ public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails 
                                Model model,@CookieValue(value = "currency", required = false)String cookie,
                                HttpServletResponse response,HttpServletRequest request) {
 
-        //TODO if old cookie exists that is not DE
+
 
         if (!model.containsAttribute("products")) {
             model.addAttribute("products", productService.getProducts(s, p, o));
@@ -91,6 +88,11 @@ public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails 
         return "comments";
     }
 
+    @GetMapping("/error/500")
+    private void testError(Model model) {
+            throw new RuntimeException();
+
+    }
 
     @PostMapping("/search-result")
     private String search(Model model, String productToSearch, RedirectAttributes rAtt,@CookieValue(value = "currency", required = false)String cookie,

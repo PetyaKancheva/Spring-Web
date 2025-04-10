@@ -57,7 +57,7 @@
                             <a class="nav-link  text-light">Hello:
 
                                 <th:block sec:authorize="isAuthenticated()"
-                                         th:text="${currentUser.firstName}"></th:block>
+                                        sec:authentication="principal.firstName"></th:block>
                                 <th:block sec:authorize="!isAuthenticated()">Guest</th:block>
                             </a>
                         </li>

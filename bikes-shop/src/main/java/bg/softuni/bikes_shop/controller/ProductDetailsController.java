@@ -35,10 +35,7 @@ public class ProductDetailsController {
     public List<String> currencyList() {
         return CURRENCY_LIST;
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
     @GetMapping("/product/{composite_name}")
     public String details(@PathVariable("composite_name") String compositeName, Model model, @CookieValue(value = "currency", required = false)String cookie,
                           HttpServletResponse response, HttpServletRequest request) {

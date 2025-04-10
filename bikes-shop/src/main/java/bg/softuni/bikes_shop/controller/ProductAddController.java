@@ -27,10 +27,7 @@ public class ProductAddController {
         this.productService = productService;
 
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
     @GetMapping("/add")
     private String addProduct(Model model) {
 

@@ -21,10 +21,7 @@ public class ActivationCodeController {
     public ActivationCodeController(UserActivationService userActivationService) {
         this.userActivationService = userActivationService;
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
 
     @GetMapping ("/user/activate/")
     private String activateUser(@RequestParam @Size(min = 15,max=15) String activation_code, RedirectAttributes rAtt){

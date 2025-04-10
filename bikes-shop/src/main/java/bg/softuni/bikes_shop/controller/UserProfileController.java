@@ -26,10 +26,7 @@ public class UserProfileController {
     public UserProfileController(UserService userService) {
         this.userService = userService;
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
     @GetMapping("/user")
 
     private String profile( Principal principal,Model model) {

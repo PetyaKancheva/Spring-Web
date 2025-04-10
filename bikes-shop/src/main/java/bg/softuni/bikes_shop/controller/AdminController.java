@@ -24,14 +24,10 @@ public class AdminController {
     private final static String ATTRIBUTE_MSG_NAME = "message";
 
 
-
     public AdminController(UserService userService) {
         this.userService = userService;
     }
-    @ModelAttribute("currentUser")
-    public CustomUserDetails currentUser(@AuthenticationPrincipal CustomUserDetails currentUser){
-        return  currentUser;
-    }
+
     @ModelAttribute("userRoles")
     public UserRoleEnum[] roleEnums(){
         return UserRoleEnum.values();
