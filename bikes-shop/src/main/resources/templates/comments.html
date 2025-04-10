@@ -24,33 +24,25 @@
                                type="text"
                                class="form-control">
                         <label for="user_name">*Enter your name</label>
-                        <p id="errorMsg"
-                           class="invalid-feedback errors alert alert-danger"></p>
                     </div>
 
                     <div class="form-floating  pt-3  ">
                         <input id="title"
                                th:name="title"
-                               th:errorclass="is-invalid "
                                type="text"
                                class="form-control"/>
                         <label for="title">*Enter title for your comment</label>
-                        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
-                           class="invalid-feedback errors alert alert-danger"></p>
                     </div>
                     <div class="form-floating  pt-3  ">
                         <input id="body"
                                th:name="body"
-                               th:errorclass="is-invalid "
                                type="text"
                                class="form-control"/>
                         <label for="body">*Share your thoughts</label>
-                        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
-                           class="invalid-feedback errors alert alert-danger"></p>
                     </div>
 
                     <div class="button-holder p-3 d-flex">
-                        <button id="add-comment-button" class="btn btn-danger btn mx-auto">Add comment</button>
+                        <button type="button" id="add-comment-button" class="btn btn-danger btn mx-auto">Add comment</button>
                     </div>
                 </form>
 

@@ -20,19 +20,18 @@ public class CommentsRestController {
         this.commentService = commentService;
     }
 
-    // add error handling
     @GetMapping("/api/comment/{id}")
     public CommentDTO getOneComment(@PathVariable("id") Long id) {
         Map<String, Long> requestPram = Map.of("id", id);
         return restTemplate.getForObject(commentService.getURLForOneComment(id), CommentDTO.class, requestPram);
     }
-    @GetMapping(value = "/api/comments/fetch", produces = "application/json")
+    @GetMapping("/api/comments/fetch")
     public Object fetchAllComments() {
         return restTemplate.getForEntity(commentService.getURLForAllComments(), Object[].class);
     }
 
     @PostMapping("/api/comment/add")
-    public CommentDTO post(@Valid CommentDTO commentDTO) {
+    public CommentDTO post( CommentDTO commentDTO) {
 
         return restTemplate.postForObject(commentService.getURLForCommentAddition(), commentDTO, CommentDTO.class);
     }
@@ -43,16 +42,6 @@ public class CommentsRestController {
         restTemplate.delete(commentService.getURLForCommentDeletion(id), id);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(CustomObjectNotFoundException.class)
-    public String handleNotFound(Exception exception) {
-        return  "/error";
-    }
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler( IllegalArgumentException.class)
-    public String handleInternalServerError(Exception exception) {
-        return  "/error";
-    }
 
 
 

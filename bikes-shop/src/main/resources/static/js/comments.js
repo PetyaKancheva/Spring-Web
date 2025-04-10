@@ -3,9 +3,10 @@
 // });
 $('#get-all-button').click(fetchAllComments);
 
+$('#add-comment-button').click(submitComment);
+
 $('#single-comment-button').click(fetchSingleComment);
-// post complete form. do by each field to catch errors
-$('#add-comment-button').click(() => $('#new-comment-form').submit());
+
 $('#delete-comment-button').click(deleteComment);
 
 let errorMsg = 'Must be populated';
@@ -19,7 +20,7 @@ async function fetchAllComments() {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            alert(response.status);
+            alert("Error status:" + response.status);
         }
 
         const json = await response.json();
@@ -39,18 +40,25 @@ async function fetchAllComments() {
             $('.data-container .row:last-child').append(commentCard);
         });
     } catch (error) {
-        alert(error);
+        alert("Error" + error);
     }
 }
 
 
 async function fetchSingleComment() {
-    let singleCommentID = $('#single-comment-input').val();
-    if (singleCommentID>0) {
-        fetch(`/api/comment/${singleCommentID}`)
 
-            .then((response) => response.json())
-            .then((c) => {
+    let singleCommentID = $('#single-comment-input').val();
+    const url = `/api/comment/${singleCommentID}`;
+
+    if (singleCommentID > 0) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                alert("Error status: " + response.status);
+            }
+            const json = await response.json();
+
+            json.then((c) => {
                 let commentCard =
                     // '<div class="row d-flex">' +
                     '<div class="card m-3" style="width: 18rem">' +
@@ -60,9 +68,11 @@ async function fetchSingleComment() {
                     '<p class="card-text ">' + c.body + '</p>'
                     + '</div>' + '</div>' + '</div>';
                 $('#single-comment-container').after(commentCard);
-            })
-            .catch(error => alert(error));
+            });
 
+        } catch (error) {
+            alert("Error " + error);
+        }
     } else {
         $('#single-comment-container').after(errorP);
     }
@@ -71,25 +81,54 @@ async function fetchSingleComment() {
 }
 
 
-// $('#delete-comment-button').click(() => {
-//     let deleteID = $('#delete-comment-input').val();
-//
-//     fetch(`/api/comment/delete/${deleteID}`)
-//         .then((response) => response.json())
-//         .then((json) => {
-//             $('#delete-comment-error').append(json)
-//         })
-//         .catch(error => $('#delete-comment-error').append(error));
-// });
 
-
-function deleteComment() {
-
+async function deleteComment() {
     let deleteID = $('#delete-comment-input').val();
-    if (deleteID.length>0) {
-        fetch(`/api/comment/delete/${deleteID}`)
-            .catch(error => alert(error));
+    const uri = `/api/comment/delete/${deleteID}`;
+
+    if (deleteID.length > 0) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                alert("Error status: " + response.status);
+            }
+            const json = await response.json();
+        } catch (error) {
+            alert("Error: " + error);
+        }
     } else {
         $('#delete-comment-container').after(errorP);
     }
+}
+
+// post complete form. do by each field to catch errors
+
+function submitComment() {
+    let errFormMsg = '';
+
+    if ($('#user_name').val().length< 3 || $('#user_name').val().length > 15) {
+        errFormMsg = 'Name must be between 3 and 15 characters. ';
+    }
+    if ($('#title').val().length < 3 || $('#title').val().length > 15) {
+        errFormMsg += 'Title must be between 3 and 15 characters.';
+    }
+    if ($('#body').val().length < 3 ) {
+        errFormMsg  += 'Comment must be more than 3 characters. ';
+    }
+
+    if (errFormMsg.length > 0) {
+        let errorP = document.createElement('p');
+        errorP.innerText = errFormMsg;
+        errorP.className = " alert alert-danger input-group-sm mb-3";
+        $('#new-comment-form').after(errorP);
+        return;
+    }
+        try {
+            $('#new-comment-form').submit();
+        } catch (e) {
+            alert("Error status:" + e);
+        }
+
+
+
 }
