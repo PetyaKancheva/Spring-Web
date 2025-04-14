@@ -1,7 +1,6 @@
 package bg.softuni.bikes_shop.controller;
 
-import bg.softuni.bikes_shop.service.UserService;
-import org.hibernate.annotations.Parameter;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

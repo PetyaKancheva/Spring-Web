@@ -23,7 +23,7 @@ async function fetchAllComments() {
             alert("Error status:" + response.status);
         }
 
-        const json = await response.json();
+        const json =  response.json();
 
         json.forEach((c, comments) => {
             if (comments % 3 === 0) {
@@ -56,7 +56,7 @@ async function fetchSingleComment() {
             if (!response.ok) {
                 alert("Error status: " + response.status);
             }
-            const json = await response.json();
+            const json =  response.json();
 
             json.then((c) => {
                 let commentCard =
@@ -88,11 +88,11 @@ async function deleteComment() {
 
     if (deleteID.length > 0) {
         try {
-            const response = await fetch(url);
+            const response = await fetch(uri);
             if (!response.ok) {
                 alert("Error status: " + response.status);
             }
-            const json = await response.json();
+            const json =  response.json();
         } catch (error) {
             alert("Error: " + error);
         }

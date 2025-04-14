@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 
 @PasswordIsFound(
-        email="oldEmail",
+        email = "oldEmail",
         password = "oldPassword"
 )
 @FieldsMisMatching(
@@ -27,6 +27,6 @@ public record UserSelfUpdateDTO(
 
     public static UserSelfUpdateDTO empty() {
         return
-                new UserSelfUpdateDTO(null, null,null);
+                new UserSelfUpdateDTO(null, null, null);
     }
 }

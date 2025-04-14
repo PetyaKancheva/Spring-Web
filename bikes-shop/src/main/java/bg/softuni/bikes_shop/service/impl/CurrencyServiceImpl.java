@@ -87,7 +87,10 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public CurrencyExchangeDTO getCurrencyDTO(HttpServletRequest request,HttpServletResponse response, String cookie) {
+          if (cookie != null){
             compareLocale(request,response,cookie);
+          }
+
 
         if (cookie == null || cookie.equals(EUR)) {
             return new CurrencyExchangeDTO(EUR, 1d);

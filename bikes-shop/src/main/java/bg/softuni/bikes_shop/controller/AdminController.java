@@ -29,15 +29,15 @@ public class AdminController {
     }
 
     @ModelAttribute("userRoles")
-    public UserRoleEnum[] roleEnums(){
+    public UserRoleEnum[] roleEnums() {
         return UserRoleEnum.values();
     }
 
     @GetMapping("/admin")
-    private String view( Model model) {
+    private String view(Model model) {
 
-        if(!model.containsAttribute("adminUpdateDTO")){
-            model.addAttribute("adminUpdateDTO",AdminUpdateDTO.empty());
+        if (!model.containsAttribute("adminUpdateDTO")) {
+            model.addAttribute("adminUpdateDTO", AdminUpdateDTO.empty());
         }
 
         return "admin-profile";
@@ -46,12 +46,12 @@ public class AdminController {
     @PostMapping("/admin")
     private String search(String personToSearch, Model model) {
 
-        if(!model.containsAttribute("listPeople")){
+        if (!model.containsAttribute("listPeople")) {
             model.addAttribute("listPeople", userService.getAllByEmailFirsOrLastName(personToSearch));
         }
 
-        if(!model.containsAttribute("adminUpdateDTO")){
-            model.addAttribute("adminUpdateDTO",AdminUpdateDTO.empty());
+        if (!model.containsAttribute("adminUpdateDTO")) {
+            model.addAttribute("adminUpdateDTO", AdminUpdateDTO.empty());
         }
 
 
@@ -60,10 +60,12 @@ public class AdminController {
 
     @GetMapping("/admin/update/{id}")
     private String selectUser(@PathVariable("id") String email, Model model) {
-            if(email.isEmpty()){
-                return "admin-profile";
-            }
-        if(!model.containsAttribute("adminUpdateDTO")){
+
+        if (email.isEmpty()) {
+            return "admin-profile";
+        }
+
+        if (!model.containsAttribute("adminUpdateDTO")) {
             model.addAttribute("adminUpdateDTO",
                     userService.getAdminDTO(email));
         }
@@ -74,16 +76,16 @@ public class AdminController {
 
     @PostMapping("/admin/update/{id}")
     private String updateProfile(Principal principal, @PathVariable("id") String oldEmail,
-         @Valid AdminUpdateDTO adminUpdateDTO
-                              , BindingResult bindingResult, RedirectAttributes rAtt) {
+                                 @Valid AdminUpdateDTO adminUpdateDTO
+            , BindingResult bindingResult, RedirectAttributes rAtt) {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("adminUpdateDTO", adminUpdateDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.adminUpdateDTO", bindingResult);
-          return "redirect:/admin/update/{id}";
+            return "redirect:/admin/update/{id}";
         }
 
-        userService.updateByAdmin(adminUpdateDTO,oldEmail);
+        userService.updateByAdmin(adminUpdateDTO, oldEmail);
 
 
         if (principal.getName().equals(oldEmail)) {

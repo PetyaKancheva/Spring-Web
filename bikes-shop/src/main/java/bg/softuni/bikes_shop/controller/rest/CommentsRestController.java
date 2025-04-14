@@ -38,7 +38,7 @@ public class CommentsRestController {
 
     @GetMapping("/api/comment/delete/{id}")
     public void delete(@PathVariable("id") Long id) {
-
+        System.out.println(commentService.getURLForCommentDeletion(id));
         restTemplate.delete(commentService.getURLForCommentDeletion(id), id);
     }
 

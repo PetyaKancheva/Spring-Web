@@ -19,7 +19,7 @@
                 <input class="form-control col-sm  text-light bg-transparent border-danger" type="search"
                        placeholder="Search" aria-label="Search"
                        th:name="productToSearch">
-                   <button class="btn btn-outline-danger" type="submit">Search</button>
+                <button class="btn btn-outline-danger" type="submit">Search</button>
             </form>
             <!--            </div>-->
 
@@ -57,7 +57,7 @@
                             <a class="nav-link  text-light">Hello:
 
                                 <th:block sec:authorize="isAuthenticated()"
-                                        sec:authentication="principal.firstName"></th:block>
+                                          sec:authentication="principal.firstName"></th:block>
                                 <th:block sec:authorize="!isAuthenticated()">Guest</th:block>
                             </a>
                         </li>
@@ -106,10 +106,9 @@
 </header>
 
 <script>
-    $("#form-currency").on("change",function() {
+    $("#form-currency").on("change", function () {
         $("#form-currency").submit();
-    })  ;
-
+    });
 </script>
 </body>
 </html>
