@@ -22,7 +22,7 @@ public class CurrencyExchangeScheduler {
         this.currencyService = currencyService;
     }
 
-    //    @Scheduled(cron ="0 */3 */1 * * *")// every 3 min
+//        @Scheduled(cron ="0 */3 */1 * * *")// every 3 min
     @Scheduled(cron = " 0 5 8 */1 * *")
     //    every day     at 8:05
 //    @Scheduled(fixedRate=86_400_000) // 24hrs

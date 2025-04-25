@@ -5,6 +5,7 @@ spring:
     password: ${MYSQL_PASSWORD:}
     username: ${MYSQL_USERNAME:}
   jpa:
+    show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
     hibernate:
@@ -16,7 +17,25 @@ spring:
 
   sql:
     init:
-      mode: never
+      mode: always
+#spring:
+#  datasource:
+#    driverClassName:  org.postgresql.Driver
+#    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/shop
+#    password: ${POSTGRES_PASSWORD}
+#    username: ${POSTGRES_USERNAME}
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#  sql:
+#    init:
+#      mode: always
+
 
   thymeleaf:
     cache: false
