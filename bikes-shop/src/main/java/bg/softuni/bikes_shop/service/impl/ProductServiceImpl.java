@@ -8,6 +8,7 @@ import bg.softuni.bikes_shop.model.events.ProductAdditionEvent;
 import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.service.CurrencyService;
 import bg.softuni.bikes_shop.service.ProductService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
@@ -73,10 +74,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAllByKeyword(productToSearch,Pageable.unpaged())
                 .map(ProductServiceImpl::mapToDTO);
     }
-
+    @Cacheable("categories")
     @Override
     public List<String> getDistinctCategories() {
-        return productRepository.getDistinctCategories();
+        System.out.println("get cached categories");
+        return               productRepository.getDistinctCategories();
     }
 
     @Override

@@ -18,7 +18,7 @@ public class ProductCompositeNameScheduler {
         this.productRepository = productRepository;
         this.productService = productService;
     }
-
+//            @Scheduled(cron ="0 */1 */1 * * *")// every 1 min
     @Scheduled(cron ="0 0 * * * *")//every hour
     void checkForEmptyProductCompositeNames(){
             List<ProductEntity> toComplete=productRepository.findAllByCompositeNameNull();
