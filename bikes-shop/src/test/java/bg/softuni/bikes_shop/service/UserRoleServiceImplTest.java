@@ -48,7 +48,7 @@ public class UserRoleServiceImplTest {
         //assert
 
         Assertions.assertNotNull(foundEntity);
-        Assertions.assertEquals( foundEntity.getName().name(),roleName.name(),"User role not matching");
+        Assertions.assertEquals( foundEntity.getName().name(),roleName.name());
 
     }
 
