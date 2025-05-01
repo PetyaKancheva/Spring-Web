@@ -46,9 +46,9 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(newOrder);
 
-         for(ItemDTO item:currentOrder.getItems()){
-                    itemService.createItem(item,newOrder);
-         }
+        for (ItemDTO item : currentOrder.getItems()) {
+            itemService.createItem(item, newOrder);
+        }
 
     }
 
@@ -60,19 +60,10 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
-    private static OrderDTO mapToDTO(OrderEntity orderEntity) {
-
+    private static   OrderDTO mapToDTO(OrderEntity orderEntity) {
         return new OrderDTO(
                 orderEntity.getBuyer().getEmail(),
-                orderEntity.getItems().stream().map(
-                        itemsEntity -> {
-                            ItemDTO itemDTO = new ItemDTO();
-                            itemDTO.setProductCompositeName(itemsEntity.getProduct().getCompositeName());
-                            itemDTO.setProductName(itemsEntity.getProduct().getName());
-                            itemDTO.setQuantity(itemsEntity.getQuantity());
-                            itemDTO.setPrice(doubleValue(itemsEntity.getProduct().getPrice()));
-                            return itemDTO;
-                        }).collect(Collectors.toList()),
+                orderEntity.getItems().stream().map(ItemServiceImpl::maptItemDTO).toList(),
                 doubleValue(orderEntity.getTotalSum()));
     }
 

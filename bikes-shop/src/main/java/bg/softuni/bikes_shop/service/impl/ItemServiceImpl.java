@@ -9,6 +9,8 @@ import bg.softuni.bikes_shop.repository.ProductRepository;
 import bg.softuni.bikes_shop.service.ItemService;
 import org.springframework.stereotype.Service;
 
+import static org.aspectj.runtime.internal.Conversions.doubleValue;
+
 @Service
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
@@ -27,5 +29,13 @@ public class ItemServiceImpl implements ItemService {
                 .setQuantity(itemDTO.getQuantity())
                 .setOrder(orderEntity));
 
+    }
+
+    public static ItemDTO maptItemDTO(ItemEntity itemsEntity) {
+        return new ItemDTO()
+                .setProductCompositeName(itemsEntity.getProduct().getCompositeName())
+                .setProductName(itemsEntity.getProduct().getName())
+                .setQuantity(itemsEntity.getQuantity())
+                .setPrice(doubleValue(itemsEntity.getProduct().getPrice()));
     }
 }
