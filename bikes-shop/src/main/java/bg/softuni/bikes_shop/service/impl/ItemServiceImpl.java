@@ -23,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
     public void createItem(ItemDTO itemDTO, OrderEntity orderEntity) {
         itemRepository.save(new ItemEntity()
                 .setProduct(productRepository.findByCompositeName(itemDTO.getProductCompositeName())
-                        .orElseThrow(() -> new CustomObjectNotFoundException("Product with id: " + itemDTO.getProductName() + "not found!")))
+                        .orElseThrow(() -> new CustomObjectNotFoundException("Product with id: " + itemDTO.getProductName() + " not found!")))
                 .setQuantity(itemDTO.getQuantity())
                 .setOrder(orderEntity));
 
