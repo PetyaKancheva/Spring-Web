@@ -30,7 +30,9 @@ public class UserProfileController {
 
         if (!model.containsAttribute("userUpdateDTO")) {
             model.addAttribute("userUpdateDTO",
-                    new UserUpdateDTO(userService.getUserMainUpdateDTO(principal.getName()), UserSelfUpdateDTO.empty()));
+                    new UserUpdateDTO(
+                            userService.getUserMainUpdateDTO(principal.getName()),
+                            new UserSelfUpdateDTO(principal.getName(), "", "")));
         }
 
         return "user-profile";
@@ -39,6 +41,7 @@ public class UserProfileController {
     @PostMapping("/user")
     private String profileUpdate(Principal principal, @Valid UserUpdateDTO userUpdateDTO,
                                  BindingResult bindingResult, RedirectAttributes rAtt) {
+        System.out.println();
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("userUpdateDTO", userUpdateDTO);

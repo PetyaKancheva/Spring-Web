@@ -1,7 +1,5 @@
 package bg.softuni.bikes_shop.model.validation.validator;
 
-
-import bg.softuni.bikes_shop.model.validation.annotation.FieldsMatching;
 import bg.softuni.bikes_shop.model.validation.annotation.FieldsMisMatching;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

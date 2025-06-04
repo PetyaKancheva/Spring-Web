@@ -37,12 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void buy(String email, CurrentOrder currentOrder) {
-
-        OrderEntity newOrder = new OrderEntity()
-                .setBuyer(userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!")))
-                .setStatus("open")
-                .setDateCreated(LocalDate.now())
-                .setTotalSum(BigDecimal.valueOf(currentOrder.getTotalPrice()));
+        OrderEntity newOrder = createOrderEntity(email, currentOrder);
 
         orderRepository.save(newOrder);
 
@@ -50,21 +45,31 @@ public class OrderServiceImpl implements OrderService {
             itemService.createItem(item, newOrder);
         }
 
+
     }
 
     @Override
     public List<OrderDTO> getAllByUser(String email) {
+
         return orderRepository
                 .findAllByBuyerEmail(email)
                 .stream().map(OrderServiceImpl::mapToDTO)
                 .toList();
     }
 
-    private static   OrderDTO mapToDTO(OrderEntity orderEntity) {
+    private static OrderDTO mapToDTO(OrderEntity orderEntity) {
         return new OrderDTO(
                 orderEntity.getBuyer().getEmail(),
                 orderEntity.getItems().stream().map(ItemServiceImpl::maptItemDTO).toList(),
                 doubleValue(orderEntity.getTotalSum()));
+    }
+
+    private OrderEntity createOrderEntity(String email, CurrentOrder currentOrder) {
+       return new OrderEntity()
+                .setBuyer(userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!")))
+                .setStatus("open")
+                .setDateCreated(LocalDate.now())
+                .setTotalSum(BigDecimal.valueOf(currentOrder.getTotalPrice()));
     }
 
 

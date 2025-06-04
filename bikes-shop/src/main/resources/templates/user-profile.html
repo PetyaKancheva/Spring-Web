@@ -102,7 +102,7 @@
                    class="invalid-feedback errors alert alert-danger"></p>
             </div>
 
-            <input type="hidden" th:name="userSelfUpdateDTO.oldEmail"  th:value="principal.email" >
+            <input type="hidden" th:name="userSelfUpdateDTO.oldEmail"  th:value="*{userSelfUpdateDTO().oldEmail}" >
 
             <div class="form-group py-2">
 

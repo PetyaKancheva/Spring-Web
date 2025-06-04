@@ -117,7 +117,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserMainUpdateDTO getUserMainUpdateDTO(String email) {
-        return mapToMainDTO(getExistingUser(email));
+        return
+                mapToMainDTO(getExistingUser(email));
     }
 
 
@@ -130,7 +131,7 @@ public class UserServiceImpl implements UserService {
     public boolean isPasswordCorrect(String email, String password) {
         return passwordEncoder.matches(password, userRepository
                 .findUserByEmail(email).map(UserEntity::getPassword)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found!")));
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found!")));
     }
 
 

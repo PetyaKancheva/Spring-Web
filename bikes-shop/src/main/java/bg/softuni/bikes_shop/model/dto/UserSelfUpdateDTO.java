@@ -19,8 +19,10 @@ import jakarta.validation.constraints.NotEmpty;
 public record UserSelfUpdateDTO(
         @NotEmpty
         String oldEmail,
+
         @PasswordMatch
         String oldPassword,
+
         @PasswordMatch
         String newPassword
 ) {

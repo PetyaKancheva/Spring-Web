@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@EnableCaching // TODO to implement for categories
+@EnableCaching
 @EnableScheduling
 @SpringBootApplication
 public class BikesShopApplication {
