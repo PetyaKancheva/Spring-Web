@@ -8,6 +8,7 @@ import bg.softuni.bikes_shop.repository.OrderRepository;
 import bg.softuni.bikes_shop.repository.UserRepository;
 import bg.softuni.bikes_shop.service.impl.ItemServiceImpl;
 import bg.softuni.bikes_shop.service.impl.OrderServiceImpl;
+import bg.softuni.bikes_shop.util.CurrentOrder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -39,6 +41,12 @@ class OrderServiceImplTest {
     private UserEntity mockUser;
     @Mock
     private ProductEntity mockProduct;
+    @Mock
+    private CurrentOrder mockCurrentOrder;
+    @Mock
+    private OrderDTO mockOrderDTO;
+    @Mock
+    OrderEntity mockOrder;
 
 
     @BeforeEach
@@ -48,36 +56,47 @@ class OrderServiceImplTest {
     }
 
     @Test
-    void testGetAllWithOneOrderSuccess() {
-        // for oneORder First?
-        // for multiple orders
-        //arrange
-        int itemsCount=2;
-        int ordersCount=2;
-       List< OrderEntity> testOrders = createListOrderEntity(ordersCount,itemsCount);
+    void testBuyProductCreateOrderEntity() {
+//        when(mockUserRepository.findUserByEmail(EMAIL)).thenReturn(Optional.of(mockUser));
+//     List<OrderEntity> listOfOneOrder= createListOrderEntity(1, 1);
+
+//        when(mockOrderRepository.save(mockOrder)).then;
+//        when(orderServiceTest.getAllByUser(EMAIL)).thenReturn(List.of(mockOrderDTO));
+
+        orderServiceTest.buy(EMAIL, mockCurrentOrder);
+
+        Assertions.assertEquals(true, mockOrderRepository.save(mockOrder));
+//            Assertions.assertEquals(1,mockOrderRepository.findAll().size());
+    }
+
+    @Test
+    void testGetAllWithOneOrder() {
+        // TODO put more items, orders
+        int itemsCount = 2;
+        int ordersCount = 1;
+        List<OrderEntity> testOrders = createListOrderEntity(ordersCount, itemsCount);
 
         when(mockOrderRepository.findAllByBuyerEmail(EMAIL).stream().toList())
                 .thenReturn(testOrders);
-//act
+
         List<OrderDTO> result = orderServiceTest.getAllByUser(EMAIL);
-//
-//        //assert
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(TOTAL_SUM,result.getFirst().totalSum()) ;
-        Assertions.assertEquals(itemsCount,result.getFirst().items().size()) ;
-        Assertions.assertEquals(ordersCount,result.size()) ;
-       Assertions.assertEquals(TOTAL_SUM,result.getFirst().items().s);
+        Assertions.assertEquals(TOTAL_SUM, result.getFirst().totalSum());
+        Assertions.assertEquals(itemsCount, result.getFirst().items().size());
+        Assertions.assertEquals(ordersCount, result.size());
 
     }
-    private List<OrderEntity> createListOrderEntity(int orderCount,int itemsCount) {
+
+    private List<OrderEntity> createListOrderEntity(int orderCount, int itemsCount) {
 
         List<OrderEntity> mockOrders = new ArrayList<>();
         for (int i = 0; i < orderCount; i++) {
             mockOrders.add(createTestOrderEntity(itemsCount));
         }
-        return  mockOrders;
+        return mockOrders;
     }
+
     private OrderEntity createTestOrderEntity(int itemsCount) {
 
         return new OrderEntity()
@@ -96,10 +115,11 @@ class OrderServiceImplTest {
         for (int i = 0; i < itemsCount; i++) {
             mockItems.add(createTestItemEntity());
         }
-        return  mockItems;
+        return mockItems;
     }
-    private ItemEntity createTestItemEntity(){
-       return new ItemEntity().setProduct(mockProduct);
+
+    private ItemEntity createTestItemEntity() {
+        return new ItemEntity().setProduct(mockProduct);
 
     }
 }

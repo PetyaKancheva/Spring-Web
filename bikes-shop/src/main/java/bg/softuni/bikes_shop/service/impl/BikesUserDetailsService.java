@@ -2,11 +2,7 @@ package bg.softuni.bikes_shop.service.impl;
 
 import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
-import bg.softuni.bikes_shop.model.entity.UserRoleEntity;
 import bg.softuni.bikes_shop.repository.UserRepository;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

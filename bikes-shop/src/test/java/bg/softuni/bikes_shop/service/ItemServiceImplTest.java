@@ -31,7 +31,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testCreateItemSuccess() {
+    void testCreateItem() {
 //        arrange
         String testCompositeName="testCompositeName";
         ItemDTO testItemDTO=new ItemDTO().setPrice(1d).setQuantity(1).setProductName("testName").setProductCompositeName(testCompositeName);
@@ -48,7 +48,6 @@ class ItemServiceImplTest {
     @Test
     void testCreateItemFail(){
         Assertions.assertThrows(CustomObjectNotFoundException.class,() ->testItemService.createItem(new ItemDTO(),new OrderEntity())   );
-
 
     }
 }

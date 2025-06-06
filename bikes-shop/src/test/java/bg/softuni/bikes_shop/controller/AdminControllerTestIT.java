@@ -1,5 +1,6 @@
 package bg.softuni.bikes_shop.controller;
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
 import bg.softuni.bikes_shop.util.TestDataUtil;
 import bg.softuni.bikes_shop.util.TestUserUtil;
@@ -9,12 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -28,10 +31,12 @@ public class AdminControllerTestIT {
     @Autowired
     private TestDataUtil testDataUtil;
 
+
     @BeforeEach
     void setUp() {
         testDataUtil.cleanUp();
         testUserUtil.cleanUp();
+
     }
 
     @AfterEach
@@ -52,15 +57,16 @@ public class AdminControllerTestIT {
 //    }
 
     @Test
-    @WithMockUser(roles = {"ADMIN"})
+
     void testAdminUpdateProfileSuccess() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/admin")
+                        .with(user(testUserUtil.createTestAdmin("test@mail.com")))
                         .param("personToSearch", "tesName")
                         .with(csrf())
                 )
-                .andExpect(status().isOk());
-//                .andExpect(view().name("admin-profile"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("admin-profile"));
     }
 
 }

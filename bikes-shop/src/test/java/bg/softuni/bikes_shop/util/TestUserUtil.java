@@ -1,5 +1,6 @@
 package bg.softuni.bikes_shop.util;
 
+import bg.softuni.bikes_shop.model.CustomUserDetails;
 import bg.softuni.bikes_shop.model.UserRoleEnum;
 import bg.softuni.bikes_shop.model.entity.UserEntity;
 import bg.softuni.bikes_shop.repository.UserRepository;
@@ -18,16 +19,17 @@ public class TestUserUtil {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-    public UserEntity createTestUser(String email) {
-        return createUser(email, List.of(UserRoleEnum.USER));
+
+    public CustomUserDetails createTestUser(String email) {
+        return new CustomUserDetails(createUser(email, List.of(UserRoleEnum.USER)));
     }
 
-    public UserEntity createTestAdmin(String email) {
-        return createUser(email, List.of(UserRoleEnum.ADMIN));
+    public CustomUserDetails createTestAdmin(String email) {
+        return new CustomUserDetails(createUser(email, List.of(UserRoleEnum.ADMIN)));
     }
 
-    public UserEntity createTestEmployee(String email) {
-        return createUser(email, List.of(UserRoleEnum.EMPLOYEE));
+    public CustomUserDetails createTestEmployee(String email) {
+        return new CustomUserDetails(createUser(email, List.of(UserRoleEnum.EMPLOYEE)));
     }
 
     private UserEntity createUser(String email, List<UserRoleEnum> roles) {

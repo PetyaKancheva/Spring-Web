@@ -17,7 +17,6 @@ public class CustomUserDetails implements UserDetails {
     private String email;
     private String password;
     private boolean isEnabled;
-
     private List<GrantedAuthority> authorities;
 
 
