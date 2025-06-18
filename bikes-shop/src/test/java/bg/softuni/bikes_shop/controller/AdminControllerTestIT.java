@@ -1,7 +1,5 @@
 package bg.softuni.bikes_shop.controller;
 
-import bg.softuni.bikes_shop.model.CustomUserDetails;
-import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
 import bg.softuni.bikes_shop.util.TestDataUtil;
 import bg.softuni.bikes_shop.util.TestUserUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -10,14 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -44,29 +39,36 @@ public class AdminControllerTestIT {
         testDataUtil.cleanUp();
         testUserUtil.cleanUp();
     }
-//    @Test
-//    @WithMockUser(roles = {"ADMIN"})
-//    void testGet() throws Exception {
-//                   mockMvc.perform(MockMvcRequestBuilders.get("/admin")
-//                                   .with(csrf()))
-////                            .flashAttr("adminUpdateDTO", AdminUpdateDTO.empty())).
-//                    .andExpect(status().isOk());
-////                    .andExpect(view().name("admin-profile"))
-////                    .andExpect(model().attribute("adminUpdateDTO", AdminUpdateDTO.empty()));
-//
-//    }
-
     @Test
-
-    void testAdminUpdateProfileSuccess() throws Exception {
-
+    void testAdminGetProfileSuccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/admin")
                         .with(user(testUserUtil.createTestAdmin("test@mail.com")))
-                        .param("personToSearch", "tesName")
+                        .param("personToSearch", "testName")
                         .with(csrf())
                 )
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin-profile"));
     }
+    @Test
+    void testAdminGetProfileAccessDenied() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/admin")
+                        .with(user(testUserUtil.createTestEmployee("test@mail.com")))
+                        .param("personToSearch", "testName")
+                        .with(csrf())
+                )
+                .andExpect(status().isForbidden());
 
+    }
+    @Test
+    void testAdminUpdateProfileSuccess() throws Exception {
+        String testEmail="b@mail.com";
+        mockMvc.perform(MockMvcRequestBuilders.get("/admin/update/{id}",testEmail)
+                        .with(user(testUserUtil.createTestAdmin("admin@mail.com")))
+                        .param("email", testEmail)
+//                . ("adminUpdateDTO",testDataUtil.createTestAdminUpdateDTO())
+                        .with(csrf())
+                ).andDo(print());
+//                .andExpect(model().size(1));
+//                .andExpect(view().name("admin-profile"));
+    }
 }

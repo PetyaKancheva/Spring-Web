@@ -1,6 +1,7 @@
 package bg.softuni.bikes_shop.util;
 
 import bg.softuni.bikes_shop.model.UserRoleEnum;
+import bg.softuni.bikes_shop.model.dto.AdminUpdateDTO;
 import bg.softuni.bikes_shop.model.dto.ItemDTO;
 import bg.softuni.bikes_shop.model.dto.OrderDTO;
 import bg.softuni.bikes_shop.model.dto.ProductAddDTO;
@@ -61,6 +62,11 @@ public class TestDataUtil {
 
 
         return productRepository.save(newProduct);
+    }
+    public AdminUpdateDTO createTestAdminUpdateDTO(){
+        AdminUpdateDTO newDTO = AdminUpdateDTO.empty();
+
+        return newDTO;
     }
 
     //
